@@ -1,0 +1,710 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Lab - Privacy-First AI Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap%22 rel="
+        stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2a3033;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #981e32;
+        }
+
+        /* Modal Animation */
+        .modal-enter {
+            opacity: 0;
+        }
+
+        .modal-enter-active {
+            opacity: 1;
+            transition: opacity 200ms ease-out;
+        }
+
+        .modal-exit {
+            opacity: 1;
+        }
+
+        .modal-exit-active {
+            opacity: 0;
+            transition: opacity 200ms ease-in;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 antialiased flex flex-col min-h-screen">
+
+    <!-- WSU Global Header Strip -->
+    <div class="wsu-crimson-bg h-2"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">AI
+                                    <span class="wsu-text-crimson">Guide</span></span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#"
+                            class="border-b-2 border-[#981e32] text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-semibold uppercase tracking-wide">AI
+                            Models</a>
+                        <a href="#comparison"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Comparison</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            Academic Resource
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-white relative border-b border-gray-200">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:flex lg:justify-between">
+            <div class="max-w-xl">
+                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+                    The Privacy-First <br>
+                    <span class="wsu-text-crimson">AI Stack</span>
+                </h1>
+                <p class="mt-5 text-xl text-gray-500 font-light">
+                    A technical field guide for Law Enforcement & Academia. Facilitating secure, air-gapped intelligence
+                    analysis on institutional hardware.
+                </p>
+                <div class="mt-8 flex gap-4">
+                    <div class="rounded-md shadow">
+                        <a href="#models"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-sm text-white wsu-crimson-bg hover:bg-red-800 md:py-4 md:text-lg transition-colors">
+                            View Models
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#airgap"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg">
+                            Why Air Gap?
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 lg:mt-0 flex items-center justify-center lg:w-1/2">
+                <!-- Abstract Academic/Tech graphic -->
+                <div class="grid grid-cols-2 gap-4 opacity-80">
+                    <div
+                        class="bg-gray-100 p-6 rounded-lg h-40 w-40 flex items-center justify-center transform translate-y-8">
+                        <i class="fa-solid fa-server text-4xl text-gray-400"></i>
+                    </div>
+                    <div
+                        class="bg-[#981e32] p-6 rounded-lg h-40 w-40 flex items-center justify-center text-white shadow-xl">
+                        <i class="fa-solid fa-shield-halved text-5xl"></i>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg h-40 w-40 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-microchip text-4xl"></i>
+                    </div>
+                    <div
+                        class="bg-gray-100 p-6 rounded-lg h-40 w-40 flex items-center justify-center transform -translate-y-8">
+                        <i class="fa-solid fa-network-wired text-4xl text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro Content -->
+    <section class="py-16 bg-gray-50" id="airgap">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-sm wsu-text-crimson font-bold tracking-wide uppercase">Institutional Data Security</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Intelligence Without Egress
+            </p>
+            <p class="mt-4 max-w-2xl text-lg text-gray-600 lg:mx-auto">
+                The shift to <span class="font-semibold text-gray-900">open-weight models</span> allows for compliance
+                with strict CJIS and IRB standards. By running models locally, agencies maintain absolute custody of
+                digital evidence and research data.
+            </p>
+        </div>
+    </section>
+
+    <!-- Model Grid -->
+    <section id="models" class="py-16 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-left mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Recommended Models</h2>
+                <div class="h-1 w-20 wsu-crimson-bg mt-2"></div>
+                <p class="mt-4 text-gray-500">Click on any card below to view detailed technical specifications.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+                <!-- Llama 3.1 -->
+                <div onclick="openModal('llama')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Meta
+                            </span>
+                            <i
+                                class="fa-solid fa-horse-head text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Llama 3.1</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">General Purpose
+                            Analysis</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            The industry standard for report summarization and synthesis. Highly stable with broad
+                            ecosystem support for standard hardware.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: 70B Parameter</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- gpt-oss -->
+                <div onclick="openModal('gptoss')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                OpenAI
+                            </span>
+                            <i
+                                class="fa-solid fa-robot text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">gpt-oss</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Research Agent</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            An "agentic" model designed to connect data points across offline databases and perform
+                            autonomous research tasks.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: 120B / 20B</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qwen3-VL -->
+                <div onclick="openModal('qwen')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                Alibaba
+                            </span>
+                            <i
+                                class="fa-solid fa-eye text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Qwen3-VL</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Vision Language</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            Specialized in video and image analysis. Capable of analyzing CCTV or bodycam footage
+                            timestamps locally.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: Video Analysis</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ministral-3 -->
+                <div onclick="openModal('ministral')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                Mistral AI
+                            </span>
+                            <i
+                                class="fa-solid fa-bolt text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Ministral-3</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Edge Compute</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            Optimized for field laptops and devices with limited compute. Ideal for patrol cars or
+                            remote field research.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: Edge Use</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DeepSeek-R1 -->
+                <div onclick="openModal('deepseek')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                DeepSeek
+                            </span>
+                            <i
+                                class="fa-solid fa-brain text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">DeepSeek-R1</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Logic Engine</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            Utilizes Chain-of-Thought reasoning for complex logic puzzles, forensic accounting, and code
+                            verification.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: Complex Logic</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemma 3 -->
+                <div onclick="openModal('gemma')"
+                    class="bg-white rounded-lg shadow-sm border border-gray-200 card-hover overflow-hidden group">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                                Google
+                            </span>
+                            <i
+                                class="fa-solid fa-comments text-gray-400 text-xl group-hover:text-[#981e32] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Gemma 3</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Responsible AI</p>
+                        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+                            Focuses on safety and multilingual support. Excellent for public-facing tools or sensitive
+                            translation.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-gray-500">Rec: Translation</span>
+                            <span class="text-xs text-[#981e32] font-semibold">View Specs &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section id="comparison" class="py-16 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Comparative Analysis</h2>
+            <div class="bg-white shadow-sm overflow-hidden border border-gray-200 rounded-sm">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th scope="col"
+                                class="py-4 pl-6 pr-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Model</th>
+                            <th scope="col"
+                                class="px-3 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Primary Application</th>
+                            <th scope="col"
+                                class="px-3 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Hardware Requirement</th>
+                            <th scope="col"
+                                class="px-3 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Privacy Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-4 pl-6 pr-3 text-sm font-semibold text-gray-900">Llama 3.1</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">General Reports</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Medium (70B)</td>
+                            <td class="px-3 py-4 text-sm text-green-700 font-bold">★★★★★</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-4 pl-6 pr-3 text-sm font-semibold text-gray-900">Qwen3-VL</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Video Evidence</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">High (VRAM)</td>
+                            <td class="px-3 py-4 text-sm text-green-700 font-bold">★★★★★</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pl-6 pr-3 text-sm font-semibold text-gray-900">Ministral-3</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Field / Patrol Edge</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Very Low (Laptop)</td>
+                            <td class="px-3 py-4 text-sm text-green-700 font-bold">★★★★★</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-4 pl-6 pr-3 text-sm font-semibold text-gray-900">DeepSeek-R1</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Financial Crime</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Medium</td>
+                            <td class="px-3 py-4 text-sm text-green-700 font-bold">★★★★☆</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pl-6 pr-3 text-sm font-semibold text-gray-900">Gemma 3</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Public Facing Tools</td>
+                            <td class="px-3 py-4 text-sm text-gray-600">Low</td>
+                            <td class="px-3 py-4 text-sm text-green-700 font-bold">★★★★★</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#2a3033] text-white">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/contact-us/" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+        <div class="wsu-crimson-bg py-4 text-center">
+            <p class="text-xs text-white opacity-90">
+                &copy; 2025 Washington State University. For Academic & Law Enforcement Use Only.
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL IMPLEMENTATION -->
+    <div id="model-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity backdrop-blur-sm" aria-hidden="true"
+                onclick="closeModal()"></div>
+
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <!-- Modal panel -->
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                <!-- Header -->
+                <div id="modal-header-bg"
+                    class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <div id="modal-icon-container"
+                            class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 mr-4">
+                            <!-- Icon injected via JS -->
+                            <i id="modal-icon" class="fa-solid fa-robot text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg leading-6 font-bold text-gray-900" id="modal-title">Model Name</h3>
+                            <p class="text-xs text-gray-500 uppercase tracking-wider" id="modal-subtitle">Subtitle</p>
+                        </div>
+                    </div>
+                    <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                        onclick="closeModal()">
+                        <span class="sr-only">Close</span>
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="px-6 py-6">
+                    <div class="prose prose-sm max-w-none text-gray-500">
+                        <p id="modal-description" class="mb-4 text-gray-700 text-base">Description goes here.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Specs -->
+                            <div class="bg-gray-50 p-4 rounded-md border border-gray-100">
+                                <h4
+                                    class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3 border-b border-gray-200 pb-2">
+                                    Technical Specs</h4>
+                                <dl class="space-y-2 text-sm" id="modal-specs">
+                                    <!-- Specs injected via JS -->
+                                </dl>
+                            </div>
+
+                            <!-- Use Cases -->
+                            <div class="bg-gray-50 p-4 rounded-md border border-gray-100">
+                                <h4
+                                    class="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3 border-b border-gray-200 pb-2">
+                                    Primary Use Cases</h4>
+                                <ul class="space-y-2 list-disc list-inside text-sm text-gray-600" id="modal-usecases">
+                                    <!-- Use cases injected via JS -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Note -->
+                        <div class="mt-6 p-4 bg-green-50 border border-green-100 rounded-md">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa-solid fa-shield-alt text-green-600 mt-0.5"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-bold text-green-800">Privacy & Security Note</h3>
+                                    <div class="mt-1 text-sm text-green-700" id="modal-privacy">
+                                        <!-- Privacy text injected via JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-200">
+                    <button type="button"
+                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#981e32] text-base font-medium text-white hover:bg-[#7d1829] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        onclick="closeModal()">
+                        Close Overview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Source for Models
+        const modelData = {
+            'llama': {
+                title: 'Llama 3.1',
+                subtitle: 'The Reliable Workhorse (Meta)',
+                icon: 'fa-horse-head',
+                colorClass: 'text-blue-600',
+                bgClass: 'bg-blue-100',
+                description: 'Llama 3.1 serves as the industry standard for open-source intelligence. Its massive ecosystem support ensures compatibility with almost all departmental hardware. The 70B parameter version offers the optimal balance between high-level reasoning and computational efficiency for secure servers.',
+                specs: [
+                    { label: 'Sizes', value: '8B, 70B, 405B' },
+                    { label: 'Context Window', value: '128k Tokens (~300 pages)' },
+                    { label: 'Architecture', value: 'Dense Transformer' }
+                ],
+                useCases: [
+                    'Summarizing extensive witness statements',
+                    'Synthesizing literature reviews from PDF collections',
+                    'General-purpose internal chatbots'
+                ],
+                privacy: 'Runs completely offline on standard enterprise GPUs (e.g., A6000, A100). No data egress to Meta.'
+            },
+            'gptoss': {
+                title: 'gpt-oss',
+                subtitle: 'The Research Agent (OpenAI)',
+                icon: 'fa-robot',
+                colorClass: 'text-green-600',
+                bgClass: 'bg-green-100',
+                description: 'Released in late 2025, gpt-oss marks a shift towards "agentic" open-weight models. It is specifically tuned to use tools, query offline databases, and perform multi-step research tasks autonomously.',
+                specs: [
+                    { label: 'Sizes', value: '20B (Edge), 120B (Server)' },
+                    { label: 'Architecture', value: 'Mixture-of-Experts (MoE)' },
+                    { label: 'Specialty', value: 'Agentic Tool Use' }
+                ],
+                useCases: [
+                    'Autonomous cross-referencing of offline databases',
+                    'Connecting disparate data points in cold cases',
+                    'Field queries via the 20B edge model'
+                ],
+                privacy: 'The MoE architecture allows high performance on fewer resources, making it easier to self-host.'
+            },
+            'qwen': {
+                title: 'Qwen3-VL',
+                subtitle: 'The Eyes of the Operation (Alibaba)',
+                icon: 'fa-eye',
+                colorClass: 'text-purple-600',
+                bgClass: 'bg-purple-100',
+                description: 'A Vision-Language Model (VLM) capable of watching video and understanding temporal events. It can process hours of footage to identify specific actions, objects, or timestamps without cloud processing.',
+                specs: [
+                    { label: 'Context Window', value: '256k Tokens' },
+                    { label: 'Input', value: 'Text, Image, Video (>20 mins)' },
+                    { label: 'Capability', value: 'Temporal Understanding' }
+                ],
+                useCases: [
+                    'Automated review of bodycam footage',
+                    'CCTV suspect tracking and timestamping',
+                    'Analyzing sociological field video data'
+                ],
+                privacy: 'Crucial for evidence handling: terabytes of video data remain on-premise while being analyzed.'
+            },
+            'ministral': {
+                title: 'Ministral-3',
+                subtitle: 'The Field Scout (Mistral AI)',
+                icon: 'fa-bolt',
+                colorClass: 'text-yellow-600',
+                bgClass: 'bg-yellow-100',
+                description: 'Designed specifically for "Edge AI"â€”running on devices with limited battery and compute, such as ruggedized laptops, tablets, or drone controllers.',
+                specs: [
+                    { label: 'Sizes', value: '3B, 8B' },
+                    { label: 'Focus', value: 'Low Latency / Edge' },
+                    { label: 'Hardware', value: 'Consumer Laptop / Mobile' }
+                ],
+                useCases: [
+                    'Report drafting in patrol cars (no internet)',
+                    'Remote field research logging',
+                    'Real-time drone telemetry analysis'
+                ],
+                privacy: 'Ensures data collected in the field is processed immediately on the device without transmission.'
+            },
+            'deepseek': {
+                title: 'DeepSeek-R1',
+                subtitle: 'The Deep Thinker (DeepSeek)',
+                icon: 'fa-brain',
+                colorClass: 'text-red-600',
+                bgClass: 'bg-red-100',
+                description: 'Uses "Chain-of-Thought" (CoT) processing to internally debate answers before responding. It excels at logic puzzles, complex math, and forensic accounting where other models might hallucinate.',
+                specs: [
+                    { label: 'Method', value: 'Reinforcement Learning (RL)' },
+                    { label: 'Output', value: 'Internal Monologue + Answer' },
+                    { label: 'Strength', value: 'Logic & Math' }
+                ],
+                useCases: [
+                    'Tracing complex financial fraud schemes',
+                    'Verifying statistical code for research',
+                    'Logic-heavy investigative deductions'
+                ],
+                privacy: 'Distilled versions allow high-level logic to run on mid-tier hardware.'
+            },
+            'gemma': {
+                title: 'Gemma 3',
+                subtitle: 'The Diplomat (Google)',
+                icon: 'fa-comments',
+                colorClass: 'text-teal-600',
+                bgClass: 'bg-teal-100',
+                description: 'Built with a heavy focus on "Responsible AI" and multilingual support. It is less likely to produce toxic output and handles non-English languages with high proficiency.',
+                specs: [
+                    { label: 'Sizes', value: '1B - 27B' },
+                    { label: 'Languages', value: '140+ Supported' },
+                    { label: 'Focus', value: 'Safety Alignment' }
+                ],
+                useCases: [
+                    'Real-time translation for victim interviews',
+                    'Public-facing academic chatbots',
+                    'Community relations tools'
+                ],
+                privacy: 'High safety guardrails make it ideal for deployed tools interacting with the public.'
+            }
+        };
+
+        function openModal(modelId) {
+            const data = modelData[modelId];
+            if (!data) return;
+
+            // Populate Text
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-subtitle').textContent = data.subtitle;
+            document.getElementById('modal-description').textContent = data.description;
+            document.getElementById('modal-privacy').textContent = data.privacy;
+
+            // Populate Specs
+            const specsList = document.getElementById('modal-specs');
+            specsList.innerHTML = ''; // Clear previous
+            data.specs.forEach(spec => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between';
+                div.innerHTML = `<dt class="text-gray-500">${spec.label}:</dt><dd class="font-medium text-gray-900">${spec.value}</dd>`;
+                specsList.appendChild(div);
+            });
+
+            // Populate Use Cases
+            const useCasesList = document.getElementById('modal-usecases');
+            useCasesList.innerHTML = ''; // Clear previous
+            data.useCases.forEach(uc => {
+                const li = document.createElement('li');
+                li.textContent = uc;
+                useCasesList.appendChild(li);
+            });
+
+            // Icon Styling
+            const iconContainer = document.getElementById('modal-icon-container');
+            const icon = document.getElementById('modal-icon');
+
+            // Reset classes
+            iconContainer.className = `flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full mr-4 ${data.bgClass}`;
+            icon.className = `fa-solid ${data.icon} ${data.colorClass}`;
+
+            // Show Modal
+            document.getElementById('model-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('model-modal').classList.add('hidden');
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

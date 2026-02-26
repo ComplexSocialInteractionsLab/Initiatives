@@ -1,0 +1,384 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Lab - Kamiak GUI Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2a3033;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #981e32;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 antialiased flex flex-col min-h-screen">
+
+    <!-- WSU Global Header Strip -->
+    <div class="wsu-crimson-bg h-2"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">Kamiak
+                                    <span class="wsu-text-crimson">GUI</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#features"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Features</a>
+                        <a href="#architecture"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Architecture</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-red-100 text-[#981e32] border border-red-200">
+                            Alpha Release
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-br from-gray-900 to-gray-800 relative border-b border-gray-900 overflow-hidden">
+        <!-- Abstract Tech Background -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:flex lg:justify-between relative z-10">
+            <div class="max-w-xl">
+                <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
+                    Democratizing HPC: <br>
+                    <span class="text-red-500">Kamiak GUI</span>
+                </h1>
+                <p class="mt-5 text-xl text-gray-300 font-light">
+                    A secure, visual interface bridging the gap between standard workstations and the WSU Kamiak
+                    High-Performance Computing cluster.
+                </p>
+                <div class="mt-8 flex gap-4">
+                    <div class="rounded-md shadow">
+                        <a href="#features"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-sm text-white wsu-crimson-bg hover:bg-red-800 md:py-4 md:text-lg transition-colors">
+                            Explore Features
+                        </a>
+                    </div>
+                    <div>
+                        <a href="AI_Guide.html"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-gray-600 text-base font-medium rounded-sm text-white bg-transparent hover:bg-gray-700 md:py-4 md:text-lg transition-colors">
+                            View AI Guide
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Graphic (Terminal Style) -->
+            <div class="mt-12 lg:mt-0 lg:w-1/2 flex justify-end">
+                <div class="w-full max-w-lg bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
+                    <div class="bg-gray-800 px-4 py-2 flex items-center gap-2 border-b border-gray-700">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-4 text-xs font-mono text-gray-400">kamiak-connection.log</span>
+                    </div>
+                    <div class="p-6 font-mono text-sm text-green-400 leading-relaxed opacity-90">
+                        <p class="mb-2">> Establishing SSH tunnel to core.kamiak.wsu.edu...</p>
+                        <p class="mb-2">> Authenticating via identity file...</p>
+                        <p class="mb-2 text-blue-400">> Tunnel established on port 8080.</p>
+                        <p class="mb-2">> Fetching cluster status...</p>
+                        <p class="mb-4 text-yellow-400">> Nodes available: 12 | Queue: Idle</p>
+                        <p class="mb-2">> Routing GUI traffic via proxy...</p>
+                        <p class="text-white font-bold animate-pulse">> Ready.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm wsu-text-crimson font-bold tracking-widest uppercase mb-2">Interface Capabilities
+                </h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Visual Control over Complex Workloads</h3>
+                <p class="mt-4 text-xl text-gray-500 max-w-3xl mx-auto font-light">Eliminate the learning curve of bash
+                    scripting and command-line interfaces. Kamiak GUI provides an intuitive dashboard for full cluster
+                    management.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-6 text-[#981e32]">
+                        <i class="fa-solid fa-network-wired text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">One-Click Connection</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Securely connect to the WSU Kamiak cluster via an automated SSH tunneling backend. No manual
+                        proxy configurations required.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-blue-700">
+                        <i class="fa-solid fa-puzzle-piece text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Visual Job Composer</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Design SBATCH scripts visually. Select partitions, nodes, GPUs, and time limits through
+                        dropdowns rather than editing text files.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-6 text-green-700">
+                        <i class="fa-solid fa-folder-tree text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">File Management</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        A built-in file explorer to upload datasets, modify scripts, and retrieve results directly from
+                        your scratch directory.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div
+                        class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-6 text-purple-700">
+                        <i class="fa-solid fa-robot text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">LLM Integration</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Launch and interact with local LLMs (like Llama 3 or Mistral) running on compute nodes via a
+                        dedicated chat interface tab.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Technical Specs -->
+    <section id="architecture" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden lg:flex">
+                <div class="lg:w-1/2 p-8 lg:p-12 lg:border-r border-gray-200">
+                    <h2 class="text-sm wsu-text-crimson font-bold tracking-widest uppercase mb-2">Technical Overview
+                    </h2>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mb-6">How It Works</h3>
+                    <div class="space-y-6 text-gray-600 text-lg font-light leading-relaxed">
+                        <p>
+                            Kamiak GUI is built as a standalone desktop application using modern web technologies. The
+                            frontend is developed in <span class="font-semibold text-gray-900">React (Next.js)</span>,
+                            ensuring a highly responsive and familiar UI.
+                        </p>
+                        <p>
+                            To communicate with the HPC cluster securely, a specialized backend acts as a bridge. It
+                            leverages <span class="font-semibold text-gray-900">SSH2</span> protocols to establish
+                            encrypted tunnels, executing commands (like <code>squeue</code> or <code>sbatch</code>) on
+                            behalf of the user.
+                        </p>
+                        <p>
+                            When an LLM is launched, the backend creates reverse port forwards, mapping the model's API
+                            running on a remote compute node directly to the local interface.
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 bg-gray-900 p-8 lg:p-12 flex flex-col justify-center">
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center border border-gray-700 text-white font-bold">
+                                1</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white mb-1">Local Client</h4>
+                                <p class="text-gray-400 text-sm">Next.js UI runs locally on the researcher's machine.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center border border-gray-700 text-white font-bold">
+                                2</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white mb-1">Secure Tunnel</h4>
+                                <p class="text-gray-400 text-sm">Node.js backend establishes SSH connection to Kamiak
+                                    login nodes.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded-full bg-[#981e32] flex items-center justify-center text-white font-bold">
+                                3</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-white mb-1">Job Execution</h4>
+                                <p class="text-gray-400 text-sm">Commands are passed to the Slurm scheduler; port
+                                    forwards map model APIs back to the UI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LLM Tools Integration -->
+    <section id="llm-tools" class="py-20 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm wsu-text-crimson font-bold tracking-widest uppercase mb-2">Agentic Capabilities</h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">LLM Integration & Custom Tools</h3>
+                <p class="mt-4 text-xl text-gray-500 max-w-3xl mx-auto font-light">Kamiak GUI doesn't just run LLMs; it
+                    orchestrates them. Access a suite of built-in agentic tools designed for complex analysis.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tool 1 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div
+                        class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-6 text-purple-700">
+                        <i class="fa-solid fa-gem text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Custom Gems</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Create specialized AI "Gems" pre-prompted with specific instructions and system roles. Tailor an
+                        agent for forensic accounting, while another acts as a legal code reviewer.
+                    </p>
+                </div>
+
+                <!-- Tool 2 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-blue-700">
+                        <i class="fa-solid fa-book-journal-whills text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Notebook LM Style</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Upload massive datasets of unstructured text (PDFs, witness statements, case files). The GUI
+                        provides a Notebook LM-like interface to directly query and synthesize information across all
+                        your connected documents.
+                    </p>
+                </div>
+
+                <!-- Tool 3 -->
+                <div class="bg-gray-50 rounded-xl p-8 border border-gray-200 card-hover">
+                    <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-6 text-green-700">
+                        <i class="fa-solid fa-globe text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Web Search Capabilities</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        When enabled, securely grant your local LLM the ability to search the public web. It seamlessly
+                        combines real-time information gathering with local, secure data processing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-[#2a3033] text-white">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="index.html" class="hover:text-white transition-colors">CSI Lab Home</a>
+            </div>
+        </div>
+        <div class="wsu-crimson-bg py-4 text-center">
+            <p class="text-xs text-white opacity-90">
+                &copy; 2026 Washington State University. For Academic & Law Enforcement Use Only.
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
