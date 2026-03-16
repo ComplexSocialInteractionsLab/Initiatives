@@ -1,0 +1,126 @@
+{
+  "project_name": "Guided Interaction",
+  "product_overview": {
+    "name": "Guided Interaction",
+    "one_sentence_description": "A specialized web application designed to standardize and improve data collection for sensitive incidents like Domestic Violence (DV) and Strangulation, providing real-time guidance for officers and investigators.",
+    "main_problem_solved": "The lack of immediate, evidence-based guidance for officers during high-stress sensitive incident reporting, and the need for standardized data collection, robust oversight, and intelligent legal assistance for supervisors and investigators.",
+    "target_users": [
+      "Law Enforcement Officers",
+      "Investigators",
+      "Supervisors",
+      "CSI Labs"
+    ]
+  },
+  "key_features": [
+    {
+      "name": "Real-Time Guidance & Lethality Assessment",
+      "what_it_does": "Analyzes report data upon submission for high-lethality indicators and provides a prioritized list of recommended next steps.",
+      "why_useful": "Ensures officers take critical safety measures and provide evidence-based victim support immediately on the scene.",
+      "example_scenario": "An officer submits a DV report; the app detects high risk and instructs the officer to immediately offer a lethality assessment protocol and connect the victim with an advocate."
+    },
+    {
+      "name": "AI Law Agent",
+      "what_it_does": "An intelligent, in-app assistant that helps officers and investigators understand complex state laws, departmental policies, and legal precedents relevant to the incident.",
+      "why_useful": "Reduces time spent researching legal technicalities and ensures reports and actions are legally sound from the start.",
+      "example_scenario": "An officer asks the AI Law Agent to clarify the differences between misdemeanor and felony assault in the state to ensure the correct charges are filed."
+    },
+    {
+      "name": "Network Graph Visualization",
+      "what_it_does": "Generates interactive network graphs to visualize complex connections between offenders, victims, and incidents.",
+      "why_useful": "Helps officers and investigators quickly understand historical patterns and relationships, identifying serial offenders or recurring victims more easily.",
+      "example_scenario": "An investigator views a suspect's profile and sees a network graph linking them to multiple past DV incidents involving different victims, indicating a pattern of serial abuse."
+    },
+    {
+      "name": "Departmental Analysis & Supervisor Forms",
+      "what_it_does": "Provides supervisors with macro-level analytics across the entire department, alongside a schema-driven UI to deploy new forms via JSON.",
+      "why_useful": "Offers deep oversight into departmental trends and allows rapid adaptation to new legal or departmental reporting requirements.",
+      "example_scenario": "A supervisor uses the departmental analysis dashboard to review monthly lethality risk trends across different precincts and deploys an updated intake form without needing app redevelopment."
+    },
+    {
+      "name": "Resource Mapping",
+      "what_it_does": "Integrates an interactive map (Leaflet.js) to locate nearby support services, hospitals, and shelters based on the incident location.",
+      "why_useful": "Allows officers to provide fast, reliable referrals to victims without leaving the app or searching externally.",
+      "example_scenario": "Using the victim's current location, the officer finds and maps out the nearest domestic violence shelter."
+    },
+    {
+      "name": "In-App Evidence Capture",
+      "what_it_does": "Uses device cameras to let officers take photos of injuries and the scene directly within the reporting form.",
+      "why_useful": "Streamlines evidence collection and securely attaches it to the specific incident report.",
+      "example_scenario": "Officer takes a photo of property damage, which is instantly appended to the draft report."
+    }
+  ],
+  "how_guided_interaction_works": {
+    "what_it_means": "'Guided interaction' means the application actively participates in the reporting process by analyzing user input to dictate the next safest, most compliant steps, rather than just passively recording data.",
+    "how_it_helps": "It removes guesswork for officers in high-stakes, time-sensitive situations, ensuring protocols are followed, victims receive appropriate care, and actions are legally sound.",
+    "differences_from_normal_ui": "Instead of a static form submission, the UI dynamically responds to data points (like a Lethality Assessment Protocol score) and physically alters the interface to display urgent, prioritized action items or suggest legal consultation.",
+    "key_components": [
+      "Dynamic Form schema engine",
+      "Scores calculation module (e.g., LAPForm)",
+      "Real-time suggestion renderer based on high-lethality logic",
+      "AI Law Agent for legal assistance",
+      "Network graph rendering engine"
+    ]
+  },
+  "value_proposition": {
+    "benefits_for_users": "Immediate protocol guidance, streamlined workflows (offline saving, all-in-one map/camera), relationship mapping through network graphs, and instant legal clarification via the AI Law Agent.",
+    "benefits_for_businesses": "Robust top-down oversight, deep analytics into incident trends and departmental performance, and ability to dynamically update data collection methods.",
+    "unique_selling_points": "Tailor-made for DV/Strangulation incidents, built-in lethality analysis bridging the gap between data entry and actionable victim support, embedded legal intelligence, and bilingual (English/Spanish) support."
+  },
+  "example_workflow": [
+    "1. Officer arrives at a domestic violence scene and opens the Guided Interaction app on their mobile device or laptop.",
+    "2. Officer selects the appropriate reporting form and begins inputting standardized data.",
+    "3. Confused about a specific state law, the officer quickly consults the AI Law Agent for clarification.",
+    "4. Officer uses the in-app camera to securely capture evidence of injuries or property damage.",
+    "5. Upon submitting the initial facts, the app calculates a lethality score behind the scenes.",
+    "6. The app actively flags high-lethality indicators and pushes a 'Recommended Next Steps' checklist to the screen.",
+    "7. Officer uses the integrated resource map to find the nearest shelter and coordinate victim transport.",
+    "8. Later, an investigator views the incident's network graph to visualize the offender's past interactions and connections."
+  ],
+  "screens_to_showcase": [
+    "Officer Portal Dashboard",
+    "Guided Reporting Form (highlighting the real-time Lethality Assessment feedback)",
+    "AI Law Agent Chat Interface",
+    "Interactive Resource Map",
+    "Network Graph Relationship Visualizer",
+    "Supervisor Departmental Analytics Dashboard",
+    "Dynamic Form Manager"
+  ],
+  "technical_highlights": {
+    "tech_stack": "React, Vite, Tailwind CSS, Firebase (Auth/Firestore), i18next",
+    "capabilities": "Offline-ready draft saving, on-the-fly English/Spanish toggling, dynamic schema-driven form generation via JSON, complex relationship rendering, AI integration.",
+    "integrations": "Leaflet.js for interactive maps, Recharts for data visualization, react-force-graph-2d for network graph rendering, LLM APIs for the AI Law Agent."
+  },
+  "marketing_copy": {
+    "tagline": "Empowering Law Enforcement with Real-Time, Evidence-Based Guidance and AI Intelligence.",
+    "short_pitch": "Guided Interaction revolutionizes sensitive incident reporting. By combining standardized data collection with real-time lethality analysis and an AI Law Agent, it provides officers with immediate next steps and legal clarity on the scene. Interactive network graphs and departmental analytics offer supervisors and investigators powerful oversight.",
+    "feature_blurbs": [
+      {
+        "title": "Active Guidance",
+        "text": "Get instant, actionable next steps based on real-time lethality indicators."
+      },
+      {
+        "title": "AI Law Agent",
+        "text": "Consult an intelligent in-app assistant for instant clarification of state laws and policies."
+      },
+      {
+        "title": "Relationship Mapping",
+        "text": "Visualize complex connections between offenders and victims through interactive network graphs."
+      },
+      {
+        "title": "Departmental Analytics",
+        "text": "Gain deep insights into incident trends and performance across the entire department."
+      }
+    ],
+    "call_to_action": "Request a Demo"
+  },
+  "website_content_structure": [
+    "Hero Section (Tagline, Short Pitch, Call to Action)",
+    "Problem Section (Challenges in sensitive reporting, compliance, and legal clarity)",
+    "Solution Section (Introducing Guided Interaction and active guidance features)",
+    "Key Features Grid (Guidance, Mapping, AI Law Agent, Network Graphs, Departmental Analytics)",
+    "How It Works / User Journey (Step-by-step visual of the officer workflow)",
+    "Benefits (Segmented for Officers, Investigators, and Supervisors)",
+    "Technical Highlights & Integrations",
+    "Final Call to Action (Schedule a demo or contact)"
+  ]
+}
