@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSI Lab - RCW AI Agent</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wsu: {
+              crimson: '#981e32',
+              gray: '#5e6a71',
+              black: '#2a3033',
+              light: '#f2f2f2'
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            body: ['Open Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+  <!-- Babel for in-browser JSX compilation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #2a3033;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .nav-link {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .wsu-crimson-bg {
+      background-color: #981e32;
+    }
+
+    .wsu-text-crimson {
+      color: #981e32;
+    }
+
+    /* Custom Animations */
+    @keyframes drawPath {
+      from {
+        stroke-dashoffset: 100;
+      }
+
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .path-line-fast {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawPath 0.6s ease-out forwards;
+    }
+
+    .path-line-slow {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawPath 0.8s ease-out forwards;
+    }
+
+    @keyframes slideDown {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -20px) scale(0.8);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Neural Network Flow (Step 2) */
+    @keyframes pulseCircle {
+
+      0%,
+      100% {
+        r: 4px;
+        fill-opacity: 0.6;
+        filter: drop-shadow(0 0 0px rgba(129, 140, 248, 0));
+      }
+
+      50% {
+        r: 6px;
+        fill-opacity: 1;
+        filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.8));
+      }
+    }
+
+    @keyframes networkFlow {
+      0% {
+        stroke-dashoffset: 100;
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      80% {
+        opacity: 1;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+      }
+    }
+
+    .animate-network-flow {
+      stroke-dasharray: 20 80;
+      animation: networkFlow 1.8s linear infinite;
+    }
+
+    /* Alive Database Float (Step 3) */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) translateY(0px);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translateY(-6px);
+      }
+    }
+
+    @keyframes queryDropIn {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+
+      60% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Wave Similarity Search */
+    @keyframes wave {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.6;
+        border-width: 3px;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(30);
+        opacity: 0;
+        border-width: 1px;
+      }
+    }
+
+    @keyframes neighborHighlight {
+      0% {
+        background-color: #cbd5e1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        background-color: #60a5fa;
+        transform: translate(-50%, -50%) scale(1.5);
+        box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+      }
+
+      100% {
+        background-color: #93c5fd;
+        transform: translate(-50%, -50%) scale(1.2);
+        box-shadow: 0 0 5px rgba(96, 165, 250, 0.4);
+      }
+    }
+
+    @keyframes targetHighlight {
+      0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(52, 211, 153, 0.9);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.6);
+      }
+    }
+
+    @keyframes fadeInLabel {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 5px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 antialiased flex flex-col min-h-screen">
+  <!-- WSU Global Header Strip -->
+  <div class="wsu-crimson-bg h-2"></div>
+
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20">
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+              <div
+                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+              </div>
+              <div class="flex items-baseline">
+                <span class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">RCW
+                  <span class="wsu-text-crimson">AI Agent</span></span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <span
+              class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200">
+              Tech Tool
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="root" class="flex-grow"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo } = React;
+
+    // --- INLINE SVG ICONS ---
+    const Icon = ({ children, size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        {children}
+      </svg>
+    );
+
+    const Layers = (props) => <Icon {...props}><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></Icon>;
+    const ChevronDown = (props) => <Icon {...props}><polyline points="6 9 12 15 18 9" /></Icon>;
+    const MessageSquare = (props) => <Icon {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></Icon>;
+    const Cpu = (props) => <Icon {...props}><rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" /></Icon>;
+    const Database = (props) => <Icon {...props}><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></Icon>;
+    const FileText = (props) => <Icon {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></Icon>;
+    const Sparkles = (props) => <Icon {...props}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="M5 3v4" /><path d="M19 17v4" /><path d="M3 5h4" /><path d="M17 19h4" /></Icon>;
+    const BrainCircuit = (props) => <Icon {...props}><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z" /><path d="M16 8V5c0-1.1.9-2 2-2" /><path d="M12 13h4" /><path d="M12 18h6a2 2 0 0 1 2 2v1" /><path d="M12 8h8" /><circle cx="16" cy="5" r="2" /><circle cx="20" cy="8" r="2" /><circle cx="20" cy="13" r="2" /><circle cx="20" cy="21" r="2" /></Icon>;
+    const ArrowRight = (props) => <Icon {...props}><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></Icon>;
+
+    // --- MOCK DATA ---
+    const QUERIES = [
+      {
+        id: 'q1',
+        text: "What is the speed limit in a school zone?",
+        targetRcw: "RCW 46.61.440",
+        targetTitle: "Maximum speed limit when passing school or playground crosswalks.",
+        targetSnippet: "Subject to RCW 46.61.400(1)... it is unlawful for the operator of any vehicle to operate the same at a speed in excess of twenty miles per hour when passing any marked school or playground crosswalk...",
+        answer: "According to RCW 46.61.440, the speed limit is 20 miles per hour when passing any marked school or playground crosswalk.",
+        vector: "[0.82, -0.14, 0.55, 0.91...]",
+        dotPos: { x: "40%", y: "45%" },
+        targetPos: { x: "65%", y: "30%" },
+        neighbors: [
+          { pos: { x: "48%", y: "20%" }, sim: "0.85" },
+          { pos: { x: "55%", y: "60%" }, sim: "0.81" },
+          { pos: { x: "75%", y: "40%" }, sim: "0.78" }
+        ]
+      },
+      {
+        id: 'q2',
+        text: "Can I use my cell phone while driving?",
+        targetRcw: "RCW 46.61.672",
+        targetTitle: "Using a personal electronic device while driving.",
+        targetSnippet: "A person who uses a personal electronic device while driving a motor vehicle on a public highway is guilty of a traffic infraction...",
+        answer: "Under RCW 46.61.672, using a personal electronic device while driving a motor vehicle on a public highway is a traffic infraction.",
+        vector: "[-0.31, 0.88, 0.12, -0.74...]",
+        dotPos: { x: "35%", y: "55%" },
+        targetPos: { x: "55%", y: "70%" },
+        neighbors: [
+          { pos: { x: "30%", y: "85%" }, sim: "0.88" },
+          { pos: { x: "60%", y: "50%" }, sim: "0.83" },
+          { pos: { x: "50%", y: "30%" }, sim: "0.79" }
+        ]
+      }
+    ];
+
+    // Generate full-screen background dots
+    const generateBgDocs = () => {
+      return Array.from({ length: 180 }).map((_, i) => ({
+        id: i,
+        x: Math.random() * 100 + '%',
+        y: Math.random() * 100 + '%',
+        delay: Math.random() * 5
+      }));
+    };
+
+    const STEPS = [
+      {
+        title: "How It Works: The RAG Pipeline",
+        desc: "To deliver reliable answers without hallucinations, our assistant uses Retrieval-Augmented Generation (RAG). It doesn't just guess—it actively researches the law. Select a scenario below to see the exact process in action.",
+      },
+      {
+        title: "1. The User Query",
+        desc: "It starts with your question. AI models are smart, but they don't memorize every single updated law perfectly. If we just asked the AI right now, it might guess or 'hallucinate'.",
+      },
+      {
+        title: "2. Vectorization (Embedding)",
+        desc: "Instead of going straight to the AI, we first send your question through an 'Embedding Model'. This translates your text into a vector—a long list of numbers representing the exact mathematical meaning and context of your question.",
+      },
+      {
+        title: "3. Vector Space Search",
+        desc: "We plot your query's vector in a high-dimensional coordinate space inside our Vector Database. The system calculates the 'distance' (Cosine Similarity) between your query and all legal documents. The closest vector is the most relevant law!",
+      },
+      {
+        title: "4. Decoding & Augmentation",
+        desc: "Once we find the closest matching vector, we pull its original text from the database. Then, we build a new 'augmented' prompt that combines your original question WITH this exact legal text.",
+      },
+      {
+        title: "5. AI Generation",
+        desc: "Finally, the Language Model reads this combined prompt. Because it has the exact law right in front of it in its 'short term memory', it generates a highly accurate, trustworthy answer based strictly on the RCW.",
+      }
+    ];
+
+    // Neural Network Coordinates
+    const nnInputs = [58, 170, 282];
+    const nnH1 = [51, 110, 170, 229, 289];
+    const nnH2 = [51, 110, 170, 229, 289];
+    const nnOutputs = [98, 146, 194, 242]; // Maps sequentially to vector output boxes
+
+    function App() {
+      const [step, setStep] = useState(0);
+      const [searchPhase, setSearchPhase] = useState(0);
+      const [activeQuery, setActiveQuery] = useState(QUERIES[0]);
+      const [typedAnswer, setTypedAnswer] = useState("");
+      const stepRefs = useRef([]);
+      const bgDocs = useMemo(() => generateBgDocs(), []);
+
+      const displayWords = useMemo(() => {
+        const words = activeQuery.text.split(' ');
+        return [
+          `"${words[0]}"`,
+          `"${words[1]}"`,
+          words.length > 2 ? `"${words[2]}..."` : '...'
+        ];
+      }, [activeQuery]);
+
+      // Scrollytelling Intersection Observer
+      useEffect(() => {
+        const observerOptions = {
+          root: null,
+          rootMargin: '-45% 0px -45% 0px',
+          threshold: 0
+        };
+
+        const observerCallback = (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const stepIndex = Number(entry.target.getAttribute('data-step'));
+              setStep(stepIndex);
+            }
+          });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        stepRefs.current.forEach((ref) => {
+          if (ref) observer.observe(ref);
+        });
+
+        return () => observer.disconnect();
+      }, []);
+
+      // Phase sequencer for Step 3 Search Animation
+      useEffect(() => {
+        if (step === 3) {
+          setSearchPhase(0);
+          const t1 = setTimeout(() => setSearchPhase(1), 500);   // Query drops in
+          const t2 = setTimeout(() => setSearchPhase(2), 1500);  // Wave scan starts
+          const t3 = setTimeout(() => setSearchPhase(3), 2500);  // Neighbors begin to light up
+          const t4 = setTimeout(() => setSearchPhase(4), 3800);  // Target found
+          return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+        } else {
+          setSearchPhase(0);
+        }
+      }, [step, activeQuery]);
+
+      // Typewriter effect for the final step
+      useEffect(() => {
+        if (step === 5) {
+          setTypedAnswer("");
+          let i = 0;
+          const interval = setInterval(() => {
+            setTypedAnswer((prev) => activeQuery.answer.slice(0, i + 1));
+            i++;
+            if (i === activeQuery.answer.length) clearInterval(interval);
+          }, 30);
+          return () => clearInterval(interval);
+        }
+      }, [step, activeQuery]);
+
+      // Smooth scroll function for the hero button
+      const scrollToVisualization = () => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+      };
+
+      return (
+        <div className="bg-white text-slate-800 font-sans">
+          {/* Header omitted since we use global Navbar */}
+
+          {/* Hero Section */}
+          <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-20 overflow-hidden bg-white">
+            {/* Subtle Background Elements */}
+            <div className="absolute inset-0 z-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-blue-100 rounded-full blur-[100px] opacity-40 z-0 pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mt-[-5vh]">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold tracking-widest uppercase mb-8 shadow-sm">
+                <Sparkles size={14} className="text-blue-500" /> Built for Washington State Police
+              </div>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-slate-900 tracking-tight mb-6 leading-[1.1]">
+                AI-Powered <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">RCW Assistant</span> <br className="hidden md:block" /> for Law Enforcement
+              </h1>
+
+              <p className="text-lg md:text-2xl text-slate-600 font-light leading-relaxed mb-10 max-w-3xl">
+                Instantly access and understand Washington State law in the field. Our system eliminates AI hallucinations by securely anchoring every answer directly to the Revised Code of Washington.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <a href="https://labs.wsu.edu/csi/contact-us/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 hover:scale-105 active:scale-95 flex items-center gap-2">
+                  Contact Us <ArrowRight size={20} />
+                </a>
+              </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-10 inset-x-0 flex justify-center pointer-events-none">
+              <div
+                onClick={scrollToVisualization}
+                className="flex flex-col items-center text-slate-400 animate-bounce cursor-pointer hover:text-blue-500 transition-colors pointer-events-auto"
+              >
+                <span className="text-[10px] uppercase tracking-widest font-bold mb-2 pl-[0.1em]">See how it works</span>
+                <ChevronDown size={24} />
+              </div>
+            </div>
+          </section>
+
+          {/* Main Content Layout (Scrollytelling) */}
+          <main className="flex flex-col lg:flex-row relative max-w-full mx-auto">
+
+            {/* Left Panel: Scrollable Narrative */}
+            <div className="w-full lg:w-[40%] xl:w-[35%] px-6 lg:pl-16 lg:pr-12 z-20 order-2 lg:order-1 pb-[10vh] bg-white relative">
+              {/* Faded right edge to blend into canvas smoothly */}
+              <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-transparent to-white pointer-events-none translate-x-full"></div>
+
+              {STEPS.map((s, i) => (
+                <div
+                  key={i}
+                  data-step={i}
+                  ref={el => stepRefs.current[i] = el}
+                  className={`min-h-[80vh] flex flex-col justify-center transition-all duration-700 ${step === i ? 'opacity-100 translate-y-0' : 'opacity-20 translate-y-4 hover:opacity-50'}`}
+                >
+                  <div className="relative py-8">
+                    <h2 className="text-4xl lg:text-5xl font-light text-slate-900 mb-6 pb-4 border-b-[3px] border-slate-900 inline-block w-full leading-tight">
+                      {s.title}
+                    </h2>
+                    <p className="text-slate-600 text-xl font-light leading-relaxed mb-6">
+                      {s.desc}
+                    </p>
+
+                    {/* Query Selection */}
+                    {i === 0 && (
+                      <div className="space-y-3 mt-10">
+                        {QUERIES.map((q) => (
+                          <button
+                            key={q.id}
+                            onClick={() => setActiveQuery(q)}
+                            className={`w-full text-left py-4 px-6 rounded-xl transition-all duration-200 group flex items-start gap-4 ${activeQuery.id === q.id ? 'bg-blue-50 text-blue-900' : 'hover:bg-slate-50 text-slate-600'}`}
+                          >
+                            <div className={`mt-1.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${activeQuery.id === q.id ? 'border-blue-600' : 'border-slate-300'}`}>
+                              {activeQuery.id === q.id && <div className="w-2 h-2 bg-blue-600 rounded-full"></div>}
+                            </div>
+                            <span className="font-medium text-lg lg:text-xl">{q.text}</span>
+                          </button>
+                        ))}
+
+                        <div className="mt-16 pt-8 flex flex-col items-center justify-center text-slate-400 animate-bounce">
+                          <span className="text-sm font-medium mb-2 uppercase tracking-widest text-[10px]">Scroll to start</span>
+                          <ChevronDown size={24} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Panel: Sticky Borderless Canvas */}
+            <div className="w-full lg:w-[60%] xl:w-[65%] h-[50vh] lg:h-screen sticky top-16 lg:top-0 order-1 lg:order-2 overflow-hidden bg-slate-50/50 z-0 border-l border-slate-100">
+
+              {/* Continuous Background Grid */}
+              <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+
+              {/* Master Container spanning the whole pane */}
+              <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-10">
+
+                {/* 1. User Query Bubble */}
+                <div className={`absolute transition-all duration-700 ease-in-out z-30
+                      ${step === 0 ? 'opacity-100 scale-100 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' : ''}
+                      ${step === 1 ? 'opacity-100 scale-110 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-blue-900/10' : ''}
+                      ${step >= 2 ? 'opacity-0 scale-75 top-[15%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none' : ''}
+                    `}>
+                  <div className="bg-white rounded-full px-6 py-4 flex items-center gap-4 border border-blue-100">
+                    <div className="bg-blue-100 text-blue-600 p-2 rounded-full shrink-0">
+                      <MessageSquare size={20} />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-0.5">User Query</div>
+                      <div className="text-slate-800 font-medium text-lg whitespace-nowrap">"{activeQuery.text}"</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Embedding / Vectorization (Neural Network) */}
+                <div className={`absolute transition-all duration-1000 ease-in-out flex flex-col items-center z-20 w-full max-w-md
+                      ${step < 2 ? 'opacity-0 scale-50 top-[55%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none' : ''}
+                      ${step === 2 ? 'opacity-100 scale-100 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' : ''}
+                      ${step > 2 ? 'opacity-0 scale-0 top-[45%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none' : ''}
+                    `}>
+
+                  {/* Embedding Model Header */}
+                  <div className="flex flex-col items-center gap-1 mb-2 relative z-10">
+                    <Cpu className="text-indigo-500" size={28} />
+                    <div className="text-sm font-bold tracking-widest text-indigo-900 uppercase">Embedding Model</div>
+                  </div>
+
+                  {/* Network SVG Canvas & Nodes */}
+                  <div className="relative w-[340px] h-[220px] mt-2">
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 340 220">
+                      <defs>
+                        <filter id="glow">
+                          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                          <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+
+                      {/* Static Connection Lines */}
+                      {nnInputs.map(x1 => nnH1.map((x2, i) => <line key={`s1-${x1}-${x2}-${i}`} x1={x1} y1="20" x2={x2} y2="90" stroke="#e0e7ff" strokeWidth="1" />))}
+                      {nnH1.map(x1 => nnH2.map((x2, i) => <line key={`s2-${x1}-${x2}-${i}`} x1={x1} y1="90" x2={x2} y2="160" stroke="#e0e7ff" strokeWidth="1" />))}
+                      {nnH2.map(x1 => nnOutputs.map((x2, i) => <line key={`s3-${x1}-${x2}-${i}`} x1={x1} y1="160" x2={x2} y2="220" stroke="#e0e7ff" strokeWidth="1" />))}
+
+                      {/* Animated Data Flows */}
+                      {nnInputs.map((x1, i) => nnH1.map((x2, j) => <line key={`a1-${x1}-${x2}-${j}`} x1={x1} y1="20" x2={x2} y2="90" stroke="#818cf8" strokeWidth="1.5" pathLength="100" className="animate-network-flow" style={{ animationDelay: `${(i * 0.1 + j * 0.05)}s` }} filter="url(#glow)" />))}
+                      {nnH1.map((x1, i) => nnH2.map((x2, j) => <line key={`a2-${x1}-${x2}-${j}`} x1={x1} y1="90" x2={x2} y2="160" stroke="#818cf8" strokeWidth="1.5" pathLength="100" className="animate-network-flow" style={{ animationDelay: `${0.6 + (i * 0.1 + j * 0.05)}s` }} filter="url(#glow)" />))}
+                      {nnH2.map((x1, i) => nnOutputs.map((x2, j) => <line key={`a3-${x1}-${x2}-${j}`} x1={x1} y1="160" x2={x2} y2="220" stroke="#818cf8" strokeWidth="1.5" pathLength="100" className="animate-network-flow" style={{ animationDelay: `${1.2 + (i * 0.1 + j * 0.05)}s` }} filter="url(#glow)" />))}
+
+                      {/* Hidden Layer Nodes */}
+                      {nnH1.map((x, i) => <circle key={`n1-${i}`} cx={x} cy="90" className="animate-[pulseCircle_1.5s_ease-in-out_infinite]" style={{ animationDelay: `${i * 0.2}s` }} fill="#a5b4fc" />)}
+                      {nnH2.map((x, i) => <circle key={`n2-${i}`} cx={x} cy="160" className="animate-[pulseCircle_1.5s_ease-in-out_infinite]" style={{ animationDelay: `${0.5 + i * 0.2}s` }} fill="#818cf8" />)}
+                    </svg>
+
+                    {/* Input words overlay positioned strictly to SVG coordinates */}
+                    {displayWords.map((word, i) => (
+                      <div key={`word-${i}`} className="absolute top-[20px] -translate-x-1/2 -translate-y-1/2 bg-white px-2.5 py-1 rounded-full shadow-sm border border-indigo-100 text-[10px] font-mono text-indigo-900 whitespace-nowrap" style={{ left: `${nnInputs[i]}px` }}>
+                        {word}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Vector Output Display */}
+                  <div className="flex gap-2 flex-wrap justify-center w-[340px] relative items-center mt-2">
+                    <span className={`text-indigo-200 text-5xl font-light absolute -left-2 transition-opacity duration-500 ${step === 2 ? 'opacity-100' : 'opacity-0'}`}>[</span>
+
+                    {activeQuery.vector.split(',').map((num, i) => (
+                      <div
+                        key={`vec-${i}`}
+                        className={`bg-indigo-600 text-white text-xs sm:text-sm px-2.5 py-1.5 rounded font-mono shadow-sm z-10
+                                   ${step === 2 ? 'animate-[popIn_0.4s_ease-out_forwards]' : 'opacity-0'}
+                                 `}
+                        style={{ opacity: step === 2 ? 0 : 1, animationDelay: step === 2 ? `${1.8 + i * 0.15}s` : '0s' }}
+                      >
+                        {num.replace('[', '').replace(']', '').trim()}
+                      </div>
+                    ))}
+
+                    <span className={`text-indigo-200 text-5xl font-light absolute -right-2 transition-opacity duration-500 ${step === 2 ? 'opacity-100' : 'opacity-0'}`}>]</span>
+                  </div>
+                </div>
+
+                {/* 3. Database & Retrieval (Full Screen Canvas) */}
+                <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out
+                      ${step < 3 ? 'opacity-0 pointer-events-none' : ''}
+                      ${step === 3 ? 'opacity-100' : ''}
+                      ${step > 3 ? 'opacity-0 pointer-events-none' : ''}
+                    `}>
+                  {/* Narrative Microcopy during Search */}
+                  <div className={`absolute top-10 left-1/2 -translate-x-1/2 text-[12px] font-mono font-medium text-slate-500 tracking-wider bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full z-40 border border-slate-200 transition-opacity duration-300
+                            ${step === 3 && searchPhase > 0 ? 'opacity-100' : 'opacity-0'}
+                        `}>
+                    {searchPhase === 1 && "Mapping query to vector space..."}
+                    {searchPhase === 2 && "Calculating cosine similarity..."}
+                    {searchPhase === 3 && "Finding nearest neighbors..."}
+                    {searchPhase === 4 && "Top match retrieved!"}
+                  </div>
+
+                  {/* Floating HUD Label */}
+                  <div className={`absolute top-8 left-8 flex items-center gap-3 z-30 transition-opacity duration-1000 delay-500 ${step === 3 ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="bg-slate-800 p-2 rounded text-white">
+                      <Database size={20} />
+                    </div>
+                    <div className="text-sm font-bold text-slate-800 tracking-wide uppercase">Vector Space</div>
+                  </div>
+
+                  {/* Vector Plot Area with Camera Zoom Effect */}
+                  <div className="absolute inset-0 w-full h-full overflow-hidden isolate">
+
+                    {/* Inner container handles the 'Camera' zoom based on query location */}
+                    <div className="w-full h-full relative transition-transform duration-1000 ease-in-out"
+                      style={{
+                        transform: step === 3 && searchPhase >= 2 ? 'scale(1.1) translateY(5%)' : 'scale(1)',
+                        transformOrigin: `${activeQuery.dotPos.x} ${activeQuery.dotPos.y}`
+                      }}>
+
+                      {/* Alive Background Dots (The Database) - Spanning entire right pane */}
+                      {bgDocs.map(doc => (
+                        <div
+                          key={doc.id}
+                          className="absolute w-2 h-2 bg-slate-300/60 rounded-full z-0"
+                          style={{
+                            left: doc.x,
+                            top: doc.y,
+                            animation: `float ${4 + doc.delay}s ease-in-out infinite`,
+                            animationDelay: `${doc.delay}s`
+                          }}
+                        />
+                      ))}
+
+                      {/* Layered Semantic Waves */}
+                      {searchPhase >= 2 && [0, 1, 2].map(i => (
+                        <div
+                          key={i}
+                          className="absolute rounded-full border border-blue-400/80 z-10 pointer-events-none"
+                          style={{
+                            left: activeQuery.dotPos.x,
+                            top: activeQuery.dotPos.y,
+                            animation: `wave 2.5s ease-out ${i * 0.4}s forwards`
+                          }}
+                        ></div>
+                      ))}
+
+                      {/* SVG Lines for Distances */}
+                      {searchPhase >= 3 && (
+                        <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none">
+                          {/* Lines to neighbor docs */}
+                          {activeQuery.neighbors.map((doc, i) => {
+                            const simScore = parseFloat(doc.sim);
+                            const delay = (1 - simScore) * 3; // Closer = shorter delay
+                            return (
+                              <line
+                                key={i}
+                                x1={activeQuery.dotPos.x} y1={activeQuery.dotPos.y}
+                                x2={doc.pos.x} y2={doc.pos.y}
+                                stroke="#93c5fd" strokeWidth="1.5" strokeDasharray="4"
+                                pathLength="100" className="path-line-fast"
+                                style={{ animationDelay: `${delay}s` }}
+                              />
+                            );
+                          })}
+                          {/* Line to TARGET doc */}
+                          {searchPhase >= 4 && (
+                            <line
+                              x1={activeQuery.dotPos.x} y1={activeQuery.dotPos.y}
+                              x2={activeQuery.targetPos.x} y2={activeQuery.targetPos.y}
+                              stroke="#34d399" strokeWidth="3"
+                              pathLength="100" className="path-line-slow drop-shadow-[0_0_4px_rgba(52,211,153,0.8)]"
+                              style={{ animationDelay: '0s' }}
+                            />
+                          )}
+                        </svg>
+                      )}
+
+                      {/* Query Vector Dot (Appears first) */}
+                      <div
+                        className={`absolute w-6 h-6 bg-blue-500 rounded-full z-30 shadow-[0_0_20px_rgba(59,130,246,0.6)]
+                                ${searchPhase >= 1 ? 'animate-[queryDropIn_0.6s_ease-out_forwards]' : 'opacity-0 scale-0'}
+                              `}
+                        style={{ left: activeQuery.dotPos.x, top: activeQuery.dotPos.y, transform: 'translate(-50%, -50%)' }}
+                      >
+                        <span className={`absolute -bottom-8 left-1/2 -translate-x-1/2 text-[11px] font-bold text-blue-700 bg-blue-50/90 backdrop-blur-sm px-2 py-1 rounded shadow-sm whitespace-nowrap
+                                   ${searchPhase >= 1 ? 'animate-[fadeInLabel_0.4s_ease-out_0.3s_forwards] opacity-0' : 'opacity-0'}
+                               `}>Query Vector</span>
+                      </div>
+
+                      {/* Neighbor Document Dots (Proximity based delay) */}
+                      {searchPhase >= 3 && activeQuery.neighbors.map((doc, i) => {
+                        const simScore = parseFloat(doc.sim);
+                        const delay = (1 - simScore) * 3;
+                        return (
+                          <div
+                            key={i}
+                            className="absolute w-3 h-3 bg-slate-300 rounded-full z-20 animate-[neighborHighlight_0.8s_ease-out_forwards]"
+                            style={{ left: doc.pos.x, top: doc.pos.y, transform: 'translate(-50%, -50%)', animationDelay: `${delay}s` }}
+                          >
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-blue-600 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded whitespace-nowrap animate-[fadeInLabel_0.4s_ease-out_forwards] opacity-0 shadow-sm"
+                              style={{ animationDelay: `${delay + 0.2}s` }}>
+                              {doc.sim}
+                            </span>
+                          </div>
+                        );
+                      })}
+
+                      {/* Target Document Dot (The Match) */}
+                      {searchPhase >= 4 && (
+                        <div
+                          className="absolute w-8 h-8 bg-emerald-400 rounded-full z-30 animate-[targetHighlight_1s_ease-out_forwards]"
+                          style={{ left: activeQuery.targetPos.x, top: activeQuery.targetPos.y, transform: 'translate(-50%, -50%) scale(0)' }}
+                        >
+                          <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded shadow-lg whitespace-nowrap animate-[fadeInLabel_0.6s_ease-out_0.4s_forwards] opacity-0">
+                            {activeQuery.targetRcw}
+                          </div>
+                          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[11px] font-bold text-emerald-700 bg-white/90 backdrop-blur-sm px-2 py-1 rounded shadow-md whitespace-nowrap animate-[fadeInLabel_0.6s_ease-out_0.4s_forwards] opacity-0">
+                            Match: 0.98
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Context Augmentation (Borderless Typography) */}
+                <div className={`absolute transition-all duration-1000 ease-in-out w-full max-w-xl px-8 z-20
+                      ${step < 4 ? 'opacity-0 scale-90 top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none' : ''}
+                      ${step === 4 ? 'opacity-100 scale-100 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' : ''}
+                      ${step === 5 ? 'opacity-0 scale-90 top-[30%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-none' : ''}
+                    `}>
+                  <div className="flex flex-col gap-8 w-full">
+                    <div className="flex items-center gap-3 border-b border-slate-300 pb-4">
+                      <Sparkles className="text-amber-500" size={32} />
+                      <h3 className="text-3xl font-light text-slate-800 tracking-tight">Augmented Prompt</h3>
+                    </div>
+
+                    <div className="space-y-8 font-mono text-sm pl-2">
+                      <div className="pl-6 border-l-[3px] border-slate-300 relative">
+                        <span className="text-slate-400 block mb-2 uppercase text-[10px] tracking-widest font-bold">System Instruction</span>
+                        <span className="text-slate-700 text-lg">Answer the user's question using ONLY the provided legal context.</span>
+                      </div>
+
+                      <div className="pl-6 border-l-[3px] border-emerald-400 relative">
+                        <div className="absolute -left-[6px] top-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
+                        <span className="text-emerald-600 block mb-2 uppercase text-[10px] tracking-widest font-bold">Retrieved Context: {activeQuery.targetRcw}</span>
+                        <span className="text-slate-700 text-base leading-relaxed block">{activeQuery.targetSnippet}</span>
+                      </div>
+
+                      <div className="pl-6 border-l-[3px] border-blue-400 relative">
+                        <div className="absolute -left-[6px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-400"></div>
+                        <span className="text-blue-500 block mb-2 uppercase text-[10px] tracking-widest font-bold">User Question</span>
+                        <span className="text-slate-900 text-lg">{activeQuery.text}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. LLM Generation (Borderless Typography) */}
+                <div className={`absolute transition-all duration-1000 ease-in-out w-full max-w-2xl px-8
+                      ${step < 5 ? 'opacity-0 scale-90 top-[70%] left-[50%] -translate-x-1/2 pointer-events-none' : ''}
+                      ${step === 5 ? 'opacity-100 scale-100 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' : ''}
+                    `}>
+                  <div className="flex flex-col gap-8 w-full">
+                    <div className="flex items-center gap-4 border-b border-slate-300 pb-4">
+                      <div className="bg-purple-100 text-purple-600 p-3 rounded-2xl">
+                        <BrainCircuit size={32} />
+                      </div>
+                      <div>
+                        <h3 className="text-3xl font-light text-slate-800 tracking-tight">Language Model</h3>
+                        <div className="text-xs text-purple-500 font-bold tracking-widest uppercase flex items-center gap-2 mt-2">
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                          </span>
+                          Generating Response
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pl-8 border-l-[3px] border-purple-300 min-h-[150px] relative">
+                      <div className="absolute -left-[6px] top-2 w-2.5 h-2.5 rounded-full bg-purple-400"></div>
+                      <p className="text-slate-800 text-2xl leading-relaxed font-light">
+                        {typedAnswer}
+                        {step === 5 && typedAnswer.length < activeQuery.answer.length && (
+                          <span className="inline-block w-2.5 h-6 ml-1 bg-purple-500 animate-pulse translate-y-1"></span>
+                        )}
+                      </p>
+                      {/* Added Contact Us Call to Action */}
+                      <div className={`mt-10 transition-all duration-700 ease-out transform
+                          ${step === 5 && typedAnswer.length === activeQuery.answer.length ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
+                      `}>
+                        <a href="https://labs.wsu.edu/csi/contact-us/" target="_blank" rel="noopener noreferrer" className="inline-flex px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 hover:scale-105 active:scale-95 flex items-center gap-2">
+                          Contact Us to Learn More <ArrowRight size={20} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </main>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-[#2a3033] text-white mt-auto">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-6 md:mb-0">
+        <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+          University</span>
+        <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+        <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+      </div>
+      <div class="flex space-x-6 text-sm text-gray-300">
+        <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+        <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+        <a href="index.html" class="hover:text-white transition-colors">CSI Lab Home</a>
+      </div>
+    </div>
+    <div class="wsu-crimson-bg py-4 text-center">
+      <p class="text-xs text-white opacity-90">
+        &copy; 2026 Washington State University. For Academic & Law Enforcement Use Only.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>
