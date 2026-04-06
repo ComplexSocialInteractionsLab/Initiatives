@@ -130,6 +130,12 @@
                     <a href="#workforce"
                         class="text-sm font-semibold text-gray-600 hover:text-[#981e32] transition-colors uppercase tracking-wide">Workforce
                         Dev</a>
+                    <a href="#models"
+                        class="flex items-center gap-1.5 text-sm font-semibold text-gray-600 hover:text-[#981e32] transition-colors uppercase tracking-wide">
+                        Models
+                        <span
+                            class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#981e32] text-white shadow-sm animate-pulse tracking-wider">NEW</span>
+                    </a>
                     <a href="https://labs.wsu.edu/csi/contact-us/" target="_blank"
                         class="text-sm font-semibold text-[#981e32] border border-[#981e32] px-4 py-2 hover:bg-[#981e32] hover:text-white transition-all rounded-sm uppercase tracking-wide">Contact
                         Us</a>
@@ -580,6 +586,87 @@
                                 </span>
                                 <div
                                     class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-[#981e32] group-hover:text-white transition-colors text-[#981e32]">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Hub -->
+    <section id="models" class="py-24 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:justify-between lg:items-end mb-16 border-b border-gray-100 pb-8">
+                <div class="max-w-2xl text-left">
+                    <h2 class="text-base wsu-text-crimson font-bold tracking-widest uppercase mb-2 flex items-center">
+                        <i class="fa-solid fa-microchip mr-2 text-lg"></i>
+                        AI Architecture
+                    </h2>
+                    <h3 class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl mb-4">
+                        Models
+                    </h3>
+                    <p class="text-xl text-gray-500 font-light">
+                        Locally deployed, privacy-first AI models engineered for highly sensitive, air-gapped
+                        environments.
+                    </p>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="h-2 w-32 wsu-crimson-bg rounded-sm"></div>
+                </div>
+            </div>
+
+            <!-- Project Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+                <!-- Embedding Model Project -->
+                <a href="Embedding_Model.html" class="group block">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 card-hover h-full flex flex-col relative justify-between">
+                        <!-- 'NEW' Badge -->
+                        <div class="absolute top-6 right-6 z-20">
+                            <span
+                                class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold  text-white uppercase tracking-widest shadow-xl animate-pulse ring-2 ring-white ring-opacity-50">
+                                New Model
+                            </span>
+                        </div>
+                        <div
+                            class="h-64 bg-gradient-to-r from-teal-700 to-teal-900 relative overflow-hidden flex items-center justify-center">
+                            <!-- Background overlay -->
+                            <div
+                                class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CgkJPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmYiLz4KCTwvc3ZnPg==')]">
+                            </div>
+                            <div class="relative z-10 text-center">
+                                <i
+                                    class="fa-solid fa-network-wired text-6xl text-white mb-6 drop-shadow-lg opacity-90 group-hover:scale-110 transition-transform duration-500"></i>
+                                <h4 class="text-white font-extrabold text-3xl tracking-wide">Embedding Model</h4>
+                            </div>
+                        </div>
+                        <div class="p-8 flex-grow flex flex-col bg-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <span
+                                    class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-teal-50 text-teal-700 border border-teal-100 uppercase tracking-widest shadow-sm">
+                                    AI Model
+                                </span>
+                            </div>
+                            <h4
+                                class="text-3xl font-extrabold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors tracking-tight">
+                                RCW Embedding Model</h4>
+                            <p class="text-gray-600 leading-relaxed mb-8 font-light text-lg">
+                                A domain-adapted dense retrieval model fine-tuned with contrastive learning (Multiple
+                                Negatives Ranking Loss) on 500K+ Washington State legal query–context pairs, optimized
+                                for high-accuracy semantic similarity and ranking across complex statutory data.
+                            </p>
+                            <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between w-full">
+                                <span
+                                    class="text-teal-700 font-semibold text-xl flex items-center group-hover:text-teal-900 transition-colors">
+                                    View Model Details
+                                </span>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center group-hover:bg-teal-700 group-hover:text-white transition-colors text-teal-700">
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </div>
                             </div>
