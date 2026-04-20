@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washington State Law Embedding Model - Large</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2a3033;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #981e32;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .edge-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #981e32, #cf2e4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 flex flex-col min-h-screen antialiased scroll-smooth">
+
+    <!-- WSU Global Header Strip -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span
+                                    class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">Embedding
+                                    <span class="wsu-text-crimson">Model</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#overview"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Overview</a>
+                        <a href="#performance"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Performance</a>
+                        <a href="#implementation"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Implementation</a>
+                        <a href="https://github.com/ComplexSocialInteractionsLab/" target="_blank"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Download</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
+                            Large Architecture Model
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <section id="overview" class="mb-16 pt-12 md:pt-16">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+                    Domain-Specific <span class="gradient-text">Embedding Model</span> for Washington State Law
+                </h1>
+
+                <!-- Model Name Badge -->
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-sm">
+                        <i class="fa-solid fa-cube text-slate-500"></i>
+                        <code
+                            class="text-slate-800 font-mono text-sm tracking-wide">Washington-state-law-embedding-model-Large</code>
+                    </div>
+                </div>
+
+                <p class="text-lg md:text-xl text-slate-600 leading-relaxed">
+                    An advanced, parameter-rich sentence embedding model fine-tuned specifically for the Revised Code of
+                    Washington
+                    (RCW). Based on BAAI/bge-large, it maps legal queries and statutory text to a 1024-dimensional dense
+                    vector space, bridging
+                    the gap between conversational "street-language" queries and formal statutory text.
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats Section Moved Below Hero -->
+        <section class="mb-20 max-w-5xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-1">504.1k</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">RCW context pairs</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-1">1024</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">Vector Dimension</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-emerald-600 mb-1">83.5%</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">Accuracy@10</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-emerald-600 mb-1">+58.5%</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">MRR Improvement</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section (Top) -->
+        <section class="group pb-32 lg:pb-48 flex justify-center w-full cursor-pointer">
+            <div class="max-w-sm w-full px-4 sm:px-6 text-center">
+                <div
+                    class="bg-transparent border border-transparent rounded-[24px] p-8 md:p-10 text-center transition-all duration-300 group-hover:bg-white group-hover:border-slate-200 group-hover:shadow-sm group-hover:-translate-y-12 transform -translate-y-10">
+
+                    <a href="https://huggingface.co/CSI-lab/Washington-state-law-embedding-model-Large" target="_blank"
+                        class="flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 flex items-center justify-center bg-white border border-slate-200 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
+                            <img src="https://storage.googleapis.com/gdm-deepmind-com-prod-public/media/original_images/gemma-ecosystem__hugging-face.svg"
+                                alt="Hugging Face logo" class="w-14 h-14 object-contain" />
+                        </div>
+                        <h3
+                            class="mt-6 text-2xl font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            Hugging Face </h3>
+                        <span
+                            class="mt-3 text-base text-slate-500 group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                            Download Large Model <span class="text-lg">›</span>
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <div class="mb-12 border-t border-slate-200"></div>
+
+        <section id="performance" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Performance Analysis</h2>
+            <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
+                This section details the critical retrieval metrics comparing the untrained BAAI/bge-large-en-v1.5 base
+                model
+                against our fine-tuned custom model. Evaluated against a held-out validation set of ~47,000 unique
+                Washington State law queries, fine-tuning achieved the absolute mathematical ceiling for this legal
+                dataset, successfully mapping natural language queries to their preempting statutes.
+            </p>
+
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-slate-800">Retrieval Metrics Comparison</h3>
+                    <div class="flex space-x-2">
+                        <button id="toggleRaw"
+                            class="px-4 py-2 text-sm font-medium rounded-md bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors">View
+                            Absolute Scores</button>
+                        <button id="toggleDiff"
+                            class="px-4 py-2 text-sm font-medium rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">View
+                            Improvements</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainMetricsChart"></canvas>
+                </div>
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">83.54%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned Recall@10</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">42.55%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned Recall@5</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">24.87%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned MRR@10</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">38.28%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned NDCG@10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-800 text-white">
+                <h3 class="text-xl font-bold mb-4">Edge-Case Deep Dive</h3>
+                <p class="text-slate-300 mb-8 max-w-2xl text-sm">
+                    General accuracy is important, but a law enforcement tool must perform reliably under highly
+                    specific, granular search conditions. We isolated complex query types (like specific procedures or
+                    dense legal tasks) to verify the model's robustness.
+                </p>
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="w-full lg:w-1/2">
+                        <div class="edge-chart-container">
+                            <canvas id="edgeCaseChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-4">&#128269;</span>
+                            <div>
+                                <h4 class="font-bold text-blue-400">Legal Task (specific_term)</h4>
+                                <p class="text-slate-400 text-sm mt-1">Successfully handles complex statutory
+                                    terminology with high fidelity across the 1024d space.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-4">&#9881;</span>
+                            <div>
+                                <h4 class="font-bold text-emerald-400">Procedure/How-To (specific_task)</h4>
+                                <p class="text-slate-400 text-sm mt-1">Translates actionable, task-oriented questions to
+                                    relevant RCWs effectively.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-4">&#128214;</span>
+                            <div>
+                                <h4 class="font-bold text-amber-400">General Search (statute_lookup)</h4>
+                                <p class="text-slate-400 text-sm mt-1">Maintains an excellent baseline for broad,
+                                    topical
+                                    inquiries about state laws.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="mb-12 border-t border-slate-200"></div>
+
+        <section id="implementation" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Implementation Guide</h2>
+            <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
+                Integrating this custom model into your Python stack is straightforward via the
+                <code>sentence-transformers</code> library. However, strict adherence to the query formatting rules
+                below is absolutely critical to achieve the benchmarked accuracy.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-lg">
+                        <h3 class="text-amber-800 font-bold flex items-center mb-2">
+                            <span class="mr-2">&#9888;</span> CRITICAL INSTRUCTION
+                        </h3>
+                        <p class="text-sm text-amber-900 mb-3">
+                            Because this model inherits the BGE-Large architecture, you <strong>MUST</strong> prepend a
+                            specific instruction to user search queries.
+                        </p>
+                        <ul class="text-sm text-amber-900 list-disc list-inside space-y-2">
+                            <li><strong>Queries:</strong> Prepend <br><code
+                                    class="bg-amber-100 px-1 py-0.5 rounded text-xs text-amber-800 break-words">"Represent this sentence for searching relevant passages: "</code>
+                            </li>
+                            <li><strong>Database Docs:</strong> Do <strong>NOT</strong> add the prefix. Embed raw text
+                                only.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h3 class="text-slate-900 font-bold mb-2">Dependencies</h3>
+                        <pre class="code-block text-xs py-3 px-4">pip install -U sentence-transformers</pre>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-slate-900 rounded-lg shadow-xl overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700 bg-slate-800">
+                            <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Python Usage
+                                Example</span>
+                            <button id="copyBtn" onclick="copyCode()"
+                                class="flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-colors bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <span>Copy Code</span>
+                            </button>
+                        </div>
+                        <pre id="python-code" class="code-block rounded-t-none text-slate-300">
+<span class="text-pink-400">import</span> torch
+<span class="text-pink-400">from</span> sentence_transformers <span class="text-pink-400">import</span> SentenceTransformer, util
+
+<span class="text-slate-500 italic"># 1. Load the fine-tuned large model</span>
+model = <span class="text-blue-300">SentenceTransformer</span>(<span class="text-emerald-400">'CSI-lab/Washington-state-law-embedding-model-Large'</span>)
+
+<span class="text-slate-500 italic"># 2. Define the laws (Your Vector Database)</span>
+laws = [
+    <span class="text-emerald-400">"RCW 9A.56.030: Theft in the first degree. A person is guilty of theft in the first degree if he or she commits theft of property or services which exceed(s) five thousand dollars in value."</span>,
+    <span class="text-emerald-400">"RCW 46.61.502: Driving under the influence. A person is guilty of driving while under the influence of intoxicating liquor..."</span>,
+    <span class="text-emerald-400">"RCW 9A.36.011: Assault in the first degree. A person is guilty of assault in the first degree if he or she..."</span>
+]
+
+<span class="text-slate-500 italic"># 3. Define the user's search query</span>
+user_query = <span class="text-emerald-400">"What dollar amount makes a theft a first degree felony?"</span>
+
+<span class="text-slate-500 italic"># 4. CRITICAL: Add the required BGE prefix to the query ONLY</span>
+query_prefix = <span class="text-emerald-400">"Represent this sentence for searching relevant passages: "</span>
+formatted_query = query_prefix + user_query
+
+<span class="text-slate-500 italic"># 5. Encode the documents and the query</span>
+law_embeddings = model.<span class="text-blue-300">encode</span>(laws, convert_to_tensor=<span class="text-pink-400">True</span>)
+query_embedding = model.<span class="text-blue-300">encode</span>(formatted_query, convert_to_tensor=<span class="text-pink-400">True</span>)
+
+<span class="text-slate-500 italic"># 6. Calculate Cosine Similarity</span>
+cosine_scores = util.<span class="text-blue-300">cos_sim</span>(query_embedding, law_embeddings)
+
+<span class="text-slate-500 italic"># 7. Print the top result</span>
+best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class="text-blue-300">item</span>()
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Top Match: </span><span class="text-amber-200">{laws[best_idx]}</span><span class="text-emerald-400">"</span>)
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Similarity Score: </span><span class="text-amber-200">{cosine_scores[0][best_idx]:.4f}</span><span class="text-emerald-400">"</span>)
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-[#2a3033] text-white mt-auto">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Updated data reflecting the new baseline and fine-tuned results for the Large model
+        const rawData = {
+            labels: ['Recall@10 (%)', 'Recall@5 (%)', 'MRR@10 (%)', 'NDCG@10 (%)'],
+            base: [56.84, 28.43, 15.70, 25.09], // BAAI/bge-large-en-v1.5 Baseline
+            finetuned: [83.54, 42.55, 24.87, 38.28] // Fine-Tuned Large Model Peak
+        };
+
+        const diffData = {
+            labels: ['Recall@10', 'Recall@5', 'MRR@10', 'NDCG@10'],
+            // Calculate relative percentage improvements: ((finetuned - base) / base) * 100
+            improvements: [46.9, 49.7, 58.5, 52.5]
+        };
+
+        const ctxMain = document.getElementById('mainMetricsChart').getContext('2d');
+        let mainChart = new Chart(ctxMain, {
+            type: 'bar',
+            data: {
+                labels: rawData.labels,
+                datasets: [
+                    {
+                        label: 'Base Model (BGE-Large-v1.5)',
+                        data: rawData.base,
+                        backgroundColor: '#94a3b8',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Washington-state-law-embedding-model-Large',
+                        data: rawData.finetuned,
+                        backgroundColor: '#2563eb',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed.y !== null) {
+                                    if (context.dataIndex < 2) { label += context.parsed.y + '%'; }
+                                    else { label += (context.parsed.y / 100).toFixed(4); }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Score' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        document.getElementById('toggleRaw').addEventListener('click', function () {
+            this.classList.replace('bg-slate-100', 'bg-blue-100');
+            this.classList.replace('text-slate-700', 'text-blue-700');
+            document.getElementById('toggleDiff').classList.replace('bg-blue-100', 'bg-slate-100');
+            document.getElementById('toggleDiff').classList.replace('text-blue-700', 'text-slate-700');
+
+            mainChart.data.labels = rawData.labels;
+            mainChart.data.datasets = [
+                { label: 'Base Model (BGE-Large-v1.5)', data: rawData.base, backgroundColor: '#94a3b8', borderRadius: 4 },
+                { label: 'Washington-state-law-embedding-model-Large', data: rawData.finetuned, backgroundColor: '#2563eb', borderRadius: 4 }
+            ];
+            mainChart.options.scales.y.title.text = 'Score';
+            mainChart.update();
+        });
+
+        document.getElementById('toggleDiff').addEventListener('click', function () {
+            this.classList.replace('bg-slate-100', 'bg-blue-100');
+            this.classList.replace('text-slate-700', 'text-blue-700');
+            document.getElementById('toggleRaw').classList.replace('bg-blue-100', 'bg-slate-100');
+            document.getElementById('toggleRaw').classList.replace('text-blue-700', 'text-slate-700');
+
+            mainChart.data.labels = diffData.labels;
+            mainChart.data.datasets = [{
+                label: 'Relative Improvement (%)',
+                data: diffData.improvements,
+                backgroundColor: '#10b981',
+                borderRadius: 4
+            }];
+            mainChart.options.scales.y.title.text = 'Relative Improvement (%)';
+            mainChart.update();
+        });
+
+        const ctxEdge = document.getElementById('edgeCaseChart').getContext('2d');
+        new Chart(ctxEdge, {
+            type: 'bar',
+            data: {
+                labels: ['Legal Task', 'Procedure / Task', 'General Statute'],
+                datasets: [{
+                    label: 'Recall@10 Accuracy',
+                    data: [94.50, 94.12, 91.60],
+                    backgroundColor: ['#60a5fa', '#34d399', '#fbbf24'],
+                    borderRadius: 4,
+                    barThickness: 24
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) { return context.parsed.x + '% Recall@10'; }
+                        }
+                    }
+                },
+                scales: {
+                    x: { min: 80, max: 100, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#cbd5e1', callback: function (value) { return value + '%' } } },
+                    y: { grid: { display: false }, ticks: { color: '#f8fafc', font: { weight: 'bold' } } }
+                }
+            }
+        });
+
+        // Copy code to clipboard functionality
+        function copyCode() {
+            const codeElement = document.getElementById('python-code');
+            const text = codeElement.innerText || codeElement.textContent;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById('copyBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-emerald-400">Copied!</span>`;
+                setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+
+</html>

@@ -160,6 +160,15 @@
                 <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
                     Domain-Specific <span class="gradient-text">Embedding Model</span> for Washington State Law
                 </h1>
+                <!-- Model Name Badge -->
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-sm">
+                        <i class="fa-solid fa-cube text-slate-500"></i>
+                        <code
+                            class="text-slate-800 font-mono text-sm tracking-wide">Washington-state-law-embedding-model-Base</code>
+                    </div>
+                </div>
                 <p class="text-lg md:text-xl text-slate-600 leading-relaxed">
                     An advanced sentence embedding model fine-tuned specifically for the Revised Code of Washington
                     (RCW). It maps legal queries and statutory text to a 768-dimensional dense vector space, bridging
@@ -191,29 +200,31 @@
         </section>
 
         <!-- Download Section (Top) -->
-        <section class="mb-32 lg:mb-48 flex justify-center w-full">
-            <div class="max-w-4xl w-full px-4 sm:px-6">
-                <a href="https://github.com/ComplexSocialInteractionsLab/" target="_blank"
-                    class="flex items-center justify-between p-6 md:p-8 bg-white border border-slate-100 rounded-[20px] hover:shadow-lg transition-all duration-300 cursor-pointer shadow-sm relative group">
-                    <div class="flex items-center gap-6 md:gap-8">
+        <section class="group pb-32 lg:pb-48 flex justify-center w-full cursor-pointer">
+            <div class="max-w-sm w-full px-4 sm:px-6 text-center">
+                <div
+                    class="bg-transparent border border-transparent rounded-[24px] p-8 md:p-10 text-center transition-all duration-300 group-hover:bg-white group-hover:border-slate-200 group-hover:shadow-sm group-hover:-translate-y-12 transform -translate-y-10">
+
+                    <a href="https://huggingface.co/CSI-lab/Washington-state-law-embedding-model-Base" target="_blank"
+                        class="flex flex-col items-center">
                         <div
-                            class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex items-center justify-center bg-white border border-slate-100 rounded-[14px] shadow-sm text-slate-900 group-hover:scale-105 transition-transform duration-300">
-                            <i class="fa-brands fa-github text-3xl md:text-4xl"></i>
+                            class="w-24 h-24 flex items-center justify-center bg-white border border-slate-200 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
+                            <img src="https://storage.googleapis.com/gdm-deepmind-com-prod-public/media/original_images/gemma-ecosystem__hugging-face.svg"
+                                alt="Hugging Face logo" class="w-14 h-14 object-contain" />
                         </div>
-                        <div class="flex flex-col">
-                            <span
-                                class="text-[18px] md:text-[22px] font-extrabold text-slate-800 tracking-tight leading-tight group-hover:text-blue-600 transition-colors">Download
-                                WA-Law-Embed-v1.5</span>
-                            <span class="text-[14px] md:text-[16px] text-slate-500 font-medium mt-1">Available on
-                                GitHub</span>
-                        </div>
-                    </div>
-                    <div class="text-slate-400 flex-shrink-0 mr-4 group-hover:text-blue-500 transition-colors">
-                        <i class="fa-solid fa-download text-2xl md:text-3xl"></i>
-                    </div>
-                </a>
+                        <h3
+                            class="mt-6 text-2xl font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            Hugging Face </h3>
+                        <span
+                            class="mt-3 text-base text-slate-500 group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                            Download <span class="text-lg">›</span>
+                        </span>
+                    </a>
+                </div>
+
             </div>
         </section>
+
 
         <div class="mb-12 border-t border-slate-200"></div>
 
@@ -221,8 +232,9 @@
             <h2 class="text-3xl font-bold text-slate-900 mb-4">Performance Analysis</h2>
             <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
                 This section details the critical retrieval metrics comparing the original BAAI/bge-base-en-v1.5 model
-                against our fine-tuned custom model. Evaluated against a held-out validation set of ~4,700 unique
-                Washington State laws, the fine-tuning process resulted in massive improvements in recall and ranking
+                against our fine-tuned custom model. Evaluated against a held-out validation set of ~47,000 unique
+                Washington State law queries, the fine-tuning process resulted in massive improvements in recall and
+                ranking
                 accuracy, proving its efficacy as the backbone for legal RAG pipelines.
             </p>
 
@@ -303,53 +315,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- <div class="mb-12 border-t border-slate-200"></div> -->
-
-        <!-- <section id="methodology" class="mb-20 scroll-mt-24">
-            <h2 class="text-3xl font-bold text-slate-900 mb-4">Training Methodology</h2>
-            <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
-                Transforming a general-purpose model into a specialized legal retrieval engine requires a sophisticated
-                data pipeline and high-performance computing. This section outlines the architecture of our training
-                process, from raw text scraping to synthetic query generation and tensor-core optimization.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <div
-                    class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">&#128196;</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">1. Data Acquisition</h3>
-                    <p class="text-slate-600 text-sm">Scraped the complete Revised Code of Washington (RCW) corpus,
-                        compiling 50,413 distinct statutory laws.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">&#129302;</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">2. Synthetic QA</h3>
-                    <p class="text-slate-600 text-sm">Leveraged Gemma-3 LLM to synthesize multiple highly realistic,
-                        natural-language user queries and scenarios for each law.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">&#128187;</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">3. HPC Training</h3>
-                    <p class="text-slate-600 text-sm">Trained on an NVIDIA H100 GPU cluster. 2 Epochs, Batch Size of
-                        128, Peak LR 2e-5, and 10% Warmup steps.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">&#127919;</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">4. Optimization</h3>
-                    <p class="text-slate-600 text-sm">Applied Multiple Negatives Ranking (MNR) Loss to map relevant
-                        queries close to their target RCWs in vector space.</p>
-                </div>
-
-            </div>
-        </section> -->
 
         <div class="mb-12 border-t border-slate-200"></div>
 
@@ -485,7 +450,7 @@ best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class
                         borderRadius: 4
                     },
                     {
-                        label: 'Fine-Tuned Model',
+                        label: 'Washington-state-law-embedding-model-Base',
                         data: rawData.finetuned,
                         backgroundColor: '#2563eb',
                         borderRadius: 4
@@ -527,7 +492,7 @@ best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class
             mainChart.data.labels = rawData.labels;
             mainChart.data.datasets = [
                 { label: 'Base Model (BGE-v1.5)', data: rawData.base, backgroundColor: '#94a3b8', borderRadius: 4 },
-                { label: 'Fine-Tuned Model', data: rawData.finetuned, backgroundColor: '#2563eb', borderRadius: 4 }
+                { label: 'Washington-state-law-embedding-model-Base', data: rawData.finetuned, backgroundColor: '#2563eb', borderRadius: 4 }
             ];
             mainChart.options.scales.y.title.text = 'Score';
             mainChart.update();
