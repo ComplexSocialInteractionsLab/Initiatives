@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revised Code of Washington (RCW) Dataset - 2026 Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #475569;
+            background-color: #fafaf9;
+            /* Warm off-white pastel base */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(165, 180, 252, 0.15);
+            border-top: 4px solid #a5b4fc;
+            /* Muted pastel indigo border */
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f8fafc;
+            color: #334155;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            border: 1px solid #e2e8f0;
+        }
+
+        .gradient-text-data {
+            background: linear-gradient(304deg, #0b3f4b 0, #07978a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* -------------------------------------------
+           Dynamic Data Pipeline Animation
+           ------------------------------------------- */
+
+        /* 1. Background Track & Particles */
+        .pipeline-track {
+            background-image: linear-gradient(90deg, #cbd5e1 50%, transparent 50%);
+            background-size: 16px 2px;
+            animation: trackMarch 1.5s linear infinite;
+        }
+
+        @keyframes trackMarch {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 16px 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+
+        .particle-1 {
+            background: #818cf8;
+            /* indigo-400 */
+            box-shadow: 0 0 12px 3px rgba(129, 140, 248, 0.5);
+            animation: shootParticle 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .particle-2 {
+            background: #34d399;
+            /* emerald-400 */
+            box-shadow: 0 0 12px 3px rgba(52, 211, 153, 0.5);
+            animation: shootParticle 3s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.5s;
+        }
+
+        @keyframes shootParticle {
+            0% {
+                left: 15%;
+                opacity: 0;
+                transform: translateY(-50%) scale(0.5);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+
+            45% {
+                left: 50%;
+                transform: translateY(-50%) scale(1.3);
+            }
+
+            55% {
+                left: 50%;
+                transform: translateY(-50%) scale(1.3);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+
+            100% {
+                left: 85%;
+                opacity: 0;
+                transform: translateY(-50%) scale(0.5);
+            }
+        }
+
+        /* 2. Left Node: HTML Scanner & Scroller */
+        .code-window {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scrolling-code {
+            animation: codeScroll 3s steps(3) infinite;
+        }
+
+        @keyframes codeScroll {
+
+            0%,
+            25% {
+                transform: translateY(0);
+            }
+
+            33%,
+            58% {
+                transform: translateY(-1.25rem);
+            }
+
+            66%,
+            91% {
+                transform: translateY(-2.5rem);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .scanner-beam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(129, 140, 248, 0.15) 50%, transparent);
+            animation: scanBeam 2s ease-in-out infinite alternate;
+            z-index: 20;
+        }
+
+        @keyframes scanBeam {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        /* 3. Center Node: Spinning Gears & Pulse */
+        .gear-icon {
+            animation: spinGear 4s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes spinGear {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .node-pulse {
+            animation: pulseNode 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseNode {
+            0% {
+                box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.2);
+                border-color: #e0e7ff;
+            }
+
+            100% {
+                box-shadow: 0 0 20px 5px rgba(129, 140, 248, 0.25);
+                border-color: #a5b4fc;
+            }
+        }
+
+        /* 4. Right Node: JSON Syntax Highlighting */
+        .json-key-1 {
+            animation: highlightKey 3s infinite;
+        }
+
+        .json-val-1 {
+            animation: highlightVal 3s infinite;
+        }
+
+        .json-key-2 {
+            animation: highlightKey 3s infinite 1.5s;
+        }
+
+        .json-val-2 {
+            animation: highlightVal 3s infinite 1.5s;
+        }
+
+        @keyframes highlightKey {
+
+            0%,
+            20% {
+                color: #8b5cf6;
+                text-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+            }
+
+            30%,
+            100% {
+                color: #6366f1;
+                text-shadow: none;
+            }
+        }
+
+        @keyframes highlightVal {
+
+            0%,
+            20% {
+                color: #10b981;
+                text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+            }
+
+            30%,
+            100% {
+                color: #0d9488;
+                text-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen antialiased scroll-smooth">
+
+    <!-- Header Strip -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest leading-none mb-1 group-hover:text-indigo-400 transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">RCW
+                                    <span class="wsu-text-crimson">Dataset</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 md:flex sm:space-x-8 items-end pb-5">
+                        <a href="#overview"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Overview</a>
+                        <a href="#pipeline"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Pipeline</a>
+                        <a href="#use-cases"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Use
+                            Cases</a>
+                        <a href="#structure"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Structure</a>
+                        <a href="#viewer"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Viewer</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold shadow-sm border uppercase tracking-wider"
+                            style="background-color: rgba(10, 66, 77, 0.1); color: rgb(10, 66, 77); border-color: rgba(10, 66, 77, 0.2);">
+                            <i class="fa-solid fa-database mr-2"></i> Foundational Dataset
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pb-24">
+
+        <section id="overview" class="pt-16 md:pt-20 pb-10 px-4">
+            <div class="text-center max-w-5xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 mb-6 tracking-tight">
+                    Revised Code of Washington <br class="hidden sm:block" /> <span class="gradient-text-data">(RCW)
+                        2026 Edition</span>
+                </h1>
+
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-sm">
+                        <i class="fa-solid fa-book text-slate-500"></i>
+                        <code class="font-mono text-sm tracking-wide">CSI-lab/Law_RCW_Dataset</code>
+                    </div>
+                </div>
+
+                <p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-4xl mx-auto">
+                    A comprehensive, structured dataset containing the full text of all permanent laws in force in the
+                    State of Washington as of 2026. Designed specifically to facilitate legal Natural Language
+                    Processing (NLP) research.
+                </p>
+
+                <div class="mt-10 flex justify-center gap-4">
+                    <a href="#viewer"
+                        class="bg-indigo-200 hover:bg-indigo-300 text-indigo-900 px-8 py-3 rounded-full font-bold transition-all shadow-sm flex items-center">
+                        <i class="fa-solid fa-table-list mr-2"></i> Explore Data
+                    </a>
+                    <a href="https://huggingface.co/datasets/CSI-lab/Law_RCW_Dataset" target="_blank"
+                        class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-3 rounded-full font-bold transition-all shadow-sm flex items-center">
+                        <i class="fa-solid fa-download mr-2 text-slate-400"></i> Hugging Face
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Dynamic Preprocessing Diagram -->
+        <section id="pipeline" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 overflow-hidden scroll-mt-24">
+            <div class="p-8 md:p-12 rounded-3xl shadow-sm border relative"
+                style="background-color: rgb(214 234 232 / 31%); border-color: rgb(10 66 77 / 10%);">
+
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-bold text-slate-700 mb-2">Preprocessing Pipeline</h2>
+                    <p class="text-slate-500 text-sm">Visualizing the transformation from unstructured legislative web
+                        pages to a machine-readable JSON array.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-stretch justify-between gap-6 relative min-h-[160px]">
+
+                    <!-- Background Track & Particles (Hidden on mobile) -->
+                    <div
+                        class="hidden md:block absolute top-1/2 left-0 w-full h-1 -translate-y-1/2 z-0 pointer-events-none">
+                        <div class="pipeline-track w-full h-full opacity-60"></div>
+                        <div class="particle particle-1"></div>
+                        <div class="particle particle-2"></div>
+                    </div>
+
+                    <!-- Left: Raw HTML -->
+                    <div
+                        class="relative w-full md:w-1/3 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm z-10 code-window flex flex-col justify-center">
+                        <div class="scanner-beam pointer-events-none"></div>
+                        <div class="flex items-center gap-3 mb-3 z-10 relative">
+                            <div
+                                class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Raw Web Data</span>
+                        </div>
+                        <div class="h-14 overflow-hidden relative z-10">
+                            <div
+                                class="scrolling-code text-slate-400 font-mono text-[11px] leading-relaxed break-all opacity-80">
+                                &lt;div class="rcw"&gt;<br>
+                                &lt;h3&gt;1.04.010&lt;/h3&gt;<br>
+                                &lt;p&gt;The ninety-one titles...&lt;/p&gt;<br>
+                                &lt;span class="note"&gt;[1950 c 16]&lt;/span&gt;<br>
+                                &lt;/div&gt;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Extraction Node -->
+                    <div class="w-full md:w-1/3 flex flex-col items-center justify-center relative z-10">
+                        <div
+                            class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl px-6 py-5 shadow-sm flex flex-col items-center node-pulse bg-opacity-90 backdrop-blur-sm">
+                            <span class="text-indigo-500 text-2xl mb-2"><i
+                                    class="fa-solid fa-gears gear-icon"></i></span>
+                            <span
+                                class="text-[11px] font-bold text-slate-600 uppercase tracking-widest text-center leading-tight">Extraction
+                                &<br>Normalization</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Structured JSON -->
+                    <div
+                        class="relative w-full md:w-1/3 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm z-10 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                            <div
+                                class="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500">
+                                <i class="fa-solid fa-brackets-curly"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Structured
+                                Corpus</span>
+                        </div>
+                        <div class="text-[11px] font-mono leading-loose relative z-10">
+                            <div class="pl-2">
+                                <span class="json-key-1 font-semibold text-indigo-500">"rcw_number"</span><span
+                                    class="text-slate-400 mx-1">:</span>
+                                <span class="json-val-1 text-teal-600">"9A.60.020"</span><span
+                                    class="text-slate-400">,</span>
+                            </div>
+                            <div class="pl-2">
+                                <span class="json-key-2 font-semibold text-indigo-500">"title"</span><span
+                                    class="text-slate-400 mx-1">:</span>
+                                <span class="json-val-2 text-teal-600">"Forgery"</span>
+                            </div>
+                            <div class="pl-2">
+                                <span class="json-key-3 font-semibold text-indigo-500">"law"</span><span
+                                    class="text-slate-400 mx-1">:</span>
+                                <span class="json-val-3 text-teal-600">"A person is guilty of forgery..."</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="use-cases" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center">Motivation & Intended Use</h2>
+            <p class="text-slate-500 mb-10 max-w-3xl mx-auto text-center leading-relaxed">
+                While federal laws are frequently modeled, state-level statutory frameworks represent a critical,
+                under-resourced domain for legal AI. This dataset provides a reliable knowledge base for the following
+                applications:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-indigo-50 p-6 rounded-3xl shadow-sm border border-indigo-100 card-hover">
+                    <div class="text-indigo-400 mb-4 text-2xl"><i class="fa-solid fa-brain"></i></div>
+                    <h3 class="text-lg font-bold text-indigo-900 mb-2">LLM Pre-training</h3>
+                    <p class="text-indigo-800/80 text-sm leading-relaxed">Continual pre-training or fine-tuning of
+                        models to improve comprehension of statutory drafting conventions and legal terminology.</p>
+                </div>
+                <div class="bg-teal-50 p-6 rounded-3xl shadow-sm border border-teal-100 card-hover">
+                    <div class="text-teal-400 mb-4 text-2xl"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h3 class="text-lg font-bold text-teal-900 mb-2">Information Retrieval</h3>
+                    <p class="text-teal-800/80 text-sm leading-relaxed">Developing and evaluating dense retrieval
+                        systems for precise legal search and semantic matching.</p>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-3xl shadow-sm border border-sky-100 card-hover">
+                    <div class="text-sky-400 mb-4 text-2xl"><i class="fa-solid fa-comment-dots"></i></div>
+                    <h3 class="text-lg font-bold text-sky-900 mb-2">RAG & QA</h3>
+                    <p class="text-sky-800/80 text-sm leading-relaxed">Providing a reliable, structured knowledge base
+                        for retrieval-augmented generation and open-domain statutory Question Answering.</p>
+                </div>
+                <div class="bg-rose-50 p-6 rounded-3xl shadow-sm border border-rose-100 card-hover">
+                    <div class="text-rose-400 mb-4 text-2xl"><i class="fa-solid fa-project-diagram"></i></div>
+                    <h3 class="text-lg font-bold text-rose-900 mb-2">Network Analysis</h3>
+                    <p class="text-rose-800/80 text-sm leading-relaxed">Analyzing cross-references and citations within
+                        the text to map the dependency structure of state law.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="structure" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">Dataset Structure</h2>
+            <p class="text-slate-500 mb-8 max-w-3xl leading-relaxed">
+                The dataset is distributed as a single, contiguous JSON array. Each element in the array represents a
+                unique, isolated section of the Revised Code of Washington.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-4 border-b border-slate-100">
+                            <h3 class="font-bold text-slate-700">Data Fields</h3>
+                        </div>
+                        <ul class="divide-y divide-slate-100">
+                            <li class="p-4 hover:bg-slate-50 transition-colors">
+                                <code
+                                    class="text-indigo-500 font-bold text-sm bg-indigo-50 px-2 py-1 rounded">rcw_number</code>
+                                <p class="text-sm text-slate-500 mt-2">The official, hierarchical section identifier
+                                    (e.g., "1.04.010"), corresponding to Title, Chapter, and Section.</p>
+                            </li>
+                            <li class="p-4 hover:bg-slate-50 transition-colors">
+                                <code
+                                    class="text-indigo-500 font-bold text-sm bg-indigo-50 px-2 py-1 rounded">title</code>
+                                <p class="text-sm text-slate-500 mt-2">The official heading or catchline of the
+                                    statutory section.</p>
+                            </li>
+                            <li class="p-4 hover:bg-slate-50 transition-colors">
+                                <code
+                                    class="text-indigo-500 font-bold text-sm bg-indigo-50 px-2 py-1 rounded">text</code>
+                                <p class="text-sm text-slate-500 mt-2">The complete, unabridged statutory text including
+                                    legislative histories, notes, and citations.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200 h-full">
+                        <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-file-code text-indigo-400"></i>
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Example
+                                    Instance (JSON Array)</span>
+                            </div>
+                        </div>
+                        <pre
+                            class="code-block rounded-none border-none m-0 bg-transparent h-full whitespace-pre-wrap break-words"><span class="text-slate-400">[</span>
+  <span class="text-slate-400">{</span>
+    <span class="text-indigo-500 font-semibold">"rcw_number"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"1.04.010"</span><span class="text-slate-400">,</span>
+    <span class="text-indigo-500 font-semibold">"title"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"Revised Code of Washington enacted."</span><span class="text-slate-400">,</span>
+    <span class="text-indigo-500 font-semibold">"text"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"The ninety-one titles with chapters and sections designated"  
+             as the "Revised Code of Washington..."</span>
+  <span class="text-slate-400">}</span>
+<span class="text-slate-400">]</span></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-slate-50 text-8xl z-0"><i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Collection &
+                            Preprocessing</h3>
+                        <p class="text-sm text-slate-500 mb-4">Data was systematically scraped from official
+                            repositories for the 2026 legislative year.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Extraction:</strong> HTML/XML parsed to isolate sections without omitting
+                                    notes.</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Normalization:</strong> Extraneous formatting stripped and Unicode
+                                    normalized.</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Alignment:</strong> Validated against the official Table of Contents for
+                                    completeness.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 rounded-3xl p-8 border border-amber-100 shadow-sm relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="text-xl font-bold text-amber-900 mb-4 border-b border-amber-200/50 pb-2">Limitations
+                            & Legal Status</h3>
+
+                        <div class="mb-4">
+                            <h4 class="text-sm font-bold text-amber-800 mb-1">Public Domain</h4>
+                            <p class="text-xs text-amber-700/80">In accordance with U.S. copyright law and the "Edicts
+                                of Government" doctrine, official state laws are not subject to copyright. This dataset
+                                is released into the Public Domain.</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="text-sm font-bold text-amber-800 mb-1">Structural Limitations</h4>
+                            <p class="text-xs text-amber-700/80">Reflects 2026 edition only. It does not contain
+                                judicial precedent (Case Law) or agency regulations. Performance may degrade on non-WA
+                                jurisdictions.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-bold text-red-800 mb-1 flex items-center gap-1"><i
+                                    class="fa-solid fa-triangle-exclamation"></i> Not Legal Counsel</h4>
+                            <p class="text-xs text-red-700/80">Models trained on this data <strong>must not</strong>
+                                provide automated legal advice. Developers should implement robust safeguards against
+                                the unauthorized practice of law.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="viewer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-3xl font-bold text-slate-800">Interactive Dataset Viewer</h2>
+                <a href="https://huggingface.co/datasets/CSI-lab/Law_RCW_Dataset" target="_blank"
+                    class="text-sm font-semibold text-indigo-500 hover:text-indigo-700 transition-colors flex items-center">
+                    Open in Hugging Face <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                </a>
+            </div>
+
+            <p class="text-slate-500 mb-8 max-w-3xl leading-relaxed">
+                Explore the corpus structure below. You can search by RCW number or keywords to inspect how the
+                legislative text was parsed and normalized.
+            </p>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative">
+                <div class="bg-slate-50 border-b border-slate-100 px-4 py-3 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-rose-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-teal-300"></div>
+                    <div
+                        class="ml-4 text-xs font-mono text-slate-400 font-semibold tracking-wide flex-grow text-center pr-12">
+                        huggingface.co/datasets/CSI-lab/Law_RCW_Dataset
+                    </div>
+                </div>
+
+                <div class="w-full bg-slate-50/50">
+                    <iframe src="https://huggingface.co/datasets/CSI-lab/Law_RCW_Dataset/embed/viewer/default/train"
+                        frameborder="0" width="100%" height="560px" title="Hugging Face Dataset Viewer"
+                        class="w-full"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#2a3033] text-white mt-auto">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washington Preemption Benchmark (WPB)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #475569;
+            background-color: #fafaf9;
+            /* Warm off-white pastel base */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(165, 180, 252, 0.15);
+            border-top: 4px solid #a5b4fc;
+            /* Muted pastel indigo border */
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f8fafc;
+            color: #334155;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            border: 1px solid #e2e8f0;
+        }
+
+        .gradient-text-data {
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* -------------------------------------------
+           Sequential Semantic Matching Animation (Pastel Version)
+           ------------------------------------------- */
+
+        /* 1. Scanner over the query (0s to 1s) */
+        .scan-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #a5b4fc;
+            /* Pastel Indigo */
+            box-shadow: 0 0 10px rgba(165, 180, 252, 0.8), 0 0 20px rgba(165, 180, 252, 0.4);
+            animation: scan 4s linear infinite;
+            z-index: 20;
+        }
+
+        @keyframes scan {
+
+            0%,
+            100% {
+                top: 0%;
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 1;
+            }
+
+            25% {
+                top: 100%;
+                opacity: 1;
+            }
+
+            30% {
+                opacity: 0;
+                top: 100%;
+            }
+        }
+
+        /* 2. Data firing across the bridge (1s to 2s) */
+        .data-flow-line {
+            background: linear-gradient(90deg, transparent, #a5b4fc, #86efac, transparent);
+            background-size: 200% 100%;
+            animation: flow 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes flow {
+
+            0%,
+            25% {
+                opacity: 0;
+                background-position: 200% 0;
+            }
+
+            26% {
+                opacity: 1;
+            }
+
+            50% {
+                background-position: -100% 0;
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* 3. Target law pulsing green (2s to 3.5s) */
+        .match-glow {
+            animation: match 4s ease-in-out infinite;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+        }
+
+        @keyframes match {
+
+            0%,
+            50% {
+                border-color: #e2e8f0;
+                box-shadow: none;
+                background-color: #ffffff;
+            }
+
+            60%,
+            80% {
+                border-color: #86efac;
+                box-shadow: 0 0 20px rgba(134, 239, 172, 0.4);
+                background-color: #f0fdf4;
+            }
+
+            100% {
+                border-color: #e2e8f0;
+                box-shadow: none;
+                background-color: #ffffff;
+            }
+        }
+
+        /* 3b. Match icon pop */
+        .match-icon {
+            animation: iconPop 4s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes iconPop {
+
+            0%,
+            50% {
+                opacity: 0.5;
+                transform: scale(1);
+                color: #94a3b8;
+            }
+
+            60%,
+            80% {
+                opacity: 1;
+                transform: scale(1.1);
+                color: #10b981;
+            }
+
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+                color: #94a3b8;
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen antialiased scroll-smooth">
+
+    <!-- Header Strip -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest leading-none mb-1 group-hover:text-indigo-400 transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">WLB
+                                    <span class="wsu-text-crimson">Dataset</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#overview"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Overview</a>
+                        <a href="#animation"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Mapping</a>
+                        <a href="#tasks"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Tasks</a>
+                        <a href="#viewer"
+                            class="border-transparent text-slate-500 hover:text-indigo-500 hover:border-indigo-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide transition-colors">Data
+                            Viewer</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 shadow-sm border border-indigo-200 uppercase tracking-wider">
+                            <i class="fa-solid fa-database mr-2"></i> WLB Dataset
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pb-24">
+
+        <!-- Hero Section -->
+        <section id="overview" class="pt-16 md:pt-20 pb-10 px-4">
+            <div class="text-center max-w-5xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 mb-6 tracking-tight">
+                    The Washington <br class="hidden sm:block" /> law <span class="gradient-text-data">Benchmark
+                        (WLB)</span>
+                </h1>
+
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-sm">
+                        <i class="fa-solid fa-book-open text-slate-500"></i>
+                        <code class="font-mono text-sm tracking-wide">CSI-lab/RCW_2025_Positive_Query_Pairs</code>
+                    </div>
+                </div>
+
+                <p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-4xl mx-auto">
+                    A large-scale, synthetic dataset designed specifically to advance Legal Information Retrieval (IR)
+                    and Semantic Search. It bridges the critical "semantic gap" between natural language and formal
+                    statutory legalese.
+                </p>
+
+                <div class="mt-10 flex justify-center gap-4">
+                    <a href="#viewer"
+                        class="bg-indigo-200 hover:bg-indigo-300 text-indigo-900 px-8 py-3 rounded-full font-bold transition-all shadow-sm flex items-center">
+                        <i class="fa-solid fa-table-list mr-2"></i> Explore Data
+                    </a>
+                    <a href="https://huggingface.co/datasets/CSI-lab/RCW_2025_Positive_Query_Pairs" target="_blank"
+                        class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-3 rounded-full font-bold transition-all shadow-sm flex items-center">
+                        <i class="fa-solid fa-download mr-2 text-slate-400"></i> Hugging Face
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section (Pastel Themes) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-indigo-50 p-8 rounded-3xl shadow-sm border border-indigo-100 card-hover">
+                    <div class="text-indigo-400 mb-4 text-3xl"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3 class="text-xl font-bold text-indigo-900 mb-2">Massive Scale</h3>
+                    <p class="text-indigo-800/80 text-sm leading-relaxed">Contains hundreds of thousands of meticulously
+                        paired examples mapping hypothetical scenarios and local legislative drafts directly to their
+                        governing WA State Statutes.</p>
+                </div>
+                <div class="bg-teal-50 p-8 rounded-3xl shadow-sm border border-teal-100 card-hover">
+                    <div class="text-teal-400 mb-4 text-3xl"><i class="fa-solid fa-language"></i></div>
+                    <h3 class="text-xl font-bold text-teal-900 mb-2">Bridging the Gap</h3>
+                    <p class="text-teal-800/80 text-sm leading-relaxed">Effectively translates conversational and
+                        drafted text into the dense, structured legalese found within the official Revised Code of
+                        Washington.</p>
+                </div>
+                <div class="bg-rose-50 p-8 rounded-3xl shadow-sm border border-rose-100 card-hover">
+                    <div class="text-rose-400 mb-4 text-3xl"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3 class="text-xl font-bold text-rose-900 mb-2">Perfect for Training</h3>
+                    <p class="text-rose-800/80 text-sm leading-relaxed">Ideal for fine-tuning dense retrievers (like
+                        BGE, E5, or MiniLM) using contrastive learning techniques such as Multiple Negatives Ranking
+                        (MNR) loss.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sequential Semantic Mapping Animation Diagram (Pastel) -->
+        <section id="animation" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 overflow-hidden">
+            <div class="bg-slate-50 p-8 md:p-12 rounded-3xl shadow-sm border border-slate-200 relative">
+
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-bold text-slate-700 mb-2">Use Case: Bridging the Semantic Gap</h2>
+                    <p class="text-slate-500 text-sm">The dataset can train models to link conversational logic to
+                        strict statutory structures.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 relative">
+
+                    <!-- Left: Citizen Query (Scanning Phase) -->
+                    <div
+                        class="relative w-full md:w-2/5 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm z-10 overflow-hidden">
+                        <div class="scan-line"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-400">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Citizen / Draft
+                                Query</span>
+                        </div>
+                        <p class="text-slate-700 font-medium text-[15px] leading-relaxed italic">"Can the city fine me
+                            $1,000 for leaving trash in the local park?"</p>
+                    </div>
+
+                    <!-- Center: Data Pipeline -->
+                    <div
+                        class="w-full md:w-1/5 flex flex-col items-center justify-center relative min-h-[100px] md:min-h-[150px]">
+                        <!-- Animated Flow Line -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none w-full">
+                            <div class="data-flow-line w-full h-1.5 rounded-full"></div>
+                            <!-- Faint background track -->
+                            <div class="absolute w-full h-1.5 bg-slate-200 rounded-full -z-10"></div>
+                        </div>
+
+                        <!-- Middle Node -->
+                        <div
+                            class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 z-10 shadow-sm flex flex-col items-center">
+                            <span class="text-indigo-400 text-lg mb-1"><i class="fa-solid fa-network-wired"></i></span>
+                            <span
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Vector
+                                Space</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: RCW Law (Match Phase) -->
+                    <div
+                        class="relative w-full md:w-2/5 rounded-2xl p-6 shadow-sm z-10 match-glow transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center match-icon transition-colors">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Formal Statute
+                                (RCW)</span>
+                        </div>
+                        <p class="text-slate-700 font-medium text-[15px] leading-relaxed"><strong
+                                class="text-slate-900">RCW 70A.200.060</strong><br />Maximum penalty for civil littering
+                            infractions shall not exceed five hundred dollars...</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Supported Tasks (Pastel Gradient Background) -->
+        <section id="tasks" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <div
+                class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-indigo-100 relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-8">Supported Tasks</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white/60 backdrop-blur-sm p-8 rounded-2xl border border-white shadow-sm">
+                            <div
+                                class="bg-indigo-100 text-indigo-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-xl">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 mb-3">Sentence Similarity & IR</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">The primary use case. Train embedding
+                                models to retrieve the correct governing RCW given a plain-English query.</p>
+                        </div>
+
+                        <div class="bg-white/60 backdrop-blur-sm p-8 rounded-2xl border border-white shadow-sm">
+                            <div
+                                class="bg-teal-100 text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-xl">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 mb-3">Retrieval-Augmented Gen</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">Evaluate the retrieval step of legal AI
+                                assistants and chatbots to ensure accurate context and prevent LLM hallucinations.</p>
+                        </div>
+
+                        <div class="bg-white/60 backdrop-blur-sm p-8 rounded-2xl border border-white shadow-sm">
+                            <div
+                                class="bg-rose-100 text-rose-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-xl">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 mb-3">Text Classification</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">Categorize legal queries into one of the
+                                500+ distinct legal domains implicitly generated in the dataset metadata.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dataset Structure -->
+        <section id="structure" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">Dataset Structure</h2>
+            <p class="text-slate-500 mb-8 max-w-3xl leading-relaxed">
+                Each row in the dataset represents a 1-to-1 positive pair between a synthetic query and a state law. It
+                is structured in standard JSONL format.
+            </p>
+
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+                <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-file-code text-indigo-400"></i>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Example Instances
+                            (JSONL)</span>
+                    </div>
+                </div>
+                <pre class="code-block rounded-none border-none m-0 bg-transparent"><span class="text-slate-400">{</span>
+  <span class="text-indigo-500 font-semibold">"query_type"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"natural_language"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"query"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"what are the rules for suing a washington state county"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"context"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"RCW 4.08.120 - Action against public corporations. An action may be maintained against a county or other of the public corporations mentioned or described in RCW 4.08.110, either upon a contract made by such county, or other public corporation in its corporate character and within the scope of its authority, or for an injury to the rights of the plaintiff arising from some act or omission of such county or other public corporation. [ 1953 c 118 s 2 . Prior: Code 1881 s 662; 1869 p 154 s 602 ; RRS s 951.]"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"metadata"</span><span class="text-slate-400">:</span> <span class="text-slate-400">{</span>
+    <span class="text-indigo-500 font-semibold">"rcw_number"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"4.08.120"</span><span class="text-slate-400">,</span>
+    <span class="text-indigo-500 font-semibold">"title"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"Action against public corporations."</span>
+  <span class="text-slate-400">}</span>
+<span class="text-slate-400">}</span>
+
+<span class="text-slate-400">{</span>
+  <span class="text-indigo-500 font-semibold">"query_type"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"exact_keyword"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"query"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"RCW 4.12 washington superior court new county"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"context"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"RCW 4.12.070 - Change to newly created county. Any party in a civil action pending in the superior court in a county out of whose limits a new county, in whole or in part, has been created, may file with the clerk of such superior court an affidavit setting forth that he or she is a resident of such newly created county, and that the venue of such action is transitory, or that the venue of such action is local, and that it ought properly to be tried in such newly created county; and thereupon the clerk shall make out a transcript of the proceedings already had in such action in such superior court, and certify it under the seal of the court, and transmit such transcript, together with the papers on file in his or her office connected with such action, to the clerk of the superior court of such newly created county, wherein it shall be proceeded with as in other cases. [ 2011 c 336 s 80 ; 1891 c 33 s 2 ; Code 1881 s 53; 1877 p 12 s 54 ; 1869 p 14 s 54 ; 1854 p 377 s 2 ; RRS s 211.]"</span><span class="text-slate-400">,</span>
+  <span class="text-indigo-500 font-semibold">"metadata"</span><span class="text-slate-400">:</span> <span class="text-slate-400">{</span>
+    <span class="text-indigo-500 font-semibold">"rcw_number"</span><span class="text-slate-400">:</span> <span class="text-teal-600">"4.12.070"</span><span class="text-slate-400">,</span>
+    <span class="text-indigo-500 font-semibold">"title"</span><span class="text-teal-600">: "Change to newly created county."</span>
+  <span class="text-slate-400">}</span>
+<span class="text-slate-400">}</span></pre>
+            </div>
+        </section>
+
+        <!-- Dataset Viewer Embed -->
+        <section id="viewer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-3xl font-bold text-slate-800">Interactive Dataset Viewer</h2>
+                <a href="https://huggingface.co/datasets/CSI-lab/RCW_2025_Positive_Query_Pairs" target="_blank"
+                    class="text-sm font-semibold text-indigo-500 hover:text-indigo-700 transition-colors flex items-center">
+                    Open in Hugging Face <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                </a>
+            </div>
+
+            <p class="text-slate-500 mb-8 max-w-3xl leading-relaxed">
+                Explore a live sample of the training pairs directly below. You can search, filter, and inspect the raw
+                structure of the data before downloading it for your own fine-tuning runs.
+            </p>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative">
+                <!-- Mac-style window controls for aesthetics -->
+                <div class="bg-slate-50 border-b border-slate-100 px-4 py-3 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-rose-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-teal-300"></div>
+                    <div
+                        class="ml-4 text-xs font-mono text-slate-400 font-semibold tracking-wide flex-grow text-center pr-12">
+                        huggingface.co/datasets/CSI-lab/RCW_2025_Positive_Query_Pairs
+                    </div>
+                </div>
+
+                <div class="w-full bg-slate-50/50">
+                    <iframe
+                        src="https://huggingface.co/datasets/CSI-lab/RCW_2025_Positive_Query_Pairs/embed/viewer/default/train"
+                        frameborder="0" width="100%" height="560px" title="Hugging Face Dataset Viewer"
+                        class="w-full"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#2a3033] text-white mt-auto">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
