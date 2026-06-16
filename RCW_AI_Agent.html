@@ -305,8 +305,16 @@
   </nav>
 
   <div id="root" class="flex-grow"></div>
-
-  <script type="text/babel">
+  <script>
+    Babel.registerPreset('classic-react', {
+      presets: [
+        [Babel.availablePresets.react, {
+          runtime: 'classic'
+        }]
+      ]
+    });
+  </script>
+  <script type="text/babel" data-presets="classic-react">
     const { useState, useEffect, useRef, useMemo } = React;
 
     // --- INLINE SVG ICONS ---
