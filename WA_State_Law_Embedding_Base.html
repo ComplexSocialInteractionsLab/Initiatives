@@ -112,6 +112,27 @@
             -webkit-text-fill-color: transparent;
         }
     </style>
+    <!-- SEO Metadata -->
+    <meta name="author" content="Shlok Tomar">
+    <meta name="description"
+        content="WA State Law Embedding Base model developed by Shlok Tomar. A privacy-first, locally deployed AI model optimized for sensitive legal analysis and data processing.">
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "WA State Law Embedding Base",
+      "applicationCategory": "Artificial Intelligence Application",
+      "applicationSubCategory": "Machine Learning Model / Text Embedding",
+
+      "creator": {
+        "@type": "Person",
+        "name": "Shlok Tomar"
+      },
+      "keywords": ["Computer Science", "Artificial Intelligence", "AI", "Machine Learning", "ML", "LLM", "AI Research", "Software"]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 flex flex-col min-h-screen antialiased scroll-smooth">
@@ -125,7 +146,8 @@
             <div class="flex justify-between h-20">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                        <a href="index.html" aria-label="Back to CSI Lab Home"
+                            class="flex flex-col justify-center cursor-pointer group">
                             <div
                                 class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
                                 <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
@@ -146,7 +168,8 @@
                             class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Methodology</a> -->
                         <a href="#implementation"
                             class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Implementation</a>
-                        <a href="https://github.com/ComplexSocialInteractionsLab/" , target="_blank"
+                        <a href="https://github.com/ComplexSocialInteractionsLab/" target="_blank"
+                            rel="noopener noreferrer"
                             class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Download</a>
                     </div>
                 </div>
@@ -215,7 +238,7 @@
                     class="bg-transparent border border-transparent rounded-[24px] p-8 md:p-10 text-center transition-all duration-300 group-hover:bg-white group-hover:border-slate-200 group-hover:shadow-sm group-hover:-translate-y-12 transform -translate-y-10">
 
                     <a href="https://huggingface.co/CSI-lab/Washington-state-law-embedding-model-Base" target="_blank"
-                        class="flex flex-col items-center">
+                        rel="noopener noreferrer" class="flex flex-col items-center">
                         <div
                             class="w-24 h-24 flex items-center justify-center bg-white border border-slate-200 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
                             <img src="https://storage.googleapis.com/gdm-deepmind-com-prod-public/media/original_images/gemma-ecosystem__hugging-face.svg"
