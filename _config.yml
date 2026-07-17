@@ -1,0 +1,7 @@
+# Site settings
+url: "https://complexsocialinteractionslab.github.io"
+baseurl: "/Initiatives"
+
+# Plugins
+plugins:
+  - jekyll-sitemap
