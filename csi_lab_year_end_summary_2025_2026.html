@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year-End Summary: The WSU Complex Social Interactions Lab (2025-2026)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M2RT3HLPVY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-M2RT3HLPVY');
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        body {
+            background-color: #f8fafc;
+            /* Lighter, cooler gray for a modern feel */
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* The main report container mimics a clean, modern digital document */
+        .report-container {
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-top: 4px solid #981e32;
+            border-radius: 8px;
+            /* Softer edges */
+        }
+
+        /* Typography Styling */
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-text {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.01em;
+            /* Modern typographic touch */
+        }
+
+        p,
+        li,
+        .body-text {
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            line-height: 1.85;
+            /* Increased for better readability */
+            color: #334155;
+            /* Softer than pure black */
+            margin-bottom: 1.75rem;
+            /* Increased paragraph spacing */
+            font-size: 1.05rem;
+        }
+
+        /* Modern Section Headers with ample whitespace */
+        section {
+            margin-bottom: 5rem;
+            /* Significant breathing room between sections */
+            position: relative;
+        }
+
+        /* Subtle section dividers */
+        section:not(:last-of-type)::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: #e2e8f0;
+            margin-top: 4rem;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            /* Slightly lighter weight than bold */
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Icon styling refined */
+        h2 i {
+            font-size: 1.15rem;
+            color: #981e32;
+            margin-right: 1rem;
+            opacity: 0.8;
+            background-color: #fff1f2;
+            /* Soft red background for icons */
+            padding: 0.75rem;
+            border-radius: 50%;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background-color: #981e32;
+            border-radius: 2px;
+        }
+
+        /* Specialized List Styling - Modernized */
+        .custom-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 2.5rem;
+        }
+
+        .custom-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 1.25rem;
+            color: #475569;
+        }
+
+        .custom-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #981e32;
+        }
+
+        .custom-list strong {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* Professional Data Table - Modern, clean lines */
+        .report-table-wrapper {
+            margin: 3rem 0;
+            overflow-x: auto;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: separate;
+            /* Allows for subtle border-bottoms */
+            border-spacing: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .report-table th {
+            color: #64748b;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+        }
+
+        .report-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+            vertical-align: middle;
+            transition: background-color 0.2s ease;
+        }
+
+        .report-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .table-value {
+            font-weight: 600;
+            color: #0f172a;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+
+        /* Clean button design */
+        .pdf-button {
+            background-color: #f8fafc;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+
+        .pdf-button:hover {
+            background-color: #fff1f2;
+            border-color: #fecdd3;
+            color: #981e32;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen antialiased">
+
+    <!-- Global Header -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1 group-hover:text-wsu-crimson transition-colors nav-text">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline nav-text">
+                                <span
+                                    class="text-xl font-bold text-slate-800 tracking-tight leading-tight mt-1">Washington
+                                    State University</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span
+                        class="nav-text text-xs font-semibold text-slate-500 uppercase tracking-widest hidden sm:block bg-slate-100 px-3 py-1 rounded-full">Official
+                        Publication</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Report Body -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+
+        <article class="report-container p-8 md:p-16 lg:p-20">
+
+            <!-- Report Header -->
+            <header class="mb-16 border-b border-slate-200 pb-12 text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight tracking-tight">Year-End
+                    Summary: The WSU Complex Social Interactions Lab</h1>
+                <div
+                    class="flex flex-col md:flex-row md:items-center text-slate-500 font-sans text-sm mt-8 gap-4 md:gap-8">
+                    <span class="font-medium bg-slate-100 px-3 py-1 rounded-md">Academic Year 2025-2026</span>
+                    <span class="flex items-center"><i class="fa-regular fa-calendar mr-2"></i>Published July
+                        2026</span>
+                </div>
+            </header>
+
+            <!-- 1. Executive Summary -->
+            <section>
+                <h2><i class="fa-solid fa-clipboard-list"></i> Executive Summary</h2>
+                <p>The 2025-2026 year marked continued growth and impact for the Complex Social Interactions Lab.
+                    Through the integration of applied research, student workforce development, public safety
+                    partnerships, and technology innovation, the lab expanded its contributions to both the university
+                    and communities across Washington State. The following highlights summarize key outcomes and
+                    accomplishments from the past year.</p>
+
+                <h3>Key Achievements</h3>
+                <ul class="custom-list">
+                    <li>Supported over <strong>6,100 hours</strong> of student research activity, providing hands-on
+                        experience in applied research, data analytics, and public safety initiatives.</li>
+                    <li>Produced research recognized at regional and national conferences, resulting in multiple student
+                        awards, honors, and scholarly presentations.</li>
+                    <li>Established and maintained collaborative partnerships with <strong>10 law enforcement
+                            agencies</strong> across Washington State, as well as community-based organizations.</li>
+                    <li>Developed and enhanced innovative technology platforms, including the Guided Interactions
+                        platform, RCW Legal AI Agent, and new artificial intelligence tools supporting legal analysis
+                        and deriving insights.</li>
+                    <li>Expanded the lab's role as a research and technology partner by providing no-cost support,
+                        evaluation services, and technical expertise to public-sector agencies.</li>
+                </ul>
+
+                <h3>Organizational Highlights</h3>
+                <div class="report-table-wrapper">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th class="w-2/3">Metric / Measure</th>
+                                <th class="w-1/3 text-right">2025-2026 Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Student Researchers Engaged</td>
+                                <td class="table-value">70+</td>
+                            </tr>
+                            <tr>
+                                <td>Academic Disciplines Represented</td>
+                                <td class="table-value">17</td>
+                            </tr>
+                            <tr>
+                                <td>Student Research Hours</td>
+                                <td class="table-value">6,100+</td>
+                            </tr>
+                            <tr>
+                                <td>National Science Foundation Interns</td>
+                                <td class="table-value">9</td>
+                            </tr>
+                            <tr>
+                                <td>Washington Law Enforcement Partners</td>
+                                <td class="table-value">10+</td>
+                            </tr>
+                            <tr>
+                                <td>Research Manuscripts in Development</td>
+                                <td class="table-value">~10</td>
+                            </tr>
+                            <tr>
+                                <td>Washington Law Benchmark Dataset (Pairs)</td>
+                                <td class="table-value">500,000+</td>
+                            </tr>
+                            <tr>
+                                <td>Major Technology Platforms Advanced</td>
+                                <td class="table-value">4+</td>
+                            </tr>
+                            <tr>
+                                <td>Embedding Models Developed</td>
+                                <td class="table-value">2</td>
+                            </tr>
+                            <tr>
+                                <td>Conference Presentation Venues</td>
+                                <td class="text-right font-medium text-slate-600 text-sm">Internal, Regional, National
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2. Detailed Summary -->
+            <section>
+                <h2><i class="fa-solid fa-file-contract"></i> Detailed Summary</h2>
+                <p>The demand for evidence-based practices to guide policy and practice has been echoed by academics,
+                    police departments, and community partners alike. The Complex Social Interactions Lab at Washington
+                    State University addresses this need with a practical, data-focused method and represents an
+                    intersection of public safety, research innovation, and student development.</p>
+                <p>Collaborating with law enforcement agencies across Washington, the lab converts complex data into
+                    actionable tools that enhance officer training, shape evidence-based policies, and support program
+                    development and evaluation. These efforts also help agencies build and sustain community trust. At
+                    the same time, the lab provides students with meaningful, hands-on experience in data collection,
+                    interpretation, and applied research, preparing them for careers that demand both technical
+                    expertise and social awareness. The results from the past year highlight the importance of this
+                    work.</p>
+            </section>
+
+            <!-- 3. Research Engagement -->
+            <section>
+                <h2><i class="fa-solid fa-graduation-cap"></i> Research Engagement</h2>
+                <p>A central component of the lab is its expansive, interdisciplinary student engagement at Washington
+                    State University. With over 70 students contributing over 6,100 research hours and representing 17
+                    specialties, the lab serves as a hub for applied learning across the university. Their involvement
+                    in programs such as the Honors College, ROTC, McNair Scholars, and other campus initiatives
+                    highlights the lab's role in cultivating well-rounded, high-achieving scholars. The strong retention
+                    rate—over one-third of students returning in subsequent semesters—highlights the value and impact of
+                    the experience, regardless of career path or discipline.</p>
+
+                <p>During the past year, the lab hosted its final year of a summer Research Experiences for
+                    Undergraduates program funded through the National Science Foundation (NSF). Nine additional
+                    students were involved through this program, and all presented their work at the WSU Research
+                    Symposium. Their projects were also presented at the Western Association of Criminal Justice,
+                    extending their work to a broader academic audience. Several of these projects continued beyond the
+                    program, with expanded research showcased at the WSU Showcase for Undergraduate Research and
+                    Creative Activities (SURCA). One project received a Gray Award, while another was developed into an
+                    Honors College thesis that earned a <em>Passed with Distinction</em> designation.</p>
+
+                <p>Student research from the lab has also been presented at multiple regional and national venues,
+                    further demonstrating its reach and quality. Presentations have taken place at the Gabriel E.
+                    Gallardo Student Symposium at the University of Washington, the Pacific Northwest Pre-Health
+                    Symposium, and the National McNair and Undergraduate Research Conference at the University of
+                    Maryland. This work has received formal recognition, including an Excellence in Research
+                    Presentation Award at the 2026 Pacific Northwest Pre-Health Symposium and the 2026 Emerita/Emeritus
+                    Society Excellence in Undergraduate Research Award in the Social, Economic, and Behavioral Sciences
+                    at WSU. These outcomes demonstrate sustained student engagement in competitive academic
+                    environments.</p>
+
+                <p>Over the past academic year, students focused on contributing to research on intimate partner
+                    violence, helping improve resource connections for survivors. However, nearly 10 manuscripts are
+                    currently in progress on a variety of topics, many of which use machine learning methods to analyze
+                    large datasets. At the same time, the lab began deploying a project to measure officer stress using
+                    biometric data from FDA-approved devices, with anticipated collection from at least three police
+                    agencies, making it the largest of its kind. This collaboration contributes to the lab's
+                    coordination with nearly 10 law enforcement agencies across Washington State on research and
+                    technology adoption partnerships. Further, community engagement occurred with organizations such as
+                    the Spokane Domestic Violence Coalition and through participation in events such as the End the
+                    Violence Conference, broadening partners beyond law enforcement to include other criminal justice
+                    entities and community support organizations.</p>
+            </section>
+
+            <!-- 4. Technology Innovations -->
+            <section>
+                <h2><i class="fa-solid fa-microchip"></i> Technology Innovations</h2>
+
+                <h3>Applied Field Technology</h3>
+                <p>These later connections have been centered on developing technology to support public health and
+                    safety. The lab's technology development focuses on building tools that support incident reporting,
+                    real-time decision-making, and data analysis in applied settings. One primary output is the Guided
+                    Interactions platform, which provides officers with structured guidance during high-risk situations,
+                    helping standardize workflows and improve consistency in responses to victims. Integrated into the
+                    software, the lab has developed the RCW Legal AI Agent, an AI assistant designed to improve accuracy
+                    when interpreting Washington State law.</p>
+
+                <h3>Workforce Development & Secure Computing</h3>
+                <p>The lab also emphasizes workforce development by making advanced AI tools more accessible in
+                    practice. These efforts aim to connect machine learning techniques with everyday investigative and
+                    analytical work. The AI Field Guide serves as a technical resource for law enforcement and academic
+                    users, outlining how to conduct secure analyses in air-gapped environments. Complementing this is
+                    the Kamiak Workspace Interface Platform, which provides a secure, visual interface to the WSU Kamiak
+                    High-Performance Computing cluster. The platform includes built-in large language model integration
+                    and custom tools, allowing users to run analyses and manage workflows without needing extensive
+                    technical expertise.</p>
+
+                <h3>AI Architecture & Legal Embedding Models</h3>
+                <p>To advance AI architecture, the lab developed domain-specific embedding models for Washington State
+                    law. These models convert both legal text and user queries into a shared vector space, improving the
+                    ability to match everyday language with formal statutory content. This approach supports more
+                    effective legal search and interpretation, particularly in applied contexts. Alongside developing
+                    these models, we created accompanying open-data resources to support research in legal information
+                    retrieval and artificial intelligence. The Washington Law Benchmark dataset includes 500k+ set of
+                    paired examples that connect hypothetical scenarios and legislative drafts to relevant statutes. In
+                    addition, the structured Revised Code of Washington dataset provides a complete and organized
+                    version of state law as of 2026. Together, these datasets support the development and evaluation of
+                    tools for legal search, analysis, and machine learning applications.</p>
+
+                <h3>Project Lighthouse</h3>
+                <p>Building directly upon this architectural foundation, the lab initialized <strong>Project
+                        Lighthouse</strong>, an automated compliance and municipal policy auditing platform. Designed as
+                    a decision-support tool for city attorneys and local government clerks, Project Lighthouse utilizes
+                    our custom embedding models to scan local city ordinances and cross-reference them against state
+                    statutes. By automatically identifying and flagging high-similarity legal pairs, the system acts as
+                    a powerful force multiplier for municipal legal teams. It significantly cuts down on manual review
+                    time while highlighting potential structural contradictions and preemption conflicts for human
+                    review before local policies are formalized.</p>
+            </section>
+
+            <!-- 5. Continued Impact -->
+            <section>
+                <h2><i class="fa-solid fa-arrow-trend-up"></i> Continued Impact</h2>
+                <p>Over the past year, the Complex Social Interactions Lab has expanded its role as a center for applied
+                    research, student training, and technology development in public safety. The lab increased student
+                    participation, produced research recognized at regional and national levels, strengthened
+                    partnerships with law enforcement and community organizations, and advanced tools designed to
+                    support decision-making in the field. These efforts demonstrate a consistent approach to combine
+                    research, practice, and education to address the challenges facing policing and community
+                    interactions. The outcomes from this year show not only growth in scale but also the continued
+                    integration of student learning with real-world impact.</p>
+
+                <p>Looking ahead, the lab is positioned to build on this progress by expanding capacity and continuing
+                    engagement. Enrollment for Fall 2026 is already the largest to date, enabling more students to
+                    participate in research and increasing the lab's capacity to support partner agencies. The lab will
+                    continue to provide this support at no cost, maintaining its commitment to advancing public safety
+                    and aligning with the university's land-grant mission. At the same time, research will increasingly
+                    focus on areas such as officer wellness and the adoption of new technologies, responding to needs
+                    identified by both departments and communities.</p>
+
+                <p>Future work will also include transitioning the developed tools into applied settings. The Guided
+                    Interactions platform will enter beta testing with partner agencies, providing an opportunity to
+                    evaluate its use in real-world scenarios and refine its functionality based on user feedback.
+                    Ongoing technology development will remain focused on ensuring that tools are grounded in legal
+                    frameworks and designed for practical use in sensitive environments. Together, these efforts
+                    position the lab to continue contributing to research, workforce development, and community-focused
+                    innovation in the coming year.</p>
+            </section>
+
+            <!-- PDF Download Action -->
+            <div class="mt-20 pt-10 border-t border-slate-200 text-center">
+                <p class="font-sans text-sm text-slate-500 mb-6 uppercase tracking-widest font-semibold">Official
+                    Document Available</p>
+                <a href="https://wpcdn.web.wsu.edu/wp-labs/uploads/sites/1517/2026/07/Year-End-Summary-2025-2026.pdf"
+                    target="_blank" rel="noopener noreferrer"
+                    class="pdf-button inline-flex items-center justify-center px-8 py-4 font-sans text-sm font-bold uppercase tracking-wider shadow-sm">
+                    <i class="fa-regular fa-file-pdf mr-3 text-xl"></i>
+                    View Original PDF Report
+                </a>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-wsu-black text-white mt-auto">
+        <div class="wsu-crimson-bg h-1 w-full"></div>
+        <div
+            class="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left nav-text">
+                <span class="text-xs font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-xs text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300 nav-text font-medium">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year-End Summary: The WSU Complex Social Interactions Lab (2024-2025)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M2RT3HLPVY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-M2RT3HLPVY');
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        body {
+            background-color: #f8fafc;
+            /* Lighter, cooler gray for a modern feel */
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* The main report container mimics a clean, modern digital document */
+        .report-container {
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-top: 4px solid #981e32;
+            border-radius: 8px;
+            /* Softer edges */
+        }
+
+        /* Typography Styling */
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-text {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.01em;
+            /* Modern typographic touch */
+        }
+
+        p,
+        li,
+        .body-text {
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            line-height: 1.85;
+            /* Increased for better readability */
+            color: #334155;
+            /* Softer than pure black */
+            margin-bottom: 1.75rem;
+            /* Increased paragraph spacing */
+            font-size: 1.05rem;
+        }
+
+        /* Modern Section Headers with ample whitespace */
+        section {
+            margin-bottom: 5rem;
+            /* Significant breathing room between sections */
+            position: relative;
+        }
+
+        /* Subtle section dividers */
+        section:not(:last-of-type)::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: #e2e8f0;
+            margin-top: 4rem;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            /* Slightly lighter weight than bold */
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Icon styling refined */
+        h2 i {
+            font-size: 1.15rem;
+            color: #981e32;
+            margin-right: 1rem;
+            opacity: 0.8;
+            background-color: #fff1f2;
+            /* Soft red background for icons */
+            padding: 0.75rem;
+            border-radius: 50%;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background-color: #981e32;
+            border-radius: 2px;
+        }
+
+        /* Specialized List Styling - Modernized */
+        .custom-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 2.5rem;
+        }
+
+        .custom-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 1.25rem;
+            color: #475569;
+        }
+
+        .custom-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #981e32;
+        }
+
+        .custom-list strong {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* Professional Data Table - Modern, clean lines */
+        .report-table-wrapper {
+            margin: 3rem 0;
+            overflow-x: auto;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .report-table th {
+            color: #64748b;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+        }
+
+        .report-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+            vertical-align: middle;
+            transition: background-color 0.2s ease;
+        }
+
+        .report-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .table-value {
+            font-weight: 600;
+            color: #0f172a;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+
+        /* Clean button design */
+        .pdf-button {
+            background-color: #f8fafc;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+
+        .pdf-button:hover {
+            background-color: #fff1f2;
+            border-color: #fecdd3;
+            color: #981e32;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen antialiased">
+
+    <!-- Global Header -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1 group-hover:text-wsu-crimson transition-colors nav-text">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline nav-text">
+                                <span
+                                    class="text-xl font-bold text-slate-800 tracking-tight leading-tight mt-1">Washington
+                                    State University</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span
+                        class="nav-text text-xs font-semibold text-slate-500 uppercase tracking-widest hidden sm:block bg-slate-100 px-3 py-1 rounded-full">Official
+                        Publication</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Report Body -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+
+        <article class="report-container p-8 md:p-16 lg:p-20">
+
+            <!-- Report Header -->
+            <header class="mb-16 border-b border-slate-200 pb-12 text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight tracking-tight">Year-End
+                    Summary: The WSU Complex Social Interactions Lab</h1>
+                <div
+                    class="flex flex-col md:flex-row md:items-center text-slate-500 font-sans text-sm mt-8 gap-4 md:gap-8">
+                    <span class="font-medium bg-slate-100 px-3 py-1 rounded-md">Academic Year 2024-2025</span>
+                    <span class="flex items-center"><i class="fa-regular fa-calendar mr-2"></i>Published July
+                        2025</span>
+                </div>
+            </header>
+
+            <!-- 1. Legislative Mandate -->
+            <section>
+                <h2><i class="fa-solid fa-landmark"></i> Fulfilling a Legislative Mandate for Safer Communities</h2>
+                <p>The demand for evidence-based practices to inform policy and practice is at an all-time high. The
+                    Complex Social Interactions Lab (CSIL) at Washington State University meets this demand with a
+                    practical, data-driven approach. Working with law enforcement partners across Washington, the lab
+                    transforms complex information into practical tools that refine officer training, inform
+                    evidence-based policy and program development and evaluation, and help agencies gain and maintain
+                    community trust.</p>
+                <p>The results of the past year confirm the value of this investment.</p>
+            </section>
+
+            <!-- 2. Investing in People -->
+            <section>
+                <h2><i class="fa-solid fa-users"></i> Investing in People and Expertise</h2>
+                <p>The legislative investment has been crucial for developing the lab's core team of experts. The
+                    funding enabled the strategic hiring of a Lab Manager, a Computer Scientist, and a Staff Scientist,
+                    creating the expert foundation necessary to manage several complex projects and develop its
+                    open-source technology.</p>
+                <p>This investment also directly empowers the next generation of public safety professionals. To date,
+                    over 400 WSU students have participated in the lab. A core group of nearly 100 students participated
+                    in the Fall and Spring of the 2024-2025 academic year, contributing a remarkable 4,320 research
+                    hours to the meticulous process of watching and labeling events in body-worn camera videos,
+                    transcribing interactions, and analyzing data. These students are providing essential support to
+                    partner agencies and forming a pipeline of skilled, data-literate professionals prepared for careers
+                    in Washington's public safety sector.</p>
+            </section>
+
+            <!-- 3. Diverse Research Portfolio -->
+            <section>
+                <h2><i class="fa-solid fa-microscope"></i> A Diverse Research Portfolio Addressing Critical Needs in
+                    Policing</h2>
+                <p>The CSIL's research portfolio is intentionally designed to address the most pressing and complex
+                    challenges facing Washington law enforcement agencies. With the support of legislative funding, the
+                    lab has made significant progress across several critical domains:</p>
+
+                <h3>Protecting Vulnerable Populations</h3>
+                <p>The CSIL is enhancing its research to improve interactions with vulnerable individuals. One
+                    agency-led project involves analyzing a decade's worth of sexual assault case reports from multiple
+                    police departments. This project investigates whether and to what extent the characteristics of
+                    effective report writing and the language used by officers have evolved, and whether these changes
+                    are correlated with legal outcomes.</p>
+                <p>Separately, the lab has developed a clinical assessment guide to help officers identify signs of
+                    cognitive impairment. This guide provides officers with a practical model for managing these
+                    sensitive encounters. Further, it establishes a method for measuring whether new training is
+                    affecting officer behavior in their interactions with individuals exhibiting signs of cognitive
+                    impairment.</p>
+                <p>Another example of the lab's work in this area is identifying and understanding crisis contacts to
+                    help Washington agencies implement advanced de-escalation strategies training. Specifically, the
+                    CSIL is partnering with agencies to evaluate the effectiveness of the nationally recognized
+                    Integrating Communications, Assessment, and Tactics (ICAT) training program. This research offers an
+                    objective, data-driven approach to assessing the impact of ICAT training on the frequency of crisis
+                    contacts and officer-initiated encounters, aiming to ensure that these strategies yield safer and
+                    more effective outcomes for individuals experiencing behavioral or mental health crises.</p>
+
+                <h3>Enhancing Officer Performance and Wellness</h3>
+                <p>Effective policing requires well-supported and resilient officers. The lab's initial on-duty stress
+                    cross-validation project successfully identified specific, observable events associated with
+                    biometric signs of stress among officers, thereby validating the research concept. With that
+                    groundwork in place, the CSIL acquired FDA-approved wearable sensors to help agencies better
+                    understand the nature of stress and how it may vary based on shift, duty assignment, and type of
+                    interaction.</p>
+                <p>These devices enable the capture of continuous, real-time biometric stress data—a significant
+                    advancement in the lab's research capabilities. The data collected will help gain a better
+                    understanding of the dynamics of on-duty stress, precisely identify interactions associated with
+                    high levels of stress, explore the critical relationship between stress and officer decision-making,
+                    and empirically evaluate the impact of agency wellness programs. This initiative will provide
+                    objective data-driven insights to help agencies support officer health, resilience, and performance.
+                </p>
+
+                <h3>Strengthening Equity and Procedural Justice</h3>
+                <p>The lab is committed to ensuring fair and equitable outcomes. One key project in this area involved a
+                    partnership with the Center for Policing Equity (CPE) and a Washington law enforcement agency. The
+                    lab analyzed 3,698 traffic stop videos to check for potential demographic disparities in officer
+                    actions. To strengthen the analysis, the lab developed a detailed system for tracking discretionary
+                    decisions, enabling more reliable comparisons between different agencies.</p>
+                <p>Another project aimed to address language barriers. A bilingual team within the lab developed a
+                    unique codebook that assesses the impact of access to translation on the clarity of an interaction
+                    and an officer's decisions, helping to ensure fairer outcomes for non-English speakers. To measure
+                    the quality of interactions, the CSIL also developed and implemented a user-friendly Procedural
+                    Justice assessment tool, which has already been used to conduct over 3,300 assessments of traffic
+                    stops and other encounters, providing agencies with a clear metric for professional and
+                    constitutional policing.</p>
+            </section>
+
+            <!-- 4. Technology Development -->
+            <section>
+                <h2><i class="fa-solid fa-microchip"></i> Technology Development that Scales Improvement Statewide</h2>
+                <p>A cornerstone of the CSIL's impact is the development of open-source technology that serves dual
+                    roles: as a practical solution to an immediate problem and as a means to enhance research capacity
+                    by translating research findings into consistent practice. Two notable technologies, developed in
+                    partnership with the Spokane Police Department and the Criminal Justice Training Commission,
+                    include:</p>
+
+                <h3>The Guided Interactions Web Application</h3>
+                <p>This platform serves as a digital guide for officers responding to sensitive calls like domestic
+                    violence and, in the future, sexual assault. The application works as a guide, standardizing best
+                    practices and prompting officers with trauma-informed questions.</p>
+                <p>It ensures that critical steps, such as completing the Lethality Assessment Program (LAP) and the
+                    Strangulation Supplement form, are not overlooked, directly improving the quality of evidence
+                    collected. Deployable on smartphones, tablets, or other computing devices, this open-source
+                    technology addresses concerns about missing required data and will be made available to Washington
+                    agencies at no cost.</p>
+
+                <h3>Exemplar-Based Training Repository</h3>
+                <p>The CSIL is leveraging its legislative support to partner with the Washington State Criminal Justice
+                    Training Commission (CJTC) to build a statewide repository. This project directly confronts a
+                    long-standing deficit in police training, which has historically focused on analyzing failures. The
+                    repository will instead create an AI-searchable library of expert-vetted videos featuring lawful,
+                    appropriate, and effective de-escalation practices.</p>
+                <p>For example, a video could show an officer using a department-approved "control-hold takedown" on a
+                    physically resistant person, demonstrating the use of leverage and positioning over strikes. WSU is
+                    building the advanced machine learning framework, while CJTC provides the crucial subject-matter
+                    expertise to evaluate and label the content. This joint effort will enable trainers to instantly
+                    access vetted examples for instruction, fundamentally changing officer training in Washington by
+                    building a culture of improvement based on proven successes.</p>
+            </section>
+
+            <!-- 5. Continued Impact -->
+            <section>
+                <h2><i class="fa-solid fa-arrow-trend-up"></i> Future Directions and Continued Impact</h2>
+                <p>Looking ahead, the CSIL will begin using its newly acquired biometric equipment in Fall 2025,
+                    offering it at no cost to partner agencies to encourage participation in vital wellness research. By
+                    continuing to build strong partnerships with police agencies and community groups, the lab's work
+                    will remain grounded in the real-world needs of Washington law enforcement agencies, while also
+                    preparing a workforce with the critical data science and applied research skills necessary for
+                    modern public safety careers.</p>
+                <p>Furthermore, by introducing agencies to evidence-based practices, the CSIL firmly positions them to
+                    compete for federal and national grants that require data analysis and evaluation support.</p>
+            </section>
+
+            <!-- PDF Download Action -->
+            <div class="mt-20 pt-10 border-t border-slate-200 text-center">
+                <p class="font-sans text-sm text-slate-500 mb-6 uppercase tracking-widest font-semibold">Official
+                    Document Available</p>
+                <a href="https://wpcdn.web.wsu.edu/wp-labs/uploads/sites/1517/2026/07/Year-End-Summary-2024-2025.pdf"
+                    target="_blank" rel="noopener noreferrer"
+                    class="pdf-button inline-flex items-center justify-center px-8 py-4 font-sans text-sm font-bold uppercase tracking-wider shadow-sm">
+                    <i class="fa-regular fa-file-pdf mr-3 text-xl"></i>
+                    View Original PDF Report
+                </a>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-wsu-black text-white mt-auto">
+        <div class="wsu-crimson-bg h-1 w-full"></div>
+        <div
+            class="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left nav-text">
+                <span class="text-xs font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-xs text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300 nav-text font-medium">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
