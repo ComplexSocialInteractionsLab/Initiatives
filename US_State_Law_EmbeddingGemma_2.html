@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US-State-Law-EmbeddingGemma-2 | CSI Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M2RT3HLPVY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-M2RT3HLPVY');
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2a3033;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #981e32;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .edge-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4f92e4, #3B82F6, #1D4ED8, #1E3A8A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+    <!-- SEO Metadata -->
+    <meta name="author" content="Shlok Tomar">
+    <meta name="description"
+        content="US-State-Law-EmbeddingGemma-2 model developed by Shlok Tomar. A privacy-first, locally deployed AI model optimized for sensitive legal analysis and data processing.">
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "US-State-Law-EmbeddingGemma-2",
+      "applicationCategory": "Artificial Intelligence Application",
+      "applicationSubCategory": "Machine Learning Model / Text Embedding",
+
+      "creator": {
+        "@type": "Person",
+        "name": "Shlok Tomar"
+      },
+      "keywords": ["Computer Science", "Artificial Intelligence", "AI", "Machine Learning", "ML", "LLM", "AI Research", "Software"]
+    }
+    </script>
+</head>
+
+<body class="bg-gray-50 flex flex-col min-h-screen antialiased scroll-smooth">
+
+    <!-- WSU Global Header Strip -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" aria-label="Back to CSI Lab Home"
+                            class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span
+                                    class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">Embedding
+                                    <span class="wsu-text-crimson">Model</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#overview"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Overview</a>
+                        <a href="#performance"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Performance</a>
+                        <!-- <a href="#methodology"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Methodology</a> -->
+                        <a href="#implementation"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Implementation</a>
+                        <a href="https://github.com/ComplexSocialInteractionsLab/" target="_blank"
+                            rel="noopener noreferrer"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Download</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                            EmbeddingGemma-2
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <section id="overview" class="mb-16 pt-12 md:pt-16">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+                    <span class="gradient-text">Embedding Gemma-2</span> <br class="delay-100">for
+                    Washington
+                    State Law
+                </h1>
+                <!-- Model Name Badge -->
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-sm">
+                        <i class="fa-solid fa-cube text-slate-500"></i>
+                        <code
+                            class="text-slate-800 font-mono text-sm tracking-wide">US-State-Law-EmbeddingGemma-2</code>
+                    </div>
+                </div>
+                <p class="text-lg md:text-xl text-slate-600 leading-relaxed">
+                    This is a highly specialized embedding model fine-tuned specifically for
+                    the Revised Code of Washington (RCW). Designed to run on consumer
+                    hardware such as mobile devices and laptops, delivering low-latency
+                    semantic representations for on-device applications, like search, retrieval-augmented generation
+                    (RAG), classification, and clustering.
+
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats Section Moved Below Hero -->
+        <section class="mb-20 max-w-5xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-1" style="color: #0239ff;">504.1k</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">RCW context pairs</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-1" style="color: #0239ff;">768</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">Vector Dimension</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-emerald-600 mb-1">87.9%</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">Accuracy@10</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 card-hover text-center">
+                    <div class="text-3xl font-bold text-emerald-600 mb-1">+49.6%</div>
+                    <div class="text-sm font-medium text-slate-500 uppercase tracking-wide">MRR Improvement</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section (Top) -->
+        <section class="group pb-32 lg:pb-48 flex justify-center w-full cursor-pointer">
+            <div class="max-w-sm w-full px-4 sm:px-6 text-center">
+                <div
+                    class="bg-transparent border border-transparent rounded-[24px] p-8 md:p-10 text-center transition-all duration-300 group-hover:bg-white group-hover:border-slate-200 group-hover:shadow-sm group-hover:-translate-y-12 transform -translate-y-10">
+
+                    <a href="https://huggingface.co/CSI-lab/US-State-Law-EmbeddingGemma-2" target="_blank"
+                        rel="noopener noreferrer" class="flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 flex items-center justify-center bg-white border border-slate-200 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
+                            <img src="https://storage.googleapis.com/gdm-deepmind-com-prod-public/media/original_images/gemma-ecosystem__hugging-face.svg"
+                                alt="Hugging Face logo" class="w-14 h-14 object-contain" />
+                        </div>
+                        <h3
+                            class="mt-6 text-2xl font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            Hugging Face </h3>
+                        <span
+                            class="mt-3 text-base text-slate-500 group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                            Download <span class="text-lg">›</span>
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <div class="mb-12 border-t border-slate-200"></div>
+
+        <section id="performance" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Performance Analysis</h2>
+            <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
+                This section details the critical retrieval metrics comparing the original baseline model
+                against our fine-tuned custom model. Evaluated against a held-out validation set of ~47,000 unique
+                Washington State law queries, the fine-tuning process resulted in massive improvements in recall and
+                ranking
+                accuracy, proving its efficacy as the backbone for legal RAG pipelines.
+            </p>
+
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-slate-800">Retrieval Metrics Comparison</h3>
+                    <div class="flex space-x-2">
+                        <button id="toggleRaw"
+                            class="px-4 py-2 text-sm font-medium rounded-md bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors">View
+                            Absolute Scores</button>
+                        <button id="toggleDiff"
+                            class="px-4 py-2 text-sm font-medium rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">View
+                            Improvements</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainMetricsChart"></canvas>
+                </div>
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">87.89%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned Accuracy@10</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">80.27%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned Accuracy@5</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">57.09%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned MRR@10</div>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <div class="text-2xl font-bold text-slate-900">64.64%</div>
+                        <div class="text-xs text-slate-500 mt-1">Fine-Tuned NDCG@10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-800 text-white relative overflow-hidden"
+                style="background: radial-gradient(circle at 55% 45%, #0f2447 0%, #060b16 70%, #020409 100%);">
+                <div class="text-center mb-6 relative z-10">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white tracking-tight">The Washington
+                        law Benchmark (WLB)
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-2 max-w-2xl mx-auto">
+                        Retrieval Accuracy vs. Model Size on the WLB Benchmark
+                    </p>
+                </div>
+
+                <div class="w-full relative z-10" style="height: 400px;">
+                    <canvas id="frontierChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <div class="mb-12 border-t border-slate-200"></div>
+
+        <section id="implementation" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Implementation Guide</h2>
+            <p class="text-slate-600 mb-10 max-w-3xl leading-relaxed">
+                Integrating this custom model into your Python stack is straightforward via the
+                <code>sentence-transformers</code> library. However, strict adherence to the query formatting rules
+                below is absolutely critical to achieve the benchmarked accuracy.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-lg">
+                        <h3 class="text-amber-800 font-bold flex items-center mb-2">
+                            <span class="mr-2">&#9888;</span> Prefix Notation & Usage
+                        </h3>
+                        <p class="text-sm text-amber-900 mb-3">
+                            We offer two types of task prefixes, depending on how embeddings are used in the task. There
+                            are two types of tasks:
+                        </p>
+                        <ul class="text-sm text-amber-900 list-disc list-inside space-y-2">
+                            <li><strong>Asymmetric Tasks:</strong> (e.g. retrieval) <br><code
+                                    class="bg-amber-100 px-1 py-0.5 rounded text-xs text-amber-800 break-words">Use a
+                                    query prefix for queries and a document prefix for corpus items.</code>
+                            </li>
+                            <li><strong>Symmetric Tasks:</strong> (e.g. classification, similarity) <br><code
+                                    class="bg-amber-100 px-1 py-0.5 rounded text-xs text-amber-800 break-words">Apply the
+                                    same task prefix to all inputs being compared.</code>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h3 class="text-slate-900 font-bold mb-2">Dependencies</h3>
+                        <pre class="code-block text-xs py-3 px-4">pip install -U sentence-transformers</pre>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-slate-900 rounded-lg shadow-xl overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700 bg-slate-800">
+                            <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Python Usage
+                                Example</span>
+                            <button id="copyBtn" onclick="copyCode()"
+                                class="flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-colors bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <span>Copy Code</span>
+                            </button>
+                        </div>
+                        <pre id="python-code" class="code-block rounded-t-none text-slate-300">
+<span class="text-pink-400">import</span> torch
+<span class="text-pink-400">from</span> sentence_transformers <span class="text-pink-400">import</span> SentenceTransformer, util
+
+<span class="text-slate-500 italic"># 1. Load the fine-tuned model</span>
+model = <span class="text-blue-300">SentenceTransformer</span>(<span class="text-emerald-400">'CSI-lab/US-state-law-EmbeddingGemma-2'</span>, 
+ model_kwargs={
+        <span class="text-emerald-400">"torch_dtype":</span> <span class="text-pink-400">torch.bfloat16</span>,
+        "config_kwargs": {
+            <span class="text-emerald-400">"load_vision_encoder":</span> <span class="text-pink-400">False</span>,
+            <span class="text-emerald-400">"load_audio_encoder":</span> <span class="text-pink-400">False</span>
+        }
+    })
+
+<span class="text-slate-500 italic"># 2. Define the laws (Your Vector Database)</span>
+laws = [
+    <span class="text-emerald-400">"RCW 9A.56.030: Theft in the first degree. A person is guilty of theft in the first degree if he or she commits theft of property or services which exceed(s) five thousand dollars in value."</span>,
+    <span class="text-emerald-400">"RCW 46.61.502: Driving under the influence. A person is guilty of driving while under the influence of intoxicating liquor..."</span>,
+    <span class="text-emerald-400">"RCW 9A.36.011: Assault in the first degree. A person is guilty of assault in the first degree if he or she..."</span>
+]
+
+<span class="text-slate-500 italic"># 3. Define the user's search query</span>
+user_query = <span class="text-emerald-400">"What dollar amount makes a theft a first degree felony?"</span>
+
+<span class="text-slate-500 italic"># 4. Encode the documents and the query</span>
+query_embedding = model.<span class="text-blue-300">encode</span>(user_query, convert_to_tensor=<span class="text-pink-400">True</span>, prompt_name=<span class="text-emerald-400">"SearchQuery"</span>)
+law_embeddings = model.<span class="text-blue-300">encode</span>(laws, convert_to_tensor=<span class="text-pink-400">True</span>, prompt_name=<span class="text-emerald-400">"Document"</span>)
+
+<span class="text-slate-500 italic"># 5. Calculate Cosine Similarity</span>
+cosine_scores = util.<span class="text-blue-300">cos_sim</span>(query_embedding, law_embeddings)
+
+<span class="text-slate-500 italic"># 7. Print the top result</span>
+best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class="text-blue-300">item</span>()
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Top Match: </span><span class="text-amber-200">{laws[best_idx]}</span><span class="text-emerald-400">"</span>)
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Similarity Score: </span><span class="text-amber-200">{cosine_scores[0][best_idx]:.4f}</span><span class="text-emerald-400">"</span>)
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-[#2a3033] text-white mt-auto">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Exact metrics parsed
+        const rawData = {
+            labels: ['Accuracy@10 (%)', 'Accuracy@5 (%)', 'MRR@10 (%)', 'NDCG@10 (%)'],
+            base: [64.27, 55.88, 38.16, 44.48],
+            finetuned: [87.89, 80.27, 57.09, 64.64]
+        };
+
+        const diffData = {
+            labels: ['Accuracy@10', 'Accuracy@5', 'MRR@10', 'NDCG@10'],
+            improvements: [36.8, 43.6, 49.6, 45.3]
+        };
+
+        const ctxMain = document.getElementById('mainMetricsChart').getContext('2d');
+        let mainChart = new Chart(ctxMain, {
+            type: 'bar',
+            data: {
+                labels: rawData.labels,
+                datasets: [
+                    {
+                        label: 'Base Model (EmbeddingGemma 2)',
+                        data: rawData.base,
+                        backgroundColor: '#bac3cf',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'US-State-Law-EmbeddingGemma-2',
+                        data: rawData.finetuned,
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed.y !== null) {
+                                    if (context.dataIndex < 2) { label += context.parsed.y + '%'; }
+                                    else { label += (context.parsed.y / 100).toFixed(4); }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Score' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        document.getElementById('toggleRaw').addEventListener('click', function () {
+            this.classList.replace('bg-slate-100', 'bg-blue-100');
+            this.classList.replace('text-slate-700', 'text-blue-700');
+            document.getElementById('toggleDiff').classList.replace('bg-blue-100', 'bg-slate-100');
+            document.getElementById('toggleDiff').classList.replace('text-blue-700', 'text-slate-700');
+
+            mainChart.data.labels = rawData.labels;
+            mainChart.data.datasets = [
+                { label: 'Base Model (EmbeddingGemma 2)', data: rawData.base, backgroundColor: '#94a3b8', borderRadius: 4 },
+                { label: 'US-State-Law-EmbeddingGemma-2', data: rawData.finetuned, backgroundColor: '#2563eb', borderRadius: 4 }
+            ];
+            mainChart.options.scales.y.title.text = 'Score';
+            mainChart.update();
+        });
+
+        document.getElementById('toggleDiff').addEventListener('click', function () {
+            this.classList.replace('bg-slate-100', 'bg-blue-100');
+            this.classList.replace('text-slate-700', 'text-blue-700');
+            document.getElementById('toggleRaw').classList.replace('bg-blue-100', 'bg-slate-100');
+            document.getElementById('toggleRaw').classList.replace('text-blue-700', 'text-slate-700');
+
+            mainChart.data.labels = diffData.labels;
+            mainChart.data.datasets = [{
+                label: 'Relative Improvement (%)',
+                data: diffData.improvements,
+                backgroundColor: '#10b981',
+                borderRadius: 4
+            }];
+            mainChart.options.scales.y.title.text = 'Relative Improvement (%)';
+            mainChart.update();
+        });
+
+        const ctxFrontier = document.getElementById('frontierChart').getContext('2d');
+
+        // Custom plugin to draw labels directly next to the points like the reference image
+        const inlineLabelsPlugin = {
+            id: 'inlineLabels',
+            afterDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx } = chart;
+                ctx.font = '12px "Open Sans", sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+                    if (!meta.hidden) {
+                        meta.data.forEach((element, index) => {
+                            const dataPoint = dataset.data[index];
+                            // Color active target blue, others gray
+                            ctx.fillStyle = dataPoint.model && dataPoint.model.includes('EmbeddingGemma-2') ? '#ffffff' : '#cbd5e1';
+                            // Offset text to the right of the point
+                            ctx.fillText(dataPoint.model, element.x + 12, element.y);
+                        });
+                    }
+                });
+            }
+        };
+
+        new Chart(ctxFrontier, {
+            type: 'scatter',
+            plugins: [inlineLabelsPlugin],
+            data: {
+                datasets: [
+                    {
+                        // label: 'Frontier Path',
+                        order: 2,
+                        data: [
+                            { x: 109, y: 53.14, model: 'bge-base-en-v1.5 (109M)' }, // Starts at bge-base
+                            { x: 270, y: 87.89, model: 'US-State-Law-EmbeddingGemma-2 (270M)' },// Goes to EmbeddingGemma fine-tune
+                            { x: 335, y: 83.5, model: 'WA-State-Law-Large (335M)' }   // Ends at WA-Large
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: '#475569',
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        pointRadius: 0,       // Hides the line's own tracking dots
+                        pointHitRadius: 0,    // Disables hover interactions on the line coordinates
+                        hoverRadius: 0
+                    },
+                    {
+                        // label: 'Fine-Tuned Models (CSI Lab)',
+                        order: 1,
+                        data: [
+                            { x: 109, y: 84.4, model: 'WA-State-Law-Base (109M)' },
+                            { x: 270, y: 87.89, model: 'US-State-Law-EmbeddingGemma-2 (270M)' },
+                            { x: 335, y: 83.5, model: 'WA-State-Law-Large (335M)' }
+                        ],
+                        backgroundColor: ['#64748b', '#3b82f6', '#64748b'],
+                        borderColor: ['#64748b', '#3b82f6', '#64748b'],
+                        borderWidth: 2,
+                        showLine: false,
+                        pointRadius: [5, 8, 5],
+                        pointHoverRadius: [7, 10, 7]
+                    },
+                    {
+                        // label: 'Un-finetuned Baselines',
+                        order: 1,
+                        data: [
+                            { x: 109, y: 53.14, model: 'bge-base-en-v1.5 (109M)' },
+                            { x: 270, y: 64.27, model: 'EmbeddingGemma 2 (270M)' },
+                            { x: 335, y: 56.84, model: 'bge-large-en-v1.5 (335M)' }
+                        ],
+                        backgroundColor: '#475569',
+                        borderColor: '#475569',
+                        borderWidth: 2,
+                        showLine: false,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: { right: 20, top: 20 }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.raw.model + ' - Score: ' + context.raw.y.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: { display: true, text: 'Model Size', align: 'end', color: '#94a3b8', font: { size: 12 } },
+                        grid: {
+                            color: 'rgba(59, 130, 246, 0.1)',
+                            drawTicks: true,
+                            tickColor: '#3b82f6',
+                            tickLength: 10
+                        },
+                        border: { color: '#3b82f6', width: 1.5 },
+                        ticks: {
+                            color: '#93c5fd',
+                            maxRotation: 0,
+                            callback: function (value) {
+                                return value + 'M';
+                            }
+                        },
+                        min: 100,
+                        max: 400
+                    },
+                    y: {
+                        title: { display: true, text: 'Accuracy Score (%)', align: 'end', color: '#94a3b8', font: { size: 12 } },
+                        grid: { display: false },
+                        border: { color: '#3b82f6', width: 1.5 },
+                        ticks: {
+                            color: '#93c5fd',
+                            stepSize: 10,
+                            callback: function (value) {
+                                return value + '%';
+                            }
+                        },
+                        min: 50,
+                        max: 95
+                    }
+                }
+            }
+        });
+
+        // Copy code to clipboard functionality
+        function copyCode() {
+            const codeElement = document.getElementById('python-code');
+            const text = codeElement.innerText || codeElement.textContent;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById('copyBtn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-emerald-400">Copied!</span>`;
+                setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+
+</html>

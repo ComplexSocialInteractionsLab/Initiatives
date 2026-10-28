@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>US-State-Law-EmbeddingGemma-2-GGUF | CSI Lab</title>
+    <meta name="author" content="Shlok Tomar">
+    <meta name="description"
+        content="Explore US-State-Law-EmbeddingGemma-2-GGUF, a Q4_K_M quantized legal embedding model designed for efficient local inference, semantic legal search, and edge AI applications.">
+
+    <meta name="theme-color" content="#981e32">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M2RT3HLPVY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-M2RT3HLPVY');
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wsu: {
+                            crimson: '#981e32',
+                            gray: '#5e6a71',
+                            black: '#2a3033',
+                            light: '#f2f2f2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --crimson: #981e32;
+            --ink: #2a3033;
+            --muted: #64748b;
+            --line: #e2e8f0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--ink);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wsu-crimson-bg {
+            background-color: #981e32;
+        }
+
+        .wsu-text-crimson {
+            color: #981e32;
+        }
+
+        .crimson-bg {
+            background: var(--crimson);
+        }
+
+        .crimson-text {
+            color: var(--crimson);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #981e32, #d15a73, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-hover {
+            border-top: 4px solid transparent;
+            transition: transform .25s ease, box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .08);
+            border-top-color: var(--crimson);
+        }
+
+        .section-anchor {
+            scroll-margin-top: 100px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, .035);
+        }
+
+        .code-block {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre;
+        }
+
+        .demo-input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: white;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .demo-input:focus {
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px rgba(152, 30, 50, .1);
+        }
+
+        .action-button {
+            background: var(--crimson);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-weight: 700;
+            transition: background .2s, transform .2s;
+        }
+
+        .action-button:hover {
+            background: #7d1729;
+        }
+
+        .action-button:active {
+            transform: scale(.98);
+        }
+
+        .secondary-button {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            background: white;
+        }
+
+        .secondary-button:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+        }
+
+        .small-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            font-weight: 700;
+        }
+
+        .phone-shell {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 8px;
+            background: #171717;
+            border: 2px solid #333;
+            border-radius: 38px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.20);
+        }
+
+        .phone-screen {
+            position: relative;
+            height: 610px;
+            overflow: hidden;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 29px;
+            scrollbar-width: none;
+        }
+
+        .phone-screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        .phone-notch {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100px;
+            height: 20px;
+            margin: 0 auto -20px;
+            background: #171717;
+            border-radius: 0 0 14px 14px;
+        }
+
+        @media (max-width: 640px) {
+            .phone-shell {
+                max-width: 290px;
+            }
+
+            .phone-screen {
+                height: 560px;
+            }
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 50px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .timeline-segment {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            border-right: 2px solid white;
+            cursor: pointer;
+            transition: filter .2s;
+        }
+
+        .timeline-segment:hover {
+            filter: brightness(.9);
+        }
+
+        .timeline-segment.active {
+            outline: 3px solid #981e32;
+            outline-offset: -3px;
+            z-index: 2;
+        }
+
+        .event-row {
+            width: 100%;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: left;
+            background: white;
+            transition: border-color .2s, background .2s;
+        }
+
+        .event-row:hover,
+        .event-row.active {
+            border-color: #981e32;
+            background: #fff8f9;
+        }
+
+        .dimension-button {
+            border: 1px solid #cbd5e1;
+            background: white;
+            padding: 12px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: all .2s;
+        }
+
+        .dimension-button.active {
+            color: white;
+            background: var(--crimson);
+            border-color: var(--crimson);
+        }
+
+        .vector-cell {
+            height: 31px;
+            min-width: 3px;
+            flex: 1;
+            border-radius: 3px;
+            background: #cbd5e1;
+        }
+
+        .vector-cell.retained {
+            background: #981e32;
+        }
+
+        .status-dot {
+            display: inline-block;
+            height: 7px;
+            width: 7px;
+            background: #0d9488;
+            border-radius: 100%;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 640px) {
+            .code-block {
+                font-size: 11px;
+                padding: 14px;
+            }
+
+            .section-title {
+                font-size: 27px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+
+    <!-- SEO Metadata -->
+    <meta name="author" content="Shlok Tomar">
+    <meta name="description"
+        content="US-State-Law-EmbeddingGemma-2-GGUF model developed by Shlok Tomar. A privacy-first, locally deployed AI model optimized for sensitive legal analysis and data processing.">
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "US-State-Law-EmbeddingGemma-2-GGUF",
+      "applicationCategory": "Artificial Intelligence Application",
+      "applicationSubCategory": "Machine Learning Model / Text Embedding",
+
+      "creator": {
+        "@type": "Person",
+        "name": "Shlok Tomar"
+      },
+      "keywords": ["Computer Science", "Artificial Intelligence", "AI", "Machine Learning", "ML", "LLM", "AI Research", "Software"]
+    }
+    </script>
+</head>
+
+<body class="bg-gray-50 flex flex-col min-h-screen antialiased scroll-smooth">
+
+    <!-- WSU Global Header Strip -->
+    <div class="wsu-crimson-bg h-2 w-full fixed top-0 z-50"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" aria-label="Back to CSI Lab Home"
+                            class="flex flex-col justify-center cursor-pointer group">
+                            <div
+                                class="flex items-center text-xs font-bold text-gray-500 uppercase tracking-widest leading-none mb-1 group-hover:text-[#981e32] transition-colors">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Back to CSI Lab
+                            </div>
+                            <div class="flex items-baseline">
+                                <span
+                                    class="text-2xl font-bold text-gray-900 tracking-tight leading-tight mt-1">Embedding
+                                    <span class="wsu-text-crimson">Model</span></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hidden sm:ml-10 sm:flex sm:space-x-8 items-end pb-5">
+                        <a href="#overview"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Overview</a>
+                        <a href="#mobile-demo"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Mobile
+                            Search</a>
+                        <a href="#bodycam-demo"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Video
+                            Search</a>
+                        <a href="#mrl"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">MRL
+                            Explorer</a>
+                        <a href="#implementation"
+                            class="border-transparent text-gray-500 hover:text-[#981e32] hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold uppercase tracking-wide">Implementation</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span
+                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800 border border-teal-200">
+                            GGUF · Q4_K_M
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- HERO -->
+        <section id="overview" class="section-anchor pt-16 md:pt-24 pb-14">
+            <div class="max-w-4xl mx-auto text-center">
+
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 mb-6">
+                    On-Device WA Law Model <br>
+                    <span class="gradient-text">Your Data Your Privacy</span>
+                </h1>
+
+                <div class="flex justify-center mb-6">
+                    <div
+                        class="inline-flex items-center gap-2 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full">
+                        <i class="fa-solid fa-cube text-slate-500"></i>
+                        <code
+                            class="text-xs sm:text-sm font-semibold break-all">US-State-Law-EmbeddingGemma-2-GGUF</code>
+                    </div>
+                </div>
+
+                <p class="text-lg md:text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto">
+                    A Q4_K_M quantized version of our fine-tuned legal embedding model,
+                    designed to make semantic retrieval more practical on consumer hardware,
+                    CPU-based systems, and resource-constrained edge devices.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-2 mt-7">
+                    <span class="px-3 py-1.5 rounded-full bg-white border text-sm text-slate-600"><i
+                            class="fa-solid fa-microchip mr-1 crimson-text"></i> Q4_K_M</span>
+                    <span class="px-3 py-1.5 rounded-full bg-white border text-sm text-slate-600"><i
+                            class="fa-solid fa-mobile-screen mr-1 crimson-text"></i> Edge-ready design</span>
+                    <span class="px-3 py-1.5 rounded-full bg-white border text-sm text-slate-600"><i
+                            class="fa-solid fa-vector-square mr-1 crimson-text"></i> 768 → 128 dimensions</span>
+                    <span class="px-3 py-1.5 rounded-full bg-white border text-sm text-slate-600"><i
+                            class="fa-solid fa-shield-halved mr-1 crimson-text"></i> Local deployment potential</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3 mt-9">
+                    <a href="#mobile-demo" class="action-button inline-flex justify-center items-center gap-2">
+                        Explore Live Demos <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <!-- <a href="#implementation" class="secondary-button inline-flex justify-center items-center gap-2">
+            <i class="fa-solid fa-code"></i> Developer Guide
+          </a> -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-3">
+                        <a href="https://huggingface.co/CSI-lab/US-state-law-EmbeddingGemma-2-GGUF" target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex justify-center items-center gap-2 rounded-lg bg-white text-slate-900 px-5 py-3 font-bold hover:bg-slate-100">
+                            <i class="fa-solid fa-cube"></i> Download the GGUF Model
+                        </a>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-400 mt-4">
+                    Interactive concept demos · No model download required · No API key required
+                </p>
+            </div>
+        </section>
+
+        <!-- FEATURE STATS -->
+        <section class="max-w-5xl mx-auto mb-20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="panel card-hover p-5 text-center">
+                    <div class="text-3xl font-extrabold crimson-text">Q4_K_M</div>
+                    <div class="small-label text-slate-500 mt-2">Weight quantization</div>
+                </div>
+                <div class="panel card-hover p-5 text-center">
+                    <div class="text-3xl font-bold text-emerald-600 mb-1">87.9%</div>
+                    <div class="small-label text-slate-500 mt-2">Accuracy@10</div>
+                </div>
+                <div class="panel card-hover p-5 text-center">
+                    <div class="text-3xl font-extrabold text-emerald-600">128</div>
+                    <div class="small-label text-slate-500 mt-2">Smallest MRL option</div>
+                </div>
+                <div class="panel card-hover p-5 text-center">
+                    <div class="text-3xl font-extrabold crimson-text">6×</div>
+                    <div class="small-label text-slate-500 mt-2">Potential vector savings</div>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 text-center mt-4">
+                The 6× figure refers to vector storage at 128 dimensions versus 768 at equal precision.
+                It is not a claim about model-file compression or measured inference speed.
+            </p>
+        </section>
+
+        <div class="border-t border-slate-200 mb-16"></div>
+
+        <!-- MOBILE DEMO -->
+        <section id="mobile-demo" class="section-anchor mb-24">
+            <div class="max-w-3xl mb-10">
+                <div class="small-label crimson-text mb-3">01 / ON-DEVICE LEGAL SEARCH</div>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    A legal research tool in your pocket.
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Imagine searching a collection of state laws directly from a mobile application.
+                    A local embedding model turns a question into a vector; a vector index retrieves
+                    relevant passages. Explore the simulated experience below.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <!-- Phone -->
+                <div class="py-2">
+                    <div class="phone-shell">
+                        <div class="phone-screen">
+                            <div class="phone-notch"></div>
+
+                            <div class="px-3 pt-7 pb-4">
+                                <!-- Compact app header -->
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <div class="text-[9px] font-bold tracking-widest text-slate-400 uppercase">
+                                            CSI LAB · CONCEPT
+                                        </div>
+                                        <div class="font-extrabold text-lg text-slate-900">
+                                            Legal Search
+                                        </div>
+                                    </div>
+
+                                    <div class="h-8 w-8 rounded-lg bg-red-50 text-[#981e32]
+                      flex items-center justify-center">
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Local inference indicator -->
+                                <div class="flex items-center gap-2 text-[10px] text-teal-800
+                    bg-teal-50 rounded-lg px-2 py-1.5 mb-3">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                    <span>On-device search · Concept demo</span>
+                                </div>
+
+                                <!-- Compact suggested searches -->
+                                <div class="mt-3">
+                                    <div class="small-label text-slate-400 mb-1.5">
+                                        QUICK SEARCH
+                                    </div>
+
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <button type="button" class="secondary-button text-[10px] px-2 py-1"
+                                            data-legal-query="What makes a theft first degree?">
+                                            Theft
+                                        </button>
+
+                                        <button type="button" class="secondary-button text-[10px] px-2 py-1"
+                                            data-legal-query="When can police search a vehicle?">
+                                            Vehicle search
+                                        </button>
+
+                                        <button type="button" class="secondary-button text-[10px] px-2 py-1"
+                                            data-legal-query="What are the rules for a traffic stop?">
+                                            Traffic stop
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <label for="legalQuery" class="block text-xs font-bold text-slate-600 mb-1.5">
+                                    Search Washington State law
+                                </label>
+
+                                <form id="legalSearchForm" class="space-y-2">
+                                    <input id="legalQuery" class="demo-input text-xs w-full"
+                                        value="Officer search a vehicle without a warrant?"
+                                        aria-label="Legal search query" readonly>
+
+                                    <button type="submit" class="action-button w-full text-xs py-2">
+                                        <i class="fa-solid fa-magnifying-glass mr-1"></i>
+                                        Search laws
+                                    </button>
+                                </form>
+
+                                <!-- Search results -->
+                                <div class="flex justify-between items-center mt-4 mb-2">
+                                    <div class="font-bold text-xs text-slate-800">
+                                        Matching passages
+                                    </div>
+                                    <div id="legalResultCount" class="text-[10px] text-slate-400">
+                                        3 examples
+                                    </div>
+                                </div>
+
+                                <div id="legalResults" aria-live="polite"></div>
+
+                                <div class="mt-3 text-[9px] text-slate-400 leading-relaxed">
+                                    Illustrative results only. Not live model inference or legal advice.
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="space-y-5">
+                    <div class="panel p-6">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-11 h-11 shrink-0 rounded-xl bg-red-50 text-[#981e32] flex items-center justify-center">
+                                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                    <path d="M12 18h.01"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-900 mb-2">Designed for local applications</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    A compatible runtime could generate query embeddings on the device.
+                                    The app can then compare them with a precomputed local index, subject
+                                    to available memory, compute, and runtime support.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel p-6">
+                        <h3 class="font-bold text-slate-900 mb-4">What happens behind the search?</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <span
+                                    class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                                <div>
+                                    <div class="font-bold text-sm">Encode the query</div>
+                                    <p class="text-sm text-slate-500">The embedding model represents the question as a
+                                        vector.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <span
+                                    class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                                <div>
+                                    <div class="font-bold text-sm">Search the index</div>
+                                    <p class="text-sm text-slate-500">A vector search engine ranks precomputed document
+                                        embeddings.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <span
+                                    class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                                <div>
+                                    <div class="font-bold text-sm">Return passages</div>
+                                    <p class="text-sm text-slate-500">The application displays matching text and source
+                                        references.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-5 rounded-r-lg">
+                        <div class="font-bold text-amber-900 text-sm mb-1">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Embeddings are not a legal oracle
+                        </div>
+                        <p class="text-sm text-amber-900 leading-relaxed">
+                            Retrieval finds potentially relevant passages. A real application still needs
+                            verified legal sources, correct citations, jurisdiction checks, and appropriate
+                            legal interpretation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="border-t border-slate-200 mb-16"></div>
+
+        <!-- BODYCAM DEMO -->
+        <section id="bodycam-demo" class="section-anchor mb-24">
+            <div class="max-w-3xl mb-10">
+                <div class="small-label crimson-text mb-3">02 / VIDEO EVIDENCE RETRIEVAL</div>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    Find the moment. Not just the file.
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Long recordings can contain hours of potentially relevant material.
+                    With timestamped transcripts or video descriptions embedded and indexed,
+                    investigators could search for concepts in natural language and navigate
+                    to candidate moments instead of reviewing every second manually.
+                </p>
+            </div>
+
+            <div class="panel overflow-hidden">
+                <div class="bg-slate-950 text-white p-4 md:p-6">
+                    <div class="flex flex-col sm:flex-row justify-between gap-3 sm:items-center mb-5">
+                        <div>
+                            <h3 class="font-bold text-lg">Video Search Explorer</h3>
+                        </div>
+                        <span class="self-start text-xs px-3 py-1 rounded-full border border-slate-700 text-slate-300">
+                            <i class="fa-solid fa-flask mr-1"></i> Simulated sample
+                        </span>
+                    </div>
+
+                    <!-- Representative video placeholder -->
+                    <div class="relative bg-slate-900 rounded-xl overflow-hidden border border-slate-700">
+                        <!-- Responsive Video Wrapper -->
+                        <div
+                            class="rounded-xl overflow-hidden border border-slate-700 bg-black aspect-video w-full shadow-lg">
+                            <video class="w-full h-full object-contain" id="scrolldownVideo"
+                                class="w-full h-full object-contain pointer-events-none" playsinline preload="metadata">
+                                <source src="DEMO-EmbeddingGemma2-gguf.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step of Video Search -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="panel p-5">
+                    <div class="w-10 h-10 rounded-xl bg-red-50 text-[#981e32] flex items-center justify-center mb-3"><i
+                            class="fa-solid fa-file-lines"></i></div>
+                    <h3 class="font-bold mb-2">1. Transcribe or describe</h3>
+                    <p class="text-sm text-slate-600">Generate timestamped speech transcripts and/or descriptions of
+                        selected
+                        video frames or clips.</p>
+                </div>
+                <div class="panel p-5">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3"><i
+                            class="fa-solid fa-vector-square"></i></div>
+                    <h3 class="font-bold mb-2">2. Embed and index</h3>
+                    <p class="text-sm text-slate-600">Encode text segments and store their vectors alongside timestamps
+                        and source
+                        metadata.</p>
+                </div>
+                <div class="panel p-5">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">3. Retrieve moments</h3>
+                    <p class="text-sm text-slate-600">Search for concepts, review candidate matches, and jump to
+                        relevant
+                        timestamps.</p>
+                </div>
+            </div>
+
+
+        </section>
+
+        <div class="border-t border-slate-200 mb-16"></div>
+
+        <!-- MRL EXPLORER -->
+        <section id="mrl" class="section-anchor mb-24">
+            <div class="max-w-3xl mb-10">
+                <div class="small-label crimson-text mb-3">03 / MATRYOSHKA REPRESENTATION LEARNING</div>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    Smaller vectors. More room to search.
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Matryoshka Representation Learning (MRL) supports using shorter prefixes of
+                    the model's embedding vector. Choose a dimension below to explore how the
+                    storage footprint changes relative to a 768-dimensional vector.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <div class="panel p-6 lg:col-span-3">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                        <h3 class="font-bold text-lg">Embedding dimension</h3>
+                        <span class="text-xs text-slate-500">Interactive explorer</span>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-2 mb-8" role="group" aria-label="Select embedding dimensions">
+                        <button class="dimension-button active" data-dim="768" aria-pressed="true">768</button>
+                        <button class="dimension-button" data-dim="512" aria-pressed="false">512</button>
+                        <button class="dimension-button" data-dim="256" aria-pressed="false">256</button>
+                        <button class="dimension-button" data-dim="128" aria-pressed="false">128</button>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 mb-6">
+                        <div class="flex justify-between items-center gap-3 mb-4">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Illustrative
+                                vector</span>
+                            <span id="vectorDimensionLabel" class="text-sm font-bold crimson-text">768 dimensions</span>
+                        </div>
+                        <div id="vectorVisual" class="flex gap-1 items-end h-10" aria-hidden="true"></div>
+                        <p class="text-xs text-slate-500 mt-4">
+                            Conceptual illustration only; individual vector values are not shown.
+                        </p>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="font-semibold text-slate-700">Relative vector storage</span>
+                                <span id="storageLabel" class="font-bold crimson-text">100%</span>
+                            </div>
+                            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+                                <div id="storageBar"
+                                    class="h-full bg-[#981e32] rounded-full transition-all duration-300"
+                                    style="width:100%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="font-semibold text-slate-700">Storage reduction</span>
+                                <span id="reductionLabel" class="font-bold text-emerald-700">0%</span>
+                            </div>
+                            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+                                <div id="reductionBar"
+                                    class="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                                    style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="panel p-6">
+                        <div class="small-label text-slate-500 mb-2">Selected dimension</div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="selectedDimension" class="text-5xl font-extrabold text-slate-900">768</span>
+                            <span class="text-slate-500">dimensions</span>
+                        </div>
+                        <div class="border-t border-slate-100 my-5"></div>
+
+                        <div class="small-label text-slate-500 mb-2">Vector storage multiplier</div>
+                        <div id="storageMultiplier" class="text-3xl font-extrabold crimson-text">1× baseline</div>
+
+                        <div class="border-t border-slate-100 my-5"></div>
+                        <div class="small-label text-slate-500 mb-2">Relative storage saved</div>
+                        <div id="savedStorage" class="text-3xl font-extrabold text-emerald-700">0%</div>
+
+                        <p id="dimensionDescription" class="text-sm text-slate-600 mt-4 leading-relaxed">
+                            The full 768-dimensional representation is the baseline for comparison.
+                        </p>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-5 rounded-r-lg">
+                        <h3 class="font-bold text-blue-900 mb-2 text-sm">What does this mean?</h3>
+                        <p class="text-sm text-blue-900 leading-relaxed">
+                            Smaller embeddings can reduce vector-index storage and memory requirements.
+                            Retrieval quality may change with dimensionality, so evaluate the chosen
+                            dimension on your own legal corpus and task.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 overflow-x-auto panel">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
+                        <tr>
+                            <th class="px-5 py-4">Dimensions</th>
+                            <th class="px-5 py-4">Relative storage</th>
+                            <th class="px-5 py-4">Reduction</th>
+                            <th class="px-5 py-4">Storage multiplier</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="px-5 py-4 font-bold">768</td>
+                            <td class="px-5 py-4">100%</td>
+                            <td class="px-5 py-4">0%</td>
+                            <td class="px-5 py-4">1×</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-4 font-bold">512</td>
+                            <td class="px-5 py-4">66.7%</td>
+                            <td class="px-5 py-4">33.3%</td>
+                            <td class="px-5 py-4">1.5× smaller</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-4 font-bold">256</td>
+                            <td class="px-5 py-4">33.3%</td>
+                            <td class="px-5 py-4">66.7%</td>
+                            <td class="px-5 py-4">3× smaller</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-4 font-bold">128</td>
+                            <td class="px-5 py-4">16.7%</td>
+                            <td class="px-5 py-4">83.3%</td>
+                            <td class="px-5 py-4">6× smaller</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-xs text-slate-500 mt-4 leading-relaxed">
+                Calculations assume the same numeric precision and storage representation per dimension.
+                They describe vector payloads, not total model size, runtime memory, or complete database
+                size. Use these dimensions only if the actual model and inference pipeline support them.
+            </p>
+        </section>
+
+        <div class="border-t border-slate-200 mb-16"></div>
+
+        <!-- TECHNICAL EXPLANATION -->
+        <section id="technology" class="section-anchor mb-24">
+            <div class="max-w-3xl mb-10">
+                <div class="small-label crimson-text mb-3">04 / UNDER THE HOOD</div>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    Three pieces. Different jobs.
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Quantization, embedding dimensionality, and vector retrieval address different
+                    parts of a local search system.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="panel card-hover p-6">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-red-50 text-[#981e32] flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">GGUF + Q4_K_M</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        GGUF is a model-file format used by supported local inference runtimes.
+                        Q4_K_M is a 4-bit-oriented quantization scheme that reduces weight storage
+                        relative to higher-precision representations.
+                    </p>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Model footprint</span>
+                </div>
+
+                <div class="panel card-hover p-6">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-vector-square"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">MRL dimensions</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Supported truncated embeddings can reduce the space required to store
+                        document vectors. This affects the retrieval index rather than the
+                        quantized model's weight file.
+                    </p>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Vector footprint</span>
+                </div>
+
+                <div class="panel card-hover p-6">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">Vector retrieval</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        A vector index compares query embeddings with document embeddings and
+                        returns ranked candidates. The index, corpus, and retrieval logic are
+                        separate components of the application.
+                    </p>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Search pipeline</span>
+                </div>
+            </div>
+
+            <div class="mt-8 panel p-6 md:p-8">
+                <h3 class="font-bold text-xl text-slate-900 mb-6">Two possible deployment architectures</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="small-label crimson-text mb-3">A / MOBILE LEGAL SEARCH</div>
+                        <div class="space-y-2">
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Legal corpus and
+                                preprocessing</div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Precomputed document
+                                embeddings</div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div
+                                class="bg-red-50 border border-red-100 rounded-lg p-3 text-sm font-semibold text-red-900">
+                                On-device
+                                query embedding</div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Local vector index →
+                                matching
+                                passages</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="small-label crimson-text mb-3">B / VIDEO RETRIEVAL</div>
+                        <div class="space-y-2">
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Video ingestion and
+                                segmentation
+                            </div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Timestamped transcripts
+                                /
+                                descriptions</div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div
+                                class="bg-red-50 border border-red-100 rounded-lg p-3 text-sm font-semibold text-red-900">
+                                Embeddings
+                                + timestamp metadata</div>
+                            <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="bg-slate-50 border rounded-lg p-3 text-sm font-semibold">Semantic query →
+                                candidate moments
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-500 mt-6 leading-relaxed">
+                    The GGUF embedding model does not itself transcribe audio, understand raw video,
+                    or determine whether an action is lawful. Those capabilities require separate
+                    components. Any stage can run locally only when its software and hardware support it.
+                </p>
+            </div>
+        </section>
+
+        <div class="border-t border-slate-200 mb-16"></div>
+
+        <!-- IMPLEMENTATION -->
+        <section id="implementation" class="section-anchor mb-24">
+            <div class="max-w-3xl mb-10">
+                <div class="small-label crimson-text mb-3">05 / FOR DEVELOPERS</div>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    Build your own local retrieval pipeline.
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    A production implementation needs a compatible embedding runtime, correct
+                    task formatting, document preprocessing, and an index. Verify the exact
+                    GGUF artifact and runtime before deploying.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="space-y-4">
+                    <div class="panel p-5">
+                        <h3 class="font-bold mb-3"><i class="fa-solid fa-download crimson-text mr-2"></i>Model files
+                        </h3>
+                        <p class="text-sm text-slate-600 mb-4">
+                            Download the model from CSI Lab huggingface.
+                        </p>
+                        <a class="text-sm font-bold crimson-text hover:underline"
+                            href="https://huggingface.co/CSI-lab/US-state-law-EmbeddingGemma-2-GGUF" target="_blank"
+                            rel="noopener noreferrer">
+                            Hugging Face <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="panel p-5">
+                        <h3 class="font-bold mb-3"><i class="fa-solid fa-code crimson-text mr-2"></i>Runtime
+                            compatibility</h3>
+                        <p class="text-sm text-slate-600 mb-3">
+                            Check whether your selected runtime supports embedding tasks, the model architecture,
+                            pooling, required prompts, and the intended output dimensions.
+                        </p>
+                        <a class="text-sm font-bold crimson-text hover:underline"
+                            href="https://github.com/ggml-org/llama.cpp#llamacpp" target="_blank"
+                            rel="noopener noreferrer">
+                            Explore llama.cpp <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
+                        <p class="text-xs text-slate-500 mt-3">
+                            Compatibility is not guaranteed merely because a runtime supports GGUF.
+                        </p>
+                    </div>
+
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-5 rounded-r-lg">
+                        <h3 class="font-bold text-amber-900 mb-2 text-sm">Before running the model</h3>
+                        <p class="text-sm text-amber-900 leading-relaxed">
+                            Confirm the exported artifact preserves the correct embedding behavior.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-slate-900 rounded-xl shadow-xl overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700 bg-slate-800">
+                            <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Python Usage
+                                Example</span>
+                            <button id="copyBtn" onclick="copyCode()"
+                                class="flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-colors bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <span>Copy Code</span>
+                            </button>
+                        </div>
+
+                        <pre id="python-code" class="code-block rounded-t-none text-slate-300">
+<span class="text-pink-400">import</span> torch
+<span class="text-pink-400">from</span> sentence_transformers <span class="text-pink-400">import</span> SentenceTransformer, util
+
+<span class="text-slate-500 italic"># 1. Load the fine-tuned model</span>
+model = <span class="text-blue-300">SentenceTransformer</span>(<span class="text-emerald-400">'CSI-lab/US-state-law-EmbeddingGemma-2'</span>, 
+ model_kwargs={
+        <span class="text-emerald-400">"torch_dtype":</span> <span class="text-pink-400">torch.bfloat16</span>,
+        "config_kwargs": {
+            <span class="text-emerald-400">"load_vision_encoder":</span> <span class="text-pink-400">False</span>,
+            <span class="text-emerald-400">"load_audio_encoder":</span> <span class="text-pink-400">False</span>
+        }
+    })
+
+<span class="text-slate-500 italic"># 2. Define the laws (Your Vector Database)</span>
+laws = [
+    <span class="text-emerald-400">"RCW 9A.56.030: Theft in the first degree. A person is guilty of theft in the first degree if he or she commits theft of property or services which exceed(s) five thousand dollars in value."</span>,
+    <span class="text-emerald-400">"RCW 46.61.502: Driving under the influence. A person is guilty of driving while under the influence of intoxicating liquor..."</span>,
+    <span class="text-emerald-400">"RCW 9A.36.011: Assault in the first degree. A person is guilty of assault in the first degree if he or she..."</span>
+]
+
+<span class="text-slate-500 italic"># 3. Define the user's search query</span>
+user_query = <span class="text-emerald-400">"What dollar amount makes a theft a first degree felony?"</span>
+
+<span class="text-slate-500 italic"># 4. Encode the documents and the query</span>
+query_embedding = model.<span class="text-blue-300">encode</span>(user_query, convert_to_tensor=<span class="text-pink-400">True</span>, prompt_name=<span class="text-emerald-400">"SearchQuery"</span>)
+law_embeddings = model.<span class="text-blue-300">encode</span>(laws, convert_to_tensor=<span class="text-pink-400">True</span>, prompt_name=<span class="text-emerald-400">"Document"</span>)
+
+<span class="text-slate-500 italic"># 5. Calculate Cosine Similarity</span>
+cosine_scores = util.<span class="text-blue-300">cos_sim</span>(query_embedding, law_embeddings)
+
+<span class="text-slate-500 italic"># 7. Print the top result</span>
+best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class="text-blue-300">item</span>()
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Top Match: </span><span class="text-amber-200">{laws[best_idx]}</span><span class="text-emerald-400">"</span>)
+<span class="text-blue-300">print</span>(<span class="text-emerald-400">f"Similarity Score: </span><span class="text-amber-200">{cosine_scores[0][best_idx]:.4f}</span><span class="text-emerald-400">"</span>)
+                        </pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="bg-[#2a3033] text-white mt-auto">
+        <div
+            class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="text-sm font-bold uppercase tracking-widest block mb-1 text-gray-400">Washington State
+                    University</span>
+                <span class="text-2xl font-bold text-white tracking-tight">CSI Lab</span>
+                <p class="text-sm text-gray-400 mt-2">Complex Social Interaction Lab</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="https://portal.wsu.edu/" class="hover:text-white transition-colors">myWSU</a>
+                <a href="https://access.wsu.edu/" class="hover:text-white transition-colors">Accessibility</a>
+                <a href="https://labs.wsu.edu/csi/" class="hover:text-white transition-colors">Main Site</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* -------------------------------------------------------
+           LEGAL SEARCH DEMO
+           Curated, illustrative results. No real model is loaded.
+        ------------------------------------------------------- */
+
+        const legalExamples = [
+            {
+                id: "vehicle",
+                title: "Vehicle searches and probable cause",
+                citation: "Illustrative topic · Verify applicable RCW and case law",
+                text: "Searches of vehicles may involve distinct constitutional rules and exceptions. The applicable facts and governing law must be checked.",
+                terms: ["vehicle", "car", "search", "warrant", "probable cause", "officer", "police", "traffic"]
+            },
+            {
+                id: "theft",
+                title: "Theft offenses and classifications",
+                citation: "Illustrative topic · Verify current RCW",
+                text: "The classification of a theft offense may depend on statutory elements, property value, and other circumstances specified by law.",
+                terms: ["theft", "stolen", "property", "value", "dollar", "first degree", "money"]
+            },
+            {
+                id: "traffic",
+                title: "Traffic stops and officer conduct",
+                citation: "Illustrative topic · Verify applicable law",
+                text: "Traffic stops raise questions about the basis for a stop, its duration, and the scope of permissible investigative actions.",
+                terms: ["traffic", "stop", "driver", "officer", "vehicle", "reason", "duration", "police"]
+            },
+            {
+                id: "dui",
+                title: "Driving under the influence",
+                citation: "Illustrative topic · Verify current RCW",
+                text: "Washington law addresses driving under the influence, including statutory elements and circumstances relevant to an investigation.",
+                terms: ["dui", "intoxicated", "alcohol", "driving", "influence", "blood", "breath"]
+            },
+            {
+                id: "assault",
+                title: "Assault offenses",
+                citation: "Illustrative topic · Verify current RCW",
+                text: "Assault offenses have statutory elements and degrees that depend on the conduct and circumstances specified in the law.",
+                terms: ["assault", "injury", "force", "weapon", "harm", "physical"]
+            }
+        ];
+
+        function rankExamples(query, items, field) {
+            const words = query.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, " ")
+                .split(/\s+/)
+                .filter(w => w.length > 2);
+
+            return items.map(item => {
+                const haystack = [
+                    item.title, item.text, ...(item.terms || [])
+                ].join(" ").toLowerCase();
+
+                let matches = 0;
+                words.forEach(word => {
+                    if (haystack.includes(word)) matches++;
+                });
+
+                const exactPhrase = query.trim().length > 4 &&
+                    haystack.includes(query.toLowerCase().trim());
+
+                return {
+                    ...item,
+                    _score: matches + (exactPhrase ? 2 : 0)
+                };
+            }).sort((a, b) => b._score - a._score)
+                .slice(0, 3);
+        }
+
+        function renderLegalResults(query) {
+            const results = rankExamples(query, legalExamples);
+            const container = document.getElementById("legalResults");
+
+            container.innerHTML = results.map((item, i) => `
+    <article class="phone-result">
+      <div class="flex items-start justify-between gap-2">
+        <div class="text-[10px] uppercase tracking-wider font-bold text-slate-400">
+          Illustrative result ${i + 1}
+        </div>
+        <span class="text-[10px] text-slate-500">Sample match</span>
+      </div>
+      <h4 class="font-bold text-xs text-slate-900 mt-2">${item.title}</h4>
+      <p class="text-[11px] text-slate-600 leading-relaxed mt-2">${item.text}</p>
+      <p class="text-[9px] text-slate-400 mt-2">${item.citation}</p>
+    </article>
+  `).join("");
+
+            document.getElementById("legalResultCount").textContent =
+                results.length + " examples";
+        }
+
+        document.getElementById("legalSearchForm").addEventListener("submit", e => {
+            e.preventDefault();
+            const query = document.getElementById("legalQuery").value.trim();
+            renderLegalResults(query || "Washington state law");
+        });
+
+        document.querySelectorAll("[data-legal-query]").forEach(button => {
+            button.addEventListener("click", () => {
+                const query = button.dataset.legalQuery;
+                document.getElementById("legalQuery").value = query;
+                renderLegalResults(query);
+            });
+        });
+
+        renderLegalResults(document.getElementById("legalQuery").value);
+
+        /* -------------------------------------------------------
+           MRL EXPLORER
+        ------------------------------------------------------- */
+
+        const dimensions = [768, 512, 256, 128];
+
+        const dimensionDescriptions = {
+            768: "Full-dimensional baseline. Retains all 768 dimensions in the representation.",
+            512: "Uses two-thirds of the baseline vector storage, assuming equal precision per dimension.",
+            256: "Uses one-third of the baseline vector storage, assuming equal precision per dimension.",
+            128: "Uses one-sixth of the baseline vector storage, an 83.3% reduction under equal-precision assumptions."
+        };
+
+        function setDimension(dim) {
+            const relative = dim / 768;
+            const reduction = (1 - relative) * 100;
+            const multiplier = 768 / dim;
+
+            document.querySelectorAll("[data-dim]").forEach(button => {
+                const active = Number(button.dataset.dim) === dim;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-pressed", String(active));
+            });
+
+            document.getElementById("selectedDimension").textContent = dim;
+            document.getElementById("vectorDimensionLabel").textContent = dim + " dimensions";
+            document.getElementById("storageLabel").textContent = (relative * 100).toFixed(1) + "%";
+            document.getElementById("reductionLabel").textContent = reduction.toFixed(1) + "%";
+            document.getElementById("storageBar").style.width = (relative * 100) + "%";
+            document.getElementById("reductionBar").style.width = reduction + "%";
+            document.getElementById("savedStorage").textContent = reduction.toFixed(1) + "%";
+
+            document.getElementById("storageMultiplier").textContent =
+                multiplier.toFixed(multiplier % 1 ? 2 : 0) + "× smaller";
+
+            if (dim === 768) {
+                document.getElementById("storageMultiplier").textContent = "1× baseline";
+            }
+
+            document.getElementById("dimensionDescription").textContent =
+                dimensionDescriptions[dim];
+
+            // Keep a fixed number of cells for a readable conceptual visualization.
+            // The filled proportion represents the selected dimension relative to 768.
+            const cellCount = 48;
+            const retainedCells = Math.round(cellCount * relative);
+
+            document.getElementById("vectorVisual").innerHTML =
+                Array.from({ length: cellCount }, (_, i) =>
+                    `<span class="vector-cell ${i < retainedCells ? "retained" : ""}"></span>`
+                ).join("");
+        }
+
+        document.querySelectorAll("[data-dim]").forEach(button => {
+            button.addEventListener("click", () => setDimension(Number(button.dataset.dim)));
+        });
+
+        setDimension(768);
+
+
+        /* -------------------------------------------------------
+           COPY CODE
+        ------------------------------------------------------- */
+
+        document.getElementById("copyCode").addEventListener("click", async () => {
+            const code = document.getElementById("codeExample").textContent;
+            const status = document.getElementById("copyStatus");
+            const button = document.getElementById("copyCode");
+
+            try {
+                await navigator.clipboard.writeText(code);
+                button.textContent = "Copied!";
+                status.textContent = "Copied the conceptual code example.";
+            } catch (error) {
+                // Fallback for browsers that do not support clipboard access.
+                const textarea = document.createElement("textarea");
+                textarea.value = code;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                const success = document.execCommand("copy");
+                textarea.remove();
+
+                button.textContent = success ? "Copied!" : "Select code manually";
+                status.textContent = success
+                    ? "Copied the conceptual code example."
+                    : "Clipboard access was unavailable. Select and copy the code manually.";
+            }
+
+            setTimeout(() => {
+                button.textContent = "Copy code";
+            }, 2000);
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('scrolldownVideo');
+
+            // Configure the observer to watch when the video enters/leaves the viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Video is on screen -> Play it
+                        video.play().catch(error => {
+                            console.log("Autoplay prevented or waiting for interaction:", error);
+                        });
+                    } else {
+                        // Video scrolled off screen -> Pause it to save system resources
+                        video.pause();
+                    }
+                });
+            }, {
+                threshold: 0.5 // Triggers when 50% of the video is visible on screen
+            });
+
+            // Start watching the video element
+            if (video) {
+                observer.observe(video);
+            }
+        });
+    </script>
+</body>
+
+</html>
