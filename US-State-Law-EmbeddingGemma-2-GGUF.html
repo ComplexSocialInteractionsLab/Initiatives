@@ -49,6 +49,71 @@
             }
         };
     </script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/ScrollTrigger.min.js"></script>
+
+    <!-- --------------------------------
+    MOBILE DEMO ANIMATION
+    -------------------------------- -->
+    <style>
+        #mobile-demo {
+            position: relative;
+        }
+
+        #mobile-demo .reveal-heading,
+        #mobile-demo .reveal-phone,
+        #mobile-demo .reveal-explanation {
+            will-change: transform, opacity;
+        }
+
+        #mobile-demo .phone-shell {
+            transform-origin: center center;
+            transform-style: preserve-3d;
+            /* filter: drop-shadow(0 25px 35px rgba(15, 23, 42, 0.12)); */
+        }
+
+        #mobile-demo .reveal-card {
+            will-change: transform, opacity;
+        }
+
+        /* Subtle entrance for search results */
+        #mobile-demo .result-item {
+            animation: resultReveal 0.5s ease both;
+        }
+
+        #mobile-demo .result-item:nth-child(2) {
+            animation-delay: 100ms;
+        }
+
+        #mobile-demo .result-item:nth-child(3) {
+            animation-delay: 200ms;
+        }
+
+        @keyframes resultReveal {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+
+            #mobile-demo *,
+            #mobile-demo *::before,
+            #mobile-demo *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 
     <style>
         :root {
@@ -500,7 +565,7 @@
 
         <!-- MOBILE DEMO -->
         <section id="mobile-demo" class="section-anchor mb-24">
-            <div class="max-w-3xl mb-10">
+            <div class="max-w-3xl mb-10 reveal-heading">
                 <div class="small-label crimson-text mb-3">01 / ON-DEVICE LEGAL SEARCH</div>
                 <h2 class="section-title text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
                     A legal research tool in your pocket.
@@ -512,9 +577,9 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center reveal-layout">
                 <!-- Phone -->
-                <div class="py-2">
+                <div class="py-2 reveal-phone">
                     <div class="phone-shell">
                         <div class="phone-screen">
                             <div class="phone-notch"></div>
@@ -673,6 +738,7 @@
                 </div>
             </div>
         </section>
+
 
         <div class="border-t border-slate-200 mb-16"></div>
 
@@ -1379,6 +1445,118 @@ best_idx = cosine_scores.<span class="text-blue-300">argmax</span>().<span class
             }
         });
     </script>
+
+
+    <!-- --------------------------------
+     SCROLL ANIMATION
+--------------------------------- -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const section = document.querySelector("#mobile-demo");
+
+            if (!section) return;
+
+            // Respect accessibility preferences.
+            const reducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+            const heading = section.querySelector(".reveal-heading");
+            const phone = section.querySelector(".reveal-phone");
+            const phoneShell = section.querySelector(".phone-shell");
+            const explanation = section.querySelector(".reveal-explanation");
+            const cards = section.querySelectorAll(".reveal-card");
+
+            if (reducedMotion) {
+                return;
+            }
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Initial states
+            gsap.set(heading, {
+                opacity: 0,
+                y: 35
+            });
+
+            gsap.set(phone, {
+                opacity: 0,
+                y: 100,
+                scale: 0.82
+            });
+
+            gsap.set(phoneShell, {
+                rotateY: -12,
+                rotateX: 5,
+                transformPerspective: 1000
+            });
+
+            gsap.set(explanation, {
+                opacity: 1
+            });
+
+            gsap.set(cards, {
+                opacity: 0,
+                y: 35
+            });
+
+            // Main scroll-controlled animation
+            const timeline = gsap.timeline({
+
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%",
+                    end: "+=900",
+                    scrub: 1.2,
+                    invalidateOnRefresh: true
+                }
+
+            });
+
+            // 1. Heading appears
+            timeline.to(heading, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            // 2. Phone enters the screen
+            timeline.to(phone, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.2,
+                ease: "power3.out"
+            }, "-=0.3");
+
+            // 3. Phone settles into position
+            timeline.to(phoneShell, {
+                rotateY: 0,
+                rotateX: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=1");
+
+            // 4. Explanation cards appear sequentially
+            timeline.to(cards, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.18,
+                duration: 0.65,
+                ease: "power2.out"
+            }, "-=0.5");
+
+            // Refresh measurements after images and fonts load.
+            window.addEventListener("load", () => {
+                ScrollTrigger.refresh();
+            });
+
+        });
+    </script>
+
 </body>
 
 </html>
