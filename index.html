@@ -9,6 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="WSU_Logo.png">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
@@ -270,7 +272,7 @@
                         <div
                             class="w-48 h-48 border border-gray-50 rounded-full flex items-center justify-center bg-gray-50 overflow-hidden relative">
                             <!-- WSU Logo inside central node -->
-                            <img src="WSU_Logo.jpg" alt="WSU Cougar Logo"
+                            <img src="WSU_Logo.png" alt="WSU Cougar Logo"
                                 class="w-24 h-24 object-contain opacity-90 relative z-10">
 
                             <!-- Slow pulsing radar effect -->
@@ -726,18 +728,13 @@
                                 New Model
                             </span>
                         </div>
-                        <div
-                            class="h-64 bg-gradient-to-r from-blue-700 to-indigo-900 relative overflow-hidden flex items-center justify-center">
-                            <!-- Background overlay -->
-                            <div
-                                class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CgkJPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmYiLz4KCTwvc3ZnPg==')]">
-                            </div>
-                            <div class="relative z-10 text-center">
-                                <i
-                                    class="fa-solid fa-cube text-6xl text-white mb-6 drop-shadow-lg opacity-90 group-hover:scale-110 transition-transform duration-500"></i>
-                                <h4 class="text-white font-extrabold text-3xl tracking-wide">Embedding Gemma-2</h4>
-                            </div>
+
+                        <!-- Image Header (Replaces the gradient + cube logo) -->
+                        <div class="h-64 w-full relative overflow-hidden bg-gray-100">
+                            <img src="US_State_Law_Gemma2_Model_Long.jpg" alt="US-State Law Embedding Gemma 2 [WA-RCW]"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
+
                         <div class="p-8 flex-grow flex flex-col bg-white">
                             <div class="flex items-center justify-between mb-4">
                                 <span
@@ -746,7 +743,7 @@
                                 </span>
                             </div>
                             <h4
-                                class="text-3xl font-extrabold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors tracking-tight">
+                                class="text-[1.8rem] font-extrabold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors tracking-tight">
                                 US-State-Law-<span class="text-blue-700">EmbeddingGemma-2</span></h4>
                             <p class="text-gray-600 leading-relaxed mb-8 font-light text-lg">
                                 A specialized 270M-parameter dense retrieval model fine-tuned on 504K+ Revised Code of
@@ -767,6 +764,7 @@
                     </div>
                 </a>
 
+
                 <!-- US-State-Law-EmbeddingGemma-2-GGUF Project -->
                 <a href="US-State-Law-EmbeddingGemma-2-GGUF.html" class="group block">
                     <div
@@ -778,28 +776,21 @@
                                 New Model
                             </span>
                         </div>
-                        <div
-                            class="h-64 bg-gradient-to-r from-[#c22f58] to-[#821130] relative overflow-hidden flex items-center justify-center">
-                            <!-- Background overlay -->
-                            <div
-                                class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CgkJPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmYiLz4KCTwvc3ZnPg==')]">
-                            </div>
-                            <div class="relative z-10 text-center">
-                                <i
-                                    class="fa-solid fa-mobile-screen-button text-6xl text-white mb-6 drop-shadow-lg opacity-90 group-hover:scale-110 transition-transform duration-500"></i>
-                                <h4 class="text-white font-extrabold text-3xl tracking-wide">Embedding Gemma-2 GGUF</h4>
-                            </div>
+                        <div class="h-64 w-full relative overflow-hidden bg-gray-100">
+                            <img src="US_State_Law_Gemma2_GGUF_Model_Long.jpg"
+                                alt="US-State Law Embedding Gemma 2 [WA-RCW] GGUF"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
                         <div class="p-8 flex-grow flex flex-col bg-white">
                             <div class="flex items-center justify-between mb-4">
                                 <span
                                     class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-rose-50 text-rose-800 border border-rose-200 uppercase tracking-widest shadow-sm">
-                                    Edge AI · Q4_K_M
+                                    AI MODEL · Q4_K_M
                                 </span>
                             </div>
                             <h4
                                 class="text-3xl font-extrabold text-gray-900 mb-4 group-hover:text-[#981e32] transition-colors tracking-tight">
-                                US-State-Law-EmbeddingGemma-2-<span class="text-[#981e32]">GGUF</span></h4>
+                                US-State-Law-EmbeddingGemma-2-<span class="text-[#981e32]">Q4_K_M</span></h4>
                             <p class="text-gray-600 leading-relaxed mb-8 font-light text-lg">
                                 A 4-bit Q4_K_M quantized edge-ready embedding model featuring Matryoshka Representation
                                 Learning (768 down to 128 dimensions). Tailored for low-memory, air-gapped on-device
@@ -823,17 +814,10 @@
                 <a href="WA_State_Law_Embedding_Base.html" class="group block">
                     <div
                         class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 card-hover h-full flex flex-col relative justify-between">
-                        <div
-                            class="h-64 bg-gradient-to-r from-teal-700 to-teal-900 relative overflow-hidden flex items-center justify-center">
-                            <!-- Background overlay -->
-                            <div
-                                class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CgkJPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmYiLz4KCTwvc3ZnPg==')]">
-                            </div>
-                            <div class="relative z-10 text-center">
-                                <i
-                                    class="fa-solid fa-network-wired text-6xl text-white mb-6 drop-shadow-lg opacity-90 group-hover:scale-110 transition-transform duration-500"></i>
-                                <h4 class="text-white font-extrabold text-3xl tracking-wide">Embedding Model</h4>
-                            </div>
+                        <div class="h-64 w-full relative overflow-hidden bg-gray-100">
+                            <img src="WA-state-law-embedding-model-Base.jpg"
+                                alt="Washington-state-law-embedding-model-Base"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
                         <div class="p-8 flex-grow flex flex-col bg-white">
                             <div class="flex items-center justify-between mb-4">
@@ -868,17 +852,10 @@
                 <a href="WA_State_Law_Embedding_large.html" class="group block">
                     <div
                         class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 card-hover h-full flex flex-col relative justify-between">
-                        <div
-                            class="h-64 bg-gradient-to-r from-purple-700 to-purple-900 relative overflow-hidden flex items-center justify-center">
-                            <!-- Background overlay -->
-                            <div
-                                class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CgkJPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmYiLz4KCTwvc3ZnPg==')]">
-                            </div>
-                            <div class="relative z-10 text-center">
-                                <i
-                                    class="fa-solid fa-network-wired text-6xl text-white mb-6 drop-shadow-lg opacity-90 group-hover:scale-110 transition-transform duration-500"></i>
-                                <h4 class="text-white font-extrabold text-3xl tracking-wide">Embedding Model</h4>
-                            </div>
+                        <div class="h-64 w-full relative overflow-hidden bg-gray-100">
+                            <img src="WA-state-law-embedding-model-Large.jpg"
+                                alt="Washington-state-law-embedding-model-Large"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
                         <div class="p-8 flex-grow flex flex-col bg-white">
                             <div class="flex items-center justify-between mb-4">
